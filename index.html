@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroAILab - Aeroponía 4.0: Cultivo evolutivo automatizado</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; text-align: center; padding: 100px 0; }
+        .hero h1 { font-size: 3em; margin-bottom: 10px; }
+        .hero .subtitle { font-size: 1.5em; margin-bottom: 30px; opacity: 0.9; }
+        .cta { background: #FF9800; color: white; padding: 15px 30px; font-size: 1.2em; border: none; border-radius: 50px; cursor: pointer; text-decoration: none; display: inline-block; margin: 10px; }
+        
+        /* Sections */
+        section { padding: 80px 0; }
+        .section-title { font-size: 2.5em; text-align: center; margin-bottom: 50px; color: #2E7D32; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; }
+        .card h3 { color: #4CAF50; margin-bottom: 15px; }
+        
+        /* Variables */
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #4CAF50; color: white; }
+        
+        /* Footer */
+        footer { background: #333; color: white; text-align: center; padding: 40px 0; }
+        .form { max-width: 400px; margin: 0 auto 20px; }
+        input[type="email"] { width: 70%; padding: 12px; border-radius: 5px 0 0 5px; border: none; }
+        input[type="submit"] { padding: 12px 20px; background: #4CAF50; color: white; border: none; border-radius: 0 5px 5px 0; cursor: pointer; }
+        
+        @media (max-width: 768px) { .hero h1 { font-size: 2em; } }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <h1>AgroAILab</h1>
+            <p class="subtitle">Aeroponía 4.0: Cultivo evolutivo automatizado</p>
+            <p><strong>Proyecto en fase de desarrollo y prototipo</strong></p>
+            <br>
+            <a href="#contacto" class="cta">Contactar</a>
+            <a href="#demo" class="cta">Ver Demo</a>
+        </div>
+    </header>
+
+    <section id="sobre">
+        <div class="container">
+            <h2 class="section-title">Transformamos el cultivo en fábrica inteligente</h2>
+            <p>AgroAILab sustituye el cultivo tradicional por un entorno ciberfísico donde la IA optimiza en tiempo real el crecimiento y calidad de la planta. Precisión quirúrgica, trazabilidad total y escalabilidad.</p>
+        </div>
+    </section>
+
+    <section id="demo">
+        <div class="container">
+            <h2 class="section-title">¿Por qué es innovador?</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Precisión 3D</h3>
+                    <p>Diseño modular impreso en 3D para dirigir nutrientes y aire selectivamente.</p>
+                </div>
+                <div class="card">
+                    <h3>10+ Variables</h3>
+                    <p>Monitorizamos VPD, espectro, nutrientes desde semilla hasta venta.</p>
+                </div>
+                <div class="card">
+                    <h3>IA + Visión</h3>
+                    <p>ESP32-CAM y sensores VOCs optimizan tamaño, aroma y rendimiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #f5f5f5;">
+        <div class="container">
+            <h2 class="section-title">Variables clave</h2>
+            <table>
+                <tr><th>Entradas Inteligentes</th><th>Resultados Medibles</th></tr>
+                <tr><td>Control espectral (rojo/azul)</td><td>Área foliar</td></tr>
+                <tr><td>Nebulización ultrasónica (5-10μm)</td><td>Aceites esenciales</td></tr>
+                <tr><td>Gestión térmica + CO₂</td><td>Peso seco/fresco</td></tr>
+                <tr><td>Ventilación dirigida</td><td>Eficiencia por vatio</td></tr>
+            </table>
+        </div>
+    </section>
+
+    <section id="equipo">
+        <div class="container">
+            <h2 class="section-title">En desarrollo</h2>
+            <div style="text-align: center;">
+                <p><strong>Presentado a convocatoria Asturias Startups</strong><br>
+                TRL 4: Prototipo validado en laboratorio<br>
+                Próximo: Piloto industrial Q3 2026</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 20px;">Únete a la lista de espera</h2>
+            <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <input type="email" name="email" placeholder="tu@email.com" required>
+                <input type="submit" value="Suscribirme">
+            </form>
+            <p>&copy; 2026 AgroAILab | En fase prototipo | <a href="#sobre" style="color: #4CAF50;">Arriba</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
