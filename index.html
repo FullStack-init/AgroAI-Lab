@@ -15,28 +15,37 @@
         .hero .subtitle { font-size: 1.5em; margin-bottom: 20px; opacity: 0.9; }
         .status { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; display: inline-block; margin-bottom: 30px; }
         .cta { background: #FF9800; color: white; padding: 15px 30px; font-size: 1.2em; border: none; border-radius: 50px; cursor: pointer; text-decoration: none; display: inline-block; margin: 10px; }
+        .cta-partners { background: #2196F3 !important; }
         
         /* Sections */
         section { padding: 80px 0; }
         .section-title { font-size: 2.5em; text-align: center; margin-bottom: 50px; color: #2E7D32; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+        .card:hover { transform: translateY(-5px); }
         .card h3 { color: #4CAF50; margin-bottom: 15px; }
         .team-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
         .team-card { text-align: left; }
         .team-card img { width: 80px; height: 80px; border-radius: 50%; background: #ddd; margin: 0 auto 15px; display: block; }
         
-        /* Timeline */
-        .timeline { display: flex; justify-content: space-between; max-width: 600px; margin: 40px auto; }
-        .milestone { text-align: center; position: relative; }
-        .milestone::before { content: ''; position: absolute; top: 20px; left: -50px; width: 50px; height: 2px; background: #4CAF50; }
-        .milestone:last-child::after { content: ''; position: absolute; top: 20px; right: -50px; width: 50px; height: 2px; background: #4CAF50; }
-        .milestone.current { font-weight: bold; color: #4CAF50; }
+        /* Timeline visual */
+        .timeline { position: relative; max-width: 800px; margin: 40px auto; padding: 20px 0; }
+        .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: #4CAF50; transform: translateX(-50%); }
+        .milestone { position: relative; width: 45%; margin: 30px 0; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .milestone.left { left: 0; }
+        .milestone.right { left: 55%; }
+        .milestone.current { background: #E8F5E8; border: 2px solid #4CAF50; }
+        .milestone.future { opacity: 0.6; }
+        .milestone-icon { position: absolute; left: 50%; top: -20px; transform: translateX(-50%); width: 40px; height: 40px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
         
         /* Table */
         table { width: 100%; border-collapse: collapse; margin: 30px 0; }
         th, td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background: #4CAF50; color: white; }
+        
+        /* Partners */
+        .partners { background: linear-gradient(135deg, #2196F3, #1976D2); color: white; text-align: center; }
+        .partners .section-title { color: white; }
         
         /* Footer */
         footer { background: #333; color: white; text-align: center; padding: 40px 0; }
@@ -46,8 +55,9 @@
         
         @media (max-width: 768px) { 
             .hero h1 { font-size: 2em; } 
-            .timeline { flex-direction: column; gap: 20px; }
-            .milestone::before, .milestone::after { display: none; }
+            .timeline::before { left: 20px; }
+            .milestone { width: calc(100% - 60px); left: 40px !important; margin-left: 20px; }
+            .milestone-icon { left: 20px; }
         }
     </style>
 </head>
@@ -57,27 +67,28 @@
             <h1>AgroAILab</h1>
             <p class="subtitle">Aeroponía 4.0: Cultivo evolutivo automatizado</p>
             <div class="status">
-                <strong>Inicio verano 2026</strong> | Lanzado 2/5/2026 | Fase prototipo
+                <strong>🚀 Abierto a socios e inversores</strong><br>
+                Inicio proyecto: Verano 2025 | Prototipo: Mayo 2026 | Fase desarrollo
             </div>
-            <a href="#contacto" class="cta">Contactar equipo</a>
-            <a href="#roadmap" class="cta">Ver roadmap</a>
+            <a href="#socios" class="cta cta-partners">Ser socio</a>
+            <a href="#roadmap" class="cta">Ver progreso</a>
         </div>
     </header>
 
     <section id="sobre">
         <div class="container">
-            <h2 class="section-title">Transformamos el cultivo en fábrica inteligente</h2>
+            <h2 class="section-title">De idea a prototipo en 10 meses</h2>
             <p>AgroAILab sustituye el cultivo tradicional por un entorno ciberfísico donde la IA optimiza en tiempo real el crecimiento y calidad de la planta. Precisión quirúrgica, trazabilidad total y escalabilidad para biomasa de alto valor.</p>
         </div>
     </section>
 
     <section id="innovacion">
         <div class="container">
-            <h2 class="section-title">¿Por qué es innovador?</h2>
+            <h2 class="section-title">Innovación técnica</h2>
             <div class="grid">
                 <div class="card">
                     <h3>Precisión 3D Modular</h3>
-                    <p>Impresión 3D para dirigir selectivamente aire, nutrientes y condiciones por zonas de la planta.</p>
+                    <p>Modelo 3D personalizado: circuitos de aire optimizados para anatomía de planta.</p>
                 </div>
                 <div class="card">
                     <h3>Monitorización Total</h3>
@@ -85,7 +96,7 @@
                 </div>
                 <div class="card">
                     <h3>IA Evolutiva</h3>
-                    <p>Visión artificial ESP32-CAM + sensores VOCs. Aprende de cada ciclo para maximizar rendimiento.</p>
+                    <p>Visión artificial ESP32-CAM + sensores VOCs. Aprende de cada ciclo.</p>
                 </div>
             </div>
         </div>
@@ -93,14 +104,42 @@
 
     <section style="background: #f5f5f5;">
         <div class="container">
-            <h2 class="section-title">Variables clave del sistema</h2>
+            <h2 class="section-title">Variables clave</h2>
             <table>
                 <tr><th>Entradas Inteligentes</th><th>Salidas de Valor</th></tr>
                 <tr><td>Control espectral Rojo/Azul</td><td>Área foliar optimizada</td></tr>
-                <tr><td>Nebulización ultrasónica 5-10μm</td><td>Rendimiento aceites esenciales</td></tr>
-                <tr><td>Gradientes térmicos + CO₂</td><td>Relación peso seco/fresco</td></tr>
-                <tr><td>Ventilación dirigida</td><td>ROI por vatio consumido</td></tr>
+                <tr><td>Nebulización ultrasónica 5-10μm</td><td>Aceites esenciales</td></tr>
+                <tr><td>Gradientes térmicos + CO₂</td><td>Peso seco/fresco</td></tr>
+                <tr><td>Ventilación dirigida</td><td>ROI por vatio</td></tr>
             </table>
+        </div>
+    </section>
+
+    <section id="roadmap">
+        <div class="container">
+            <h2 class="section-title">Progreso visual</h2>
+            <div class="timeline">
+                <div class="milestone left current">
+                    <div class="milestone-icon">1</div>
+                    <h4>Verano 2025</h4>
+                    <p>Investigación + diseño conceptual</p>
+                </div>
+                <div class="milestone right">
+                    <div class="milestone-icon">2</div>
+                    <h4>Otoño-Invierno 2025</h4>
+                    <p>Modelado 3D: circuitos aire + anatomía planta</p>
+                </div>
+                <div class="milestone left current">
+                    <div class="milestone-icon">3</div>
+                    <h4>Mayo 2026</h4>
+                    <p>✅ Prototipo funcional | Presentación CEEI Asturias</p>
+                </div>
+                <div class="milestone right future">
+                    <div class="milestone-icon">4</div>
+                    <h4>Verano 2026</h4>
+                    <p>Inicio operaciones piloto</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -109,50 +148,46 @@
             <h2 class="section-title">Equipo fundador</h2>
             <div class="grid team-grid">
                 <div class="card team-card">
-                    <div style="background: #ddd; width:80px;height:80px;border-radius:50%;margin:0 auto 15px;"></div>
-                    <h3>Estudiante Ingeniería Electrónica Industrial y Automática</h3>
-                    <p>Universidad de Oviedo (Uniovi). Formación previa en finanzas. Experto en automatización, IA aplicada y control de procesos.</p>
+                    <div style="background: linear-gradient(135deg, #4CAF50, #2E7D32); color:white; display:flex;align-items:center;justify-content:center;">⚡</div>
+                    <h3>Estudiante Ing. Electrónica Industrial y Automática</h3>
+                    <p>Uniovi | Formación previa en finanzas | Automatización + IA aplicada</p>
                 </div>
                 <div class="card team-card">
-                    <div style="background: #ddd; width:80px;height:80px;border-radius:50%;margin:0 auto 15px;"></div>
+                    <div style="background: linear-gradient(135deg, #2196F3, #1976D2); color:white; display:flex;align-items:center;justify-content:center;">💻</div>
                     <h3>Ingeniero Informático</h3>
-                    <p>Desarrollo de visión artificial, machine learning y sistemas embebidos (ESP32). Escalabilidad cloud y datos.</p>
+                    <p>Visión artificial | Machine Learning | Sistemas embebidos ESP32</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="roadmap">
+    <section id="socios" class="partners">
         <div class="container">
-            <h2 class="section-title">Roadmap 2026</h2>
-            <div class="timeline">
-                <div class="milestone current">May 2026<br>Prototipo lab</div>
-                <div class="milestone">Verano 2026<br>Inicio operaciones</div>
-                <div class="milestone">Q4 2026<br>Piloto industrial</div>
-            </div>
-            <p style="text-align: center; margin-top: 40px;">Presentado a convocatoria <strong>Start in Asturias</strong> | TRL 4</p>
+            <h2 class="section-title">🫱 Buscamos socios</h2>
+            <p style="font-size: 1.3em; max-width: 600px; margin: 0 auto 40px;">
+                Inversores, partners técnicos, clientes piloto o CEEI Asturias. 
+                <strong>Contacto directo para deck pitch.</strong>
+            </p>
+            <a href="#contacto" class="cta">Ser socio ahora</a>
         </div>
     </section>
 
     <footer id="contacto">
         <div class="container">
-            <h2 style="color: white; margin-bottom: 20px;">Únete al proyecto</h2>
+            <h2 style="color: white; margin-bottom: 20px;">Mantente al día</h2>
             <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                 <input type="email" name="email" placeholder="tu@email.com" required>
-                <input type="submit" value="Suscribirme a updates">
+                <input type="submit" value="Suscribirme">
             </form>
-            <p>© 2026 AgroAILab | Fase prototipo | <a href="#sobre" style="color: #4CAF50;">Volver arriba</a></p>
+            <p>© 2026 AgroAILab | Prototipo Mayo 2026 | <a href="#sobre" style="color: #4CAF50;">↑</a></p>
         </div>
     </footer>
 
     <script>
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
