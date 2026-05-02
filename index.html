@@ -3,216 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroAILab - Aeroponía 4.0: Cultivo evolutivo automatizado</title>
+    <title>AgroAILab | Deep Tech Aeroponics</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
-        /* Hero */
-        .hero { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; text-align: center; padding: 100px 0; }
-        .hero h1 { font-size: 3em; margin-bottom: 10px; }
-        .hero .subtitle { font-size: 1.5em; margin-bottom: 20px; opacity: 0.9; }
-        .status { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; display: inline-block; margin-bottom: 30px; }
-        .cta { background: #FF9800; color: white; padding: 15px 30px; font-size: 1.2em; border: none; border-radius: 50px; cursor: pointer; text-decoration: none; display: inline-block; margin: 10px; }
-        .cta-partners { background: #2196F3 !important; }
-        .email-link { color: #FF9800; font-weight: bold; font-size: 1.1em; text-decoration: none; }
-        .email-link:hover { text-decoration: underline; }
-        
-        /* Sections */
-        section { padding: 80px 0; }
-        .section-title { font-size: 2.5em; text-align: center; margin-bottom: 50px; color: #2E7D32; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card h3 { color: #4CAF50; margin-bottom: 15px; }
-        .team-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
-        .team-card { text-align: center; }
-        .team-avatar { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2em; color: white; }
-        .advisor { border-top: 4px solid #2196F3; margin-top: 40px; padding-top: 30px; }
-        
-        /* Timeline visual */
-        .timeline { position: relative; max-width: 900px; margin: 40px auto; padding: 20px 0; }
-        .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background: #4CAF50; transform: translateX(-50%); }
-        .milestone { position: relative; width: 45%; margin: 40px 0; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .milestone.left { left: 0; }
-        .milestone.right { left: 55%; }
-        .milestone.current { background: #E8F5E8; border: 3px solid #4CAF50; box-shadow: 0 0 20px rgba(76,175,80,0.3); }
-        .milestone.future { opacity: 0.7; }
-        .milestone-icon { position: absolute; left: 50%; top: -25px; transform: translateX(-50%); width: 50px; height: 50px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2em; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        
-        /* Table */
-        table { width: 100%; border-collapse: collapse; margin: 30px 0; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        th, td { padding: 18px 15px; text-align: left; }
-        th { background: #4CAF50; color: white; }
-        tr:nth-child(even) { background: #f8f9fa; }
-        
-        /* Partners */
-        .partners { background: linear-gradient(135deg, #2196F3, #1976D2); color: white; text-align: center; }
-        .partners .section-title { color: white; }
-        
-        /* Footer */
-        footer { background: #333; color: white; text-align: center; padding: 50px 0; }
-        .form { max-width: 500px; margin: 0 auto 30px; }
-        input[type="email"] { width: 70%; padding: 15px; border-radius: 50px 0 0 50px; border: none; font-size: 1.1em; }
-        input[type="submit"] { padding: 15px 30px; background: #4CAF50; color: white; border: none; border-radius: 0 50px 50px 0; cursor: pointer; font-size: 1.1em; }
-        
-        @media (max-width: 768px) { 
-            .hero h1 { font-size: 2em; } 
-            .timeline::before { left: 30px; }
-            .milestone { width: calc(100% - 80px); left: 60px !important; margin-left: 20px; }
-            .milestone-icon { left: 30px; }
+        :root {
+            --agro-green: #00ff66;
+            --ai-white: #ffffff;
+            --lab-blue: #00e5ff;
+            --bg: #030705; /* Fondo negro con levísimo tinte verde/azul */
+            --surface: rgba(22, 26, 24, 0.7); /* Transparente para ver las partículas */
+            --text-main: #e4e4e7;
+            --text-dim: #94a3b8;
+            --border: rgba(0, 255, 102, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Canvas de fondo */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        /* Título con efecto gradiente animado */
+        .brand-title {
+            font-size: clamp(4rem, 12vw, 7rem);
+            font-weight: 900;
+            letter-spacing: -3px;
+            margin: 0;
+            background: linear-gradient(270deg, var(--agro-green), var(--ai-white), var(--lab-blue), var(--agro-green));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: cyberGlow 4s linear infinite;
+            text-shadow: 0 0 20px rgba(0, 255, 102, 0.2);
+        }
+
+        @keyframes cyberGlow {
+            to { background-position: 200% center; }
+        }
+
+        .mission-desc {
+            max-width: 700px;
+            margin: 30px auto;
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+            border-left: 2px solid var(--agro-green);
+            padding-left: 20px;
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Sección Equipo Fundador */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .member-card {
+            background: var(--surface);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .member-card:hover {
+            border-color: var(--agro-green);
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.15);
+        }
+
+        .member-card h3 { margin: 10px 0 5px 0; color: #fff; }
+        .member-role { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; }
+        .member-desc { font-size: 0.9rem; color: var(--text-dim); }
+
+        /* Timeline */
+        .timeline {
+            max-width: 800px;
+            margin: 100px auto;
+            position: relative;
+            padding: 0 20px;
+        }
+        .timeline::before {
+            content: ''; position: absolute; left: 50px; top: 0; bottom: 0; width: 1px; background: var(--border);
+        }
+        .milestone { position: relative; margin-bottom: 60px; padding-left: 100px; }
+        .milestone::after {
+            content: ''; position: absolute; left: 45px; top: 10px; width: 12px; height: 12px;
+            background: var(--ai-white); border-radius: 50%;
+            box-shadow: 0 0 10px var(--agro-green);
+        }
+
+        /* Inversión y Botones */
+        .investment-section {
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .cta-box {
+            border: 1px solid var(--lab-blue);
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 20px;
+            background: rgba(0, 229, 255, 0.05);
+            backdrop-filter: blur(5px);
+        }
+        .btn-contact {
+            display: inline-block;
+            background: transparent;
+            color: var(--agro-green);
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 20px;
+            border: 1px solid var(--agro-green);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-contact:hover { 
+            background: var(--agro-green); 
+            color: #000; 
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.4); 
+        }
+
+        footer { 
+            padding: 50px; text-align: center; color: var(--text-dim); font-size: 0.8rem; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
         }
     </style>
 </head>
 <body>
-    <header class="hero">
-        <div class="container">
-            <h1>AgroAILab</h1>
-            <p class="subtitle">Aeroponía 4.0: Cultivo evolutivo automatizado</p>
-            <div class="status">
-                <strong>🚀 Abierto a socios e inversores</strong><br>
-                Inicio: <strong>Verano 2025</strong> | Prototipo: <strong>Mayo 2026</strong> | Fase desarrollo
-            </div>
-            <a href="#socios" class="cta cta-partners">Ser socio/inversor</a>
-            <a href="#roadmap" class="cta">Ver progreso completo</a>
-            <a href="mailto:fullstack.init@hotmail.com" class="cta">📧 Contacto directo</a>
-        </div>
-    </header>
 
-    <section id="sobre">
-        <div class="container">
-            <h2 class="section-title">De idea a prototipo en 10 meses</h2>
-            <p style="font-size: 1.2em; max-width: 800px; margin: 0 auto; text-align: center;">
-                AgroAILab transforma el cultivo tradicional en fábrica inteligente de biomasa. 
-                IA + aeroponía con precisión quirúrgica y aprendizaje continuo.
-            </p>
-        </div>
-    </section>
+    <!-- Canvas para el fondo animado de nebulización/datos -->
+    <canvas id="particleCanvas"></canvas>
 
-    <section id="innovacion">
-        <div class="container">
-            <h2 class="section-title">Tecnología innovadora</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>🔧 Precisión 3D Modular</h3>
-                    <p>Modelo 3D personalizado: circuitos de aire optimizados para anatomía específica de planta.</p>
-                </div>
-                <div class="card">
-                    <h3>📊 Monitorización Total</h3>
-                    <p>+10 variables clave (VPD, espectro lumínico, química nutricional) desde semilla hasta venta.</p>
-                </div>
-                <div class="card">
-                    <h3>🧠 IA Evolutiva</h3>
-                    <p>Visión artificial ESP32-CAM + sensores VOCs. Machine Learning que mejora cada ciclo.</p>
-                </div>
-            </div>
+    <section class="hero">
+        <h1 class="brand-title">AgroAILab</h1>
+        <div class="mission-desc">
+            Convertimos plantas en algoritmos mediante una arquitectura de aeroponía evolutiva. 
+            Optimizamos el metabolismo vegetal mediante hardware de precisión, análisis de datos e inteligencia aplicada.
         </div>
-    </section>
-
-    <section style="background: #f5f5f5;">
-        <div class="container">
-            <h2 class="section-title">Variables del sistema</h2>
-            <table>
-                <tr><th>Entradas Inteligentes</th><th>Salidas de Valor</th></tr>
-                <tr><td>Control espectral Rojo/Azul</td><td>Área foliar optimizada</td></tr>
-                <tr><td>Nebulización ultrasónica 5-10μm</td><td>Rendimiento aceites esenciales</td></tr>
-                <tr><td>Gradientes térmicos + CO₂</td><td>Relación peso seco/fresco</td></tr>
-                <tr><td>Ventilación dirigida</td><td>Eficiencia energética (ROI/watio)</td></tr>
-            </table>
-        </div>
-    </section>
-
-    <section id="roadmap">
-        <div class="container">
-            <h2 class="section-title">📈 Progreso detallado</h2>
-            <div class="timeline">
-                <div class="milestone left current">
-                    <div class="milestone-icon">1</div>
-                    <h4>Verano 2025</h4>
-                    <p>Investigación de mercado + diseño conceptual</p>
-                </div>
-                <div class="milestone right">
-                    <div class="milestone-icon">2</div>
-                    <h4>Otoño-Invierno 2025</h4>
-                    <p>Modelado 3D: circuitos de aire + anatomía vegetal</p>
-                </div>
-                <div class="milestone left current">
-                    <div class="milestone-icon">✅</div>
-                    <h4>Mayo 2026</h4>
-                    <p><strong>Prototipo funcional</strong><br>Presentación CEEI Asturias</p>
-                </div>
-                <div class="milestone right future">
-                    <div class="milestone-icon">4</div>
-                    <h4>Verano 2026</h4>
-                    <p>Operaciones piloto + primera comercialización</p>
-                </div>
-            </div>
-        </div>
+        <a href="mailto:fullstack.init@hotmail.com" class="btn-contact">Seguir el desarrollo</a>
     </section>
 
     <section id="equipo">
-        <div class="container">
-            <h2 class="section-title">Equipo</h2>
-            <div class="grid team-grid">
-                <div class="card team-card">
-                    <div class="team-avatar" style="background: linear-gradient(135deg, #FF5722, #D84315);">⚡</div>
-                    <h3>Leandro</h3>
-                    <p><strong>Fundador - Ing. Electrónica Industrial y Automática</strong><br>
-                    Uniovi | Formación en finanzas | Automatización + control de procesos<br>
-                    <a href="mailto:fullstack.init@hotmail.com?subject=AgroAILab-Leandro" class="email-link">✉️ Contactar</a></p>
-                </div>
-                <div class="card team-card">
-                    <div class="team-avatar" style="background: linear-gradient(135deg, #2196F3, #1976D2);">💻</div>
-                    <h3>Christian</h3>
-                    <p><strong>Fundador - Ingeniero Informático</strong><br>
-                    Visión artificial | Machine Learning | Sistemas embebidos ESP32<br>
-                    <a href="mailto:fullstack.init@hotmail.com?subject=AgroAILab-Christian" class="email-link">✉️ Contactar</a></p>
-                </div>
-                <div class="card team-card advisor">
-                    <div class="team-avatar" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2);">🌱</div>
-                    <h3>Sofía</h3>
-                    <p><strong>Asesora Agritech</strong><br>
-                    Experiencia en campos de grandes dimensiones | Optimización cultivos a escala<br>
-                    <a href="mailto:fullstack.init@hotmail.com?subject=AgroAILab-Sofía" class="email-link">✉️ Contactar</a></p>
-                </div>
+        <h2 style="text-align: center; font-size: 2.5rem; margin-top: 50px; color: var(--ai-white);">Core Team</h2>
+        <div class="team-grid">
+            <div class="member-card">
+                <span class="member-role" style="color: var(--agro-green);">Engineering & Finance</span>
+                <h3>Leo</h3>
+                <p class="member-desc">Estudiante de Ing. Electrónica (UniOvi). Arquitecto del hardware de control y responsable de la viabilidad económica y ROI del proyecto.</p>
+            </div>
+            <div class="member-card">
+                <span class="member-role" style="color: var(--lab-blue);">Software & AI</span>
+                <h3>Christian</h3>
+                <p class="member-desc">Desarrollador de software y sistemas. Responsable de la integración de visión artificial, bases de datos y el motor de aprendizaje evolutivo.</p>
+            </div>
+            <div class="member-card">
+                <span class="member-role" style="color: var(--ai-white);">Agricultural Advisory</span>
+                <h3>Sofia</h3>
+                <p class="member-desc">Experta asesora en agricultura. Define las necesidades biológicas y fenológicas para asegurar que la tecnología sirva a la vida vegetal.</p>
             </div>
         </div>
     </section>
 
-    <section id="socios" class="partners">
-        <div class="container">
-            <h2 class="section-title">🤝 Buscamos socios estratégicos</h2>
-            <p style="font-size: 1.3em; max-width: 700px; margin: 0 auto 50px; line-height: 1.8;">
-                <strong>Inversores, partners técnicos, clientes beta o CEEI Asturias.</strong><br>
-                Oportunidad temprana en agritech IA. Deck pitch disponible.
-            </p>
-            <a href="mailto:fullstack.init@hotmail.com?subject=AgroAILab-Socio" class="cta cta-partners">Convertirse en socio</a>
-            <a href="#roadmap" class="cta">Ver roadmap completo</a>
+    <div class="timeline">
+        <h2 style="text-align: center; margin-bottom: 80px; color: var(--ai-white);">Cronograma Evolutivo</h2>
+        <div class="milestone">
+            <div style="color: var(--agro-green); font-family: monospace;">VERANO 2025</div>
+            <div class="member-card" style="text-align: left; padding: 20px;">
+                <h3>Génesis</h3>
+                <p>Conceptualización de Aeroponía 4.0 e investigación de dinámicas de fluidos.</p>
+            </div>
+        </div>
+        <div class="milestone">
+            <div style="color: var(--lab-blue); font-family: monospace;">2025 - 2026</div>
+            <div class="member-card" style="text-align: left; padding: 20px;">
+                <h3>I+D y Modelado 3D</h3>
+                <p>Diseño de la anatomía de flujo y soportes electrónicos modulares. Simulación de entornos ciberfísicos.</p>
+            </div>
+        </div>
+        <div class="milestone">
+            <div style="color: var(--ai-white); font-family: monospace;">MAYO 2026 (ACTUAL)</div>
+            <div class="member-card" style="text-align: left; padding: 20px;">
+                <h3>Prototipo MVP</h3>
+                <p>Fase de calibración y sensorización avanzada. Presentación de hitos en el ecosistema de innovación de Asturias (CEEI).</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="investment-section">
+        <div class="cta-box">
+            <h2 style="margin-top: 0; color: var(--ai-white);">Partnership & Investment</h2>
+            <p style="color: var(--text-dim);">Estamos construyendo la próxima frontera de la biomasa industrial. Buscamos socios e inversores para escalar este ecosistema.</p>
+            <a href="mailto:fullstack.init@hotmail.com" class="btn-contact">Hablar con los fundadores</a>
         </div>
     </section>
 
-    <footer id="contacto">
-        <div class="container">
-            <h2 style="color: white; margin-bottom: 30px;">📬 Mantente informado</h2>
-            <form class="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                <input type="email" name="email" placeholder="Introduce tu email para updates" required>
-                <input type="submit" value="Suscribirme gratis">
-            </form>
-            <p style="margin-top: 20px;">
-                <a href="mailto:fullstack.init@hotmail.com" style="color: #4CAF50; font-size: 1.2em;">fullstack.init@hotmail.com</a><br>
-                © 2026 AgroAILab | Prototipo funcional Mayo 2026 | <a href="#sobre" style="color: #4CAF50;">↑ Volver arriba</a>
-            </p>
-        </div>
+    <footer>
+        <p>AgroAILab &copy; 2026 | Desarrollado en Asturias, España</p>
+        <p style="margin-top: 10px;">Contact: fullstack.init@hotmail.com</p>
     </footer>
 
+    <!-- Script del sistema de partículas -->
     <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-            });
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
         });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5; // Simula gotas de micras
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * -1.5 - 0.5; // Movimiento hacia arriba (nebulización/evaporación)
+                this.color = Math.random() > 0.5 ? 'rgba(0, 255, 102, 0.4)' : 'rgba(0, 229, 255, 0.3)';
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                // Si la partícula sale de la pantalla, reaparece abajo
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 8000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
     </script>
 </body>
 </html>
