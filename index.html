@@ -384,7 +384,7 @@
             </div>
             <div class="card">
                 <h3>⚡ Eficiencia Energética</h3>
-                <p>Trabajamos en un sistema innovador de ahorro que busca llegar a <span class="highlight">entre un 50% y 70% de ahorro en gasto energético lumínico</span>.</p>
+                <p>Optimización espectral y temporal que reduce el consumo energético por unidad de biomasa (<span class="highlight">kWh/g</span>) hasta en un <span class="highlight">50‑70%</span> frente a sistemas convencionales.</p>
             </div>
             <div class="card">
                 <h3>📈 Trazabilidad & Control</h3>
@@ -572,219 +572,245 @@
 </footer>
 
 <script>
-    // ===== SPRAY CANVAS =====
-    const canvas = document.getElementById('sprayCanvas');
-    const ctxSpray = canvas.getContext('2d');
-    let particles = [];
-    let animId;
+    (function() {
+        // ===== SPRAY CANVAS =====
+        const canvas = document.getElementById('sprayCanvas');
+        if (canvas) {
+            const ctxSpray = canvas.getContext('2d');
+            let particles = [];
+            let animId;
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    class Droplet {
-        constructor() {
-            this.reset();
-        }
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = canvas.height + Math.random() * 200;
-            this.size = Math.random() * 2.5 + 0.8;
-            this.speedY = -(Math.random() * 0.6 + 0.2);
-            this.speedX = (Math.random() - 0.5) * 0.4;
-            this.opacity = Math.random() * 0.35 + 0.08;
-            this.wobble = Math.random() * Math.PI * 2;
-            this.wobbleSpeed = (Math.random() - 0.5) * 0.015;
-            this.life = 0;
-            this.maxLife = 300 + Math.random() * 500;
-        }
-        update() {
-            this.y += this.speedY;
-            this.x += this.speedX + Math.sin(this.wobble) * 0.3;
-            this.wobble += this.wobbleSpeed;
-            this.life++;
-            if (this.y < -20 || this.life > this.maxLife || this.x < -20 || this.x > canvas.width + 20) {
-                this.reset();
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Droplet {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height + Math.random() * 200;
+                    this.size = Math.random() * 2.5 + 0.8;
+                    this.speedY = -(Math.random() * 0.6 + 0.2);
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.opacity = Math.random() * 0.35 + 0.08;
+                    this.wobble = Math.random() * Math.PI * 2;
+                    this.wobbleSpeed = (Math.random() - 0.5) * 0.015;
+                    this.life = 0;
+                    this.maxLife = 300 + Math.random() * 500;
+                }
+                update() {
+                    this.y += this.speedY;
+                    this.x += this.speedX + Math.sin(this.wobble) * 0.3;
+                    this.wobble += this.wobbleSpeed;
+                    this.life++;
+                    if (this.y < -20 || this.life > this.maxLife || this.x < -20 || this.x > canvas.width + 20) {
+                        this.reset();
+                    }
+                }
+                draw(ctx) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(200,230,255,${this.opacity})`;
+                    ctx.fill();
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = `rgba(180,220,255,${this.opacity * 0.6})`;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+
+            const PARTICLE_COUNT = 70;
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push(new Droplet());
+            }
+
+            function animateSpray() {
+                ctxSpray.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw(ctxSpray);
+                });
+                animId = requestAnimationFrame(animateSpray);
+            }
+            animateSpray();
         }
-        draw(ctx) {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(200,230,255,${this.opacity})`;
-            ctx.fill();
-            ctx.shadowBlur = 6;
-            ctx.shadowColor = `rgba(180,220,255,${this.opacity * 0.6})`;
-            ctx.fill();
-            ctx.shadowBlur = 0;
+
+        // ===== THEME TOGGLE =====
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        function getCurrentTheme() { return html.getAttribute('data-theme'); }
+        themeToggle.addEventListener('click', () => {
+            const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            // Actualizar gráfico ECharts con nuevo tema
+            if (window.radarChart) {
+                window.radarChart.clear();
+                window.radarChart.setOption(getEChartsOption(newTheme));
+            }
+        });
+
+        // ===== MOBILE MENU =====
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+
+        // ===== SMOOTH SCROLL =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ===== ECHARTS RADAR =====
+        function getEChartsOption(theme) {
+            const isLight = theme === 'light';
+            return {
+                radar: {
+                    indicator: [
+                        { name: 'Crecimiento', max: 100 },
+                        { name: 'Efic. hídrica', max: 100 },
+                        { name: 'Terpenos', max: 100 },
+                        { name: 'Salud foliar', max: 100 }
+                    ],
+                    center: ['50%', '50%'],
+                    radius: '75%',
+                    axisName: {
+                        color: isLight ? '#1a2e2a' : '#e6eef5',
+                        fontSize: 11,
+                        fontFamily: 'Inter, sans-serif'
+                    },
+                    splitArea: {
+                        areaStyle: { color: [isLight ? 'rgba(31,94,63,0.04)' : 'rgba(45,212,191,0.04)'] }
+                    },
+                    splitLine: { lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' } },
+                    axisLine: { lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' } }
+                },
+                series: [{
+                    type: 'radar',
+                    data: [{ value: [65, 70, 55, 80], name: 'Rendimiento (%)' }],
+                    symbol: 'circle',
+                    symbolSize: 8,
+                    lineStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', width: 2 },
+                    areaStyle: { color: isLight ? 'rgba(31,94,63,0.2)' : 'rgba(45,212,191,0.25)' },
+                    itemStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', borderColor: '#fff', borderWidth: 1.5 }
+                }],
+                tooltip: { trigger: 'item' }
+            };
         }
-    }
 
-    const PARTICLE_COUNT = 70;
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push(new Droplet());
-    }
+        // Inicializar ECharts SOLO cuando el DOM y la librería estén listos
+        function initRadar() {
+            const radarDom = document.getElementById('radarChart');
+            if (!radarDom || !window.echarts) {
+                // Reintentar si aún no está disponible
+                setTimeout(initRadar, 50);
+                return;
+            }
+            window.radarChart = echarts.init(radarDom);
+            window.radarChart.setOption(getEChartsOption(getCurrentTheme()));
 
-    function animateSpray() {
-        ctxSpray.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw(ctxSpray);
-        });
-        animId = requestAnimationFrame(animateSpray);
-    }
-    animateSpray();
+            // Asegurar tamaño tras un pequeño retraso
+            setTimeout(() => {
+                if (window.radarChart) window.radarChart.resize();
+            }, 150);
 
-    // ===== THEME TOGGLE =====
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
+            window.addEventListener('resize', () => {
+                if (window.radarChart) window.radarChart.resize();
+            });
+        }
 
-    function getCurrentTheme() { return html.getAttribute('data-theme'); }
+        // Arrancar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initRadar);
+        } else {
+            initRadar();
+        }
 
-    themeToggle.addEventListener('click', () => {
-        const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        updateEChartsTheme();
-    });
+        // ===== DEMO UPDATE =====
+        window.updateDemo = function() {
+            if (!window.radarChart) return;
+            const red = +document.getElementById('redSlider').value;
+            const blue = +document.getElementById('blueSlider').value;
+            const age = +document.getElementById('ageSlider').value;
+            const vpd = +document.getElementById('vpdSlider').value;
+            const mist = +document.getElementById('mistSlider').value;
 
-    // ===== MOBILE MENU =====
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => mobileMenu.classList.remove('open'));
-    });
+            document.getElementById('redVal').innerText = red;
+            document.getElementById('blueVal').innerText = blue;
+            document.getElementById('ageVal').innerText = age;
+            document.getElementById('vpdVal').innerText = vpd.toFixed(2);
+            document.getElementById('mistVal').innerText = mist;
 
-    // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
+            let growth = 3 + (red/18)*5 + (blue/16)*3;
+            let ageFactor = Math.min(1.2, age/35);
+            let vpdStress = 1 - Math.abs(vpd - 0.9) * 0.7;
+            let mistEff = 1 - Math.abs(mist-18)*0.025;
+            growth = growth * ageFactor * vpdStress * mistEff;
+            growth = Math.min(22, Math.max(1.5, growth));
 
-    // ===== ECHARTS RADAR =====
-    const radarDom = document.getElementById('radarChart');
-    const isLightInit = getCurrentTheme() === 'light';
+            let waterEff = 110 - (mistEff*20) - (red/18)*10 + (vpdStress*10);
+            waterEff = Math.min(130, Math.max(30, waterEff));
 
-    function getEChartsOption(theme) {
-        const isLight = theme === 'light';
-        return {
-            radar: {
-                indicator: [
-                    { name: 'Crecimiento', max: 100 },
-                    { name: 'Efic. hídrica', max: 100 },
-                    { name: 'Terpenos', max: 100 },
-                    { name: 'Salud foliar', max: 100 }
-                ],
-                center: ['50%', '50%'],
-                radius: '75%',
-                axisName: {
-                    color: isLight ? '#1a2e2a' : '#e6eef5',
-                    fontSize: 11,
-                    fontFamily: 'Inter, sans-serif'
-                },
-                splitArea: {
-                    areaStyle: { color: [isLight ? 'rgba(31,94,63,0.04)' : 'rgba(45,212,191,0.04)'] }
-                },
-                splitLine: { lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' } },
-                axisLine: { lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' } }
-            },
-            series: [{
-                type: 'radar',
-                data: [{ value: [65, 70, 55, 80], name: 'Rendimiento (%)' }],
-                symbol: 'circle',
-                symbolSize: 8,
-                lineStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', width: 2 },
-                areaStyle: { color: isLight ? 'rgba(31,94,63,0.2)' : 'rgba(45,212,191,0.25)' },
-                itemStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', borderColor: '#fff', borderWidth: 1.5 }
-            }],
-            tooltip: { trigger: 'item' }
+            let terpenes = 0.3 + (red/18)*0.6 * vpdStress * mistEff;
+            terpenes = Math.min(0.9, Math.max(0.2, terpenes));
+
+            let health = (vpdStress*0.7 + mistEff*0.3) * 100;
+            health = Math.min(98, Math.max(18, Math.floor(health)));
+
+            document.getElementById('growthMetric').innerText = growth.toFixed(1);
+            document.getElementById('waterMetric').innerText = Math.round(waterEff);
+            document.getElementById('terpMetric').innerText = terpenes.toFixed(2);
+            document.getElementById('healthMetric').innerText = health;
+
+            window.radarChart.setOption({
+                series: [{
+                    data: [{ value: [
+                        Math.min(100, (growth/22)*100),
+                        Math.min(100, ((130-waterEff)/100)*100),
+                        (terpenes/0.9)*100,
+                        health
+                    ], name: 'Rendimiento (%)' }]
+                }]
+            });
         };
-    }
 
-    let radarChart = echarts.init(radarDom);
-    radarChart.setOption(getEChartsOption(getCurrentTheme()));
+        // Conectar sliders después de una pequeña pausa para asegurar que existen
+        function bindSliders() {
+            const ids = ['redSlider','blueSlider','ageSlider','vpdSlider','mistSlider'];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', window.updateDemo);
+            });
+            if (window.radarChart) window.updateDemo();
+        }
+        setTimeout(bindSliders, 100);
 
-    function updateEChartsTheme() {
-        radarChart.dispose();
-        radarChart = echarts.init(radarDom);
-        radarChart.setOption(getEChartsOption(getCurrentTheme()));
-        updateDemo();
-    }
+        // ===== FORMSPREE =====
+        window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', { formElement: '#my-form', formId: 'mbdwggjy' });
 
-    window.addEventListener('resize', () => radarChart.resize());
-
-    // ===== DEMO UPDATE =====
-    function updateDemo() {
-        const red = +document.getElementById('redSlider').value;
-        const blue = +document.getElementById('blueSlider').value;
-        const age = +document.getElementById('ageSlider').value;
-        const vpd = +document.getElementById('vpdSlider').value;
-        const mist = +document.getElementById('mistSlider').value;
-
-        document.getElementById('redVal').innerText = red;
-        document.getElementById('blueVal').innerText = blue;
-        document.getElementById('ageVal').innerText = age;
-        document.getElementById('vpdVal').innerText = vpd.toFixed(2);
-        document.getElementById('mistVal').innerText = mist;
-
-        let growth = 3 + (red/18)*5 + (blue/16)*3;
-        let ageFactor = Math.min(1.2, age/35);
-        let vpdStress = 1 - Math.abs(vpd - 0.9) * 0.7;
-        let mistEff = 1 - Math.abs(mist-18)*0.025;
-        growth = growth * ageFactor * vpdStress * mistEff;
-        growth = Math.min(22, Math.max(1.5, growth));
-
-        let waterEff = 110 - (mistEff*20) - (red/18)*10 + (vpdStress*10);
-        waterEff = Math.min(130, Math.max(30, waterEff));
-
-        let terpenes = 0.3 + (red/18)*0.6 * vpdStress * mistEff;
-        terpenes = Math.min(0.9, Math.max(0.2, terpenes));
-
-        let health = (vpdStress*0.7 + mistEff*0.3) * 100;
-        health = Math.min(98, Math.max(18, Math.floor(health)));
-
-        document.getElementById('growthMetric').innerText = growth.toFixed(1);
-        document.getElementById('waterMetric').innerText = Math.round(waterEff);
-        document.getElementById('terpMetric').innerText = terpenes.toFixed(2);
-        document.getElementById('healthMetric').innerText = health;
-
-        radarChart.setOption({
-            series: [{
-                data: [{ value: [
-                    Math.min(100, (growth/22)*100),
-                    Math.min(100, ((130-waterEff)/100)*100),
-                    (terpenes/0.9)*100,
-                    health
-                ], name: 'Rendimiento (%)' }]
-            }]
+        const form = document.getElementById('my-form');
+        const statusDiv = document.getElementById('form-status');
+        form.addEventListener('formspree:success', () => {
+            statusDiv.textContent = '✅ Mensaje enviado. ¡Gracias!';
+            statusDiv.className = 'success';
+            form.reset();
         });
-    }
-
-    ['redSlider','blueSlider','ageSlider','vpdSlider','mistSlider'].forEach(id =>
-        document.getElementById(id).addEventListener('input', updateDemo)
-    );
-    updateDemo();
-
-    // ===== FORMSPREE =====
-    window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
-    formspree('initForm', { formElement: '#my-form', formId: 'mbdwggjy' });
-
-    const form = document.getElementById('my-form');
-    const statusDiv = document.getElementById('form-status');
-    form.addEventListener('formspree:success', () => {
-        statusDiv.textContent = '✅ Mensaje enviado. ¡Gracias!';
-        statusDiv.className = 'success';
-        form.reset();
-    });
-    form.addEventListener('formspree:error', () => {
-        statusDiv.textContent = '❌ Error al enviar. Intenta de nuevo.';
-        statusDiv.className = 'error';
-    });
+        form.addEventListener('formspree:error', () => {
+            statusDiv.textContent = '❌ Error al enviar. Intenta de nuevo.';
+            statusDiv.className = 'error';
+        });
+    })();
 </script>
 </body>
 </html>
