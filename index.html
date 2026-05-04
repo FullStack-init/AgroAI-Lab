@@ -3,22 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="AgroAILab - Investigación en aeroponía evolutiva 4.0. Hardware de precisión, modelos de IA y diseño paramétrico para cultivo de alta eficiencia.">
-    <title>AgroAILab | Deep Tech en fase de I+D</title>
+    <title>AgroAILab | Aeroponía evolutiva · I+D en precisión agrícola</title>
+    <!-- Tipografías profesionales -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Chart.js para gráfico radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        :root {
-            --agro-green: #00ff66;
-            --ai-white: #ffffff;
-            --lab-blue: #00e5ff;
-            --bg: #030705;
-            --surface: rgba(22, 26, 24, 0.7);
-            --text-main: #e4e4e7;
-            --text-dim: #a0aec0;
-            --border: rgba(0, 255, 102, 0.25);
-            --card-bg: rgba(10, 14, 12, 0.75);
-            --glow-green: 0 0 12px rgba(0, 255, 102, 0.3);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -26,600 +16,602 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            background: #f5f9f7;
+            color: #1a2e2a;
             line-height: 1.5;
             scroll-behavior: smooth;
-            overflow-x: hidden;
         }
 
-        #particleCanvas {
-            position: fixed;
+        /* Header */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.85;
+            z-index: 100;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
-
         .container {
             max-width: 1300px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 32px;
         }
-
-        /* Hero */
-        .hero {
-            min-height: 85vh;
+        .header-inner {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
-            padding: 40px 20px;
+            padding: 18px 0;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-
-        .brand-title {
-            font-size: clamp(3.5rem, 12vw, 6rem);
-            font-weight: 900;
-            letter-spacing: -3px;
-            margin: 0;
-            background: linear-gradient(270deg, var(--agro-green), var(--ai-white), var(--lab-blue), var(--agro-green));
-            background-size: 200% auto;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: cyberGlow 5s linear infinite;
-            text-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-
-        @keyframes cyberGlow {
-            to { background-position: 200% center; }
+        .logo-img {
+            height: 48px;
+            width: auto;
+            background: white; /* para fondo blanco */
+            border-radius: 12px;
+            padding: 4px;
         }
-
-        .mission-desc {
-            max-width: 750px;
-            margin: 30px auto;
-            font-size: 1.05rem;
-            color: var(--text-dim);
-            line-height: 1.7;
-            border-left: 3px solid var(--agro-green);
-            padding: 20px 28px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(6px);
-            border-radius: 0 20px 20px 0;
-            text-align: left;
-        }
-
-        .badge-dev {
-            background: rgba(0, 229, 255, 0.15);
-            border-radius: 40px;
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            color: var(--lab-blue);
-            display: inline-block;
-            margin-top: 16px;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-contact {
-            display: inline-block;
-            background: transparent;
-            color: var(--agro-green);
-            padding: 12px 32px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            margin-top: 24px;
-            border: 1px solid var(--agro-green);
-            transition: all 0.25s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.85rem;
-        }
-
-        .btn-contact:hover {
-            background: var(--agro-green);
-            color: #000;
-            box-shadow: 0 0 18px rgba(0, 255, 102, 0.6);
-            border-color: transparent;
-        }
-
-        /* Secciones */
-        section {
-            margin: 80px 0;
-        }
-
-        .section-title {
-            font-size: 2rem;
+        .logo-text {
+            font-size: 1.6rem;
             font-weight: 700;
-            text-align: center;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, var(--lab-blue));
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            font-family: 'Merriweather', serif;
+            color: #1f5e3f;
             letter-spacing: -0.3px;
         }
-
-        .section-sub {
-            text-align: center;
-            color: var(--text-dim);
-            margin-bottom: 48px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+        .logo-text span {
+            font-weight: 400;
+            color: #5b8c6f;
+            font-size: 0.9rem;
+            display: block;
+            line-height: 1.2;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #2c5142;
+            font-weight: 500;
+            transition: 0.2s;
             font-size: 0.95rem;
         }
+        .nav-links a:hover {
+            color: #1f8a4c;
+        }
 
-        /* Grids y cards */
-        .grid-2col {
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin: 40px 0 32px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 28px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4a6b5e;
+            cursor: pointer;
+            border-radius: 40px;
+            transition: 0.2s;
+        }
+        .tab-btn.active {
+            background: #1f5e3f;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            animation: fade 0.25s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Cards y elementos */
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eef2ef;
+        }
+        .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 28px;
         }
-
-        .tech-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 1.8rem;
-            transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+        h2 {
+            font-family: 'Merriweather', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1f3d32;
+            margin-bottom: 0.75rem;
         }
-
-        .tech-card:hover {
-            border-color: var(--agro-green);
-            transform: translateY(-5px);
-            box-shadow: var(--glow-green);
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #2c5a46;
+            margin-bottom: 14px;
         }
-
-        .tech-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--ai-white);
-        }
-
-        .param-list {
-            list-style: none;
-            margin-top: 16px;
-        }
-
-        .param-list li {
-            margin-bottom: 16px;
-            border-left: 2px solid var(--agro-green);
-            padding-left: 14px;
-        }
-
-        .param-name {
-            font-weight: 700;
-            color: var(--lab-blue);
-            display: block;
-            font-size: 0.9rem;
-        }
-
-        .param-desc {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            margin-top: 4px;
-        }
-
-        .badge-light {
-            background: rgba(0, 255, 102, 0.12);
-            border-radius: 30px;
-            padding: 4px 12px;
+        .badge {
+            background: #eef5f0;
+            color: #2a6e4b;
+            padding: 4px 14px;
+            border-radius: 40px;
             font-size: 0.7rem;
-            color: var(--agro-green);
+            font-weight: 600;
             display: inline-block;
-            margin-top: 8px;
+            margin-bottom: 18px;
+        }
+        hr {
+            margin: 28px 0;
+            border: none;
+            border-top: 1px solid #e0ece6;
         }
 
-        /* Team */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 30px;
+        /* Dashboard innovador */
+        .dashboard-wrapper {
+            background: white;
+            border-radius: 32px;
+            border: 1px solid #e2edeb;
+            overflow: hidden;
         }
-
-        .member-card {
-            background: var(--surface);
-            backdrop-filter: blur(10px);
-            padding: 28px 20px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            text-align: center;
-            transition: all 0.25s;
-        }
-
-        .member-card:hover {
-            border-color: var(--agro-green);
-            transform: translateY(-6px);
-            box-shadow: var(--glow-green);
-        }
-
-        .member-role {
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--lab-blue);
-        }
-
-        .member-card h3 {
-            margin: 12px 0 8px;
-            font-size: 1.4rem;
-        }
-
-        .member-desc {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            line-height: 1.4;
-        }
-
-        /* Roadmap mejorado con efectos */
-        .roadmap {
-            margin: 60px 0;
-        }
-
-        .milestone {
+        .demo-grid {
             display: flex;
-            gap: 24px;
-            margin-bottom: 32px;
-            background: rgba(5, 10, 8, 0.6);
-            backdrop-filter: blur(5px);
-            border-radius: 28px;
-            padding: 20px 28px;
-            border-left: 5px solid var(--agro-green);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateX(-15px);
-            animation: slideIn 0.5s ease forwards;
+            flex-wrap: wrap;
         }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .controls-area {
+            flex: 1.2;
+            padding: 32px;
+            background: #fefefe;
+            border-right: 1px solid #eef2ef;
         }
-
-        .milestone:nth-child(1) { animation-delay: 0.1s; }
-        .milestone:nth-child(2) { animation-delay: 0.2s; }
-        .milestone:nth-child(3) { animation-delay: 0.3s; }
-        .milestone:nth-child(4) { animation-delay: 0.4s; }
-
-        .milestone:hover {
-            transform: translateX(6px);
-            border-left-width: 6px;
-            background: rgba(0, 20, 15, 0.7);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        .charts-area {
+            flex: 1.8;
+            padding: 32px;
+            background: #ffffff;
         }
-
-        .milestone-date {
-            min-width: 130px;
-            font-family: 'Fira Mono', monospace;
-            font-weight: 600;
-            color: var(--lab-blue);
-            font-size: 0.9rem;
+        /* Sliders modernos */
+        .slider-group {
+            margin-bottom: 28px;
         }
-
-        .milestone-content h4 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: var(--agro-green);
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            color: #2b4e3e;
         }
-
-        .milestone-content p {
-            font-size: 0.9rem;
-            color: var(--text-dim);
+        .slider-group input {
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #c8dfd4, #2a9d6e);
+            border-radius: 10px;
+            -webkit-appearance: none;
+            outline: none;
         }
-
-        /* Sección de especificaciones MVP (futuro) */
-        .spec-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
+        .slider-group input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #1f8a4c;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid white;
+        }
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+        .metric-card {
+            background: #f4f9f6;
+            border-radius: 24px;
+            padding: 16px;
+            flex: 1;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1f8a4c;
+        }
+        canvas#radarChart {
+            max-height: 300px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .note {
+            font-size: 0.7rem;
+            color: #7e9b8c;
+            text-align: center;
             margin-top: 24px;
         }
-
-        .spec-item {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(0, 229, 255, 0.25);
-            transition: 0.2s;
-        }
-
-        .spec-item:hover {
-            border-color: var(--agro-green);
-        }
-
-        .spec-item h4 {
-            color: var(--agro-green);
-            margin-bottom: 12px;
-            font-size: 1rem;
-        }
-
-        .spec-item p {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-        }
-
-        .future-note {
-            text-align: center;
-            font-style: italic;
-            margin-top: 28px;
-            background: rgba(0, 255, 102, 0.05);
+        .btn-outline {
+            border: 1px solid #2a7f55;
+            padding: 8px 24px;
             border-radius: 40px;
-            padding: 12px;
-            font-size: 0.8rem;
-            color: var(--lab-blue);
-        }
-
-        /* Investment */
-        .investment-section {
-            text-align: center;
-            margin: 80px 0 60px;
-        }
-
-        .cta-box {
-            border: 1px solid var(--lab-blue);
-            padding: 48px 32px;
-            max-width: 700px;
-            margin: 0 auto;
-            border-radius: 40px;
-            background: rgba(0, 229, 255, 0.03);
-            backdrop-filter: blur(10px);
+            display: inline-block;
+            font-weight: 500;
             transition: 0.2s;
+            background: white;
+            color: #2a7f55;
+            text-decoration: none;
         }
-
-        .cta-box:hover {
-            border-color: var(--agro-green);
-            box-shadow: 0 0 20px rgba(0, 255, 102, 0.1);
+        .btn-outline:hover {
+            background: #2a7f55;
+            color: white;
         }
-
         footer {
-            padding: 40px 20px;
             text-align: center;
-            color: var(--text-dim);
-            font-size: 0.75rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            padding: 40px 20px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 48px;
+            color: #799b8a;
+            font-size: 0.8rem;
+            background: #fcfefd;
         }
-
-        @media (max-width: 700px) {
-            .milestone {
-                flex-direction: column;
-                gap: 8px;
-                padding: 18px;
-            }
-            .milestone-date {
-                text-align: left;
-            }
-            .container {
-                padding: 0 16px;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
+        @media (max-width: 800px) {
+            .container { padding: 0 20px; }
+            .header-inner { flex-direction: column; align-items: flex-start; }
+            .demo-grid { flex-direction: column; }
+            .controls-area { border-right: none; border-bottom: 1px solid #eef2ef; }
+        }
+        /* Estilo más serio para proyecto */
+        .tech-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .tech-list li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .tech-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #2a9d6e;
         }
     </style>
 </head>
 <body>
-    <canvas id="particleCanvas"></canvas>
 
-    <div class="container">
-        <!-- Hero -->
-        <section class="hero">
-            <h1 class="brand-title">AgroAILab</h1>
-            <div class="mission-desc">
-                <strong>🧬 Investigación en aeroponía evolutiva 4.0</strong><br>
-                Estamos desarrollando una plataforma que sustituye el sustrato por atomización de precisión + inteligencia artificial. El objetivo: medir y optimizar el metabolismo vegetal mediante sensores, visión artificial y actuadores localizados. Actualmente en fase conceptual y diseño de prototipo.
-                <div class="badge-dev">🔬 Proyecto en I+D · MVP planificado para verano 2026</div>
-            </div>
-            <a href="mailto:leandro@agroailab.com" class="btn-contact">Contactar con el equipo</a>
-        </section>
+<div class="site-header">
+    <div class="container header-inner">
+        <div class="logo-area">
+            <img src="logo.png" alt="AgroAILab" class="logo-img" onerror="this.style.display='none'">
+            <div class="logo-text">AgroAILab <span>aeroponía evolutiva</span></div>
+        </div>
+        <div class="nav-links">
+            <a href="#" data-tab-link="inicio">Inicio</a>
+            <a href="#" data-tab-link="proyecto">Proyecto I+D</a>
+            <a href="#" data-tab-link="roadmap">Roadmap</a>
+            <a href="#" data-tab-link="demo">Demo técnica</a>
+            <a href="#" data-tab-link="colabora">Equipo & Alianzas</a>
+        </div>
+    </div>
+</div>
 
-        <!-- Parámetros clave: entrada / salida (investigación) -->
-        <section>
-            <h2 class="section-title">⚙️ Líneas de investigación</h2>
-            <p class="section-sub">Identificamos las variables críticas para controlar el entorno y las métricas biológicas que permitirán entrenar nuestros modelos.</p>
-            <div class="grid-2col">
-                <div class="tech-card">
-                    <h3>📡 Parámetros de control (inputs)</h3>
-                    <ul class="param-list">
-                        <li><span class="param-name">🔆 Espectro lumínico dinámico</span><div class="param-desc">LEDs rojo (660nm) y azul (450nm) con modulación por etapas fenológicas.</div></li>
-                        <li><span class="param-name">💧 Nebulización ultrasónica</span><div class="param-desc">Gotas de 5-10 micras, ciclos ajustables para hidratación radicular.</div></li>
-                        <li><span class="param-name">🌡️ VPD (control de transpiración)</span><div class="param-desc">Balance entre temperatura foliar, humedad y flujo de aire.</div></li>
-                        <li><span class="param-name">🧪 Nutrición de precisión</span><div class="param-desc">CE, pH y temperatura de la solución atomizada.</div></li>
-                        <li><span class="param-name">🌀 Ventilación direccional</span><div class="param-desc">Extractores y deflectores para renovación de CO₂ y homogenización.</div></li>
-                    </ul>
-                    <div class="badge-light">+ Fotoperiodo, calidad de aire, temperaturas duales (raíz/dosel)</div>
-                </div>
-                <div class="tech-card">
-                    <h3>📊 Métricas de respuesta (outputs)</h3>
-                    <ul class="param-list">
-                        <li><span class="param-name">🌱 Biomasa y área foliar</span><div class="param-desc">Evolución diaria mediante visión artificial (segmentación de imagen).</div></li>
-                        <li><span class="param-name">🎨 Índices de clorofila</span><div class="param-desc">Detección temprana de estrés nutricional por colorimetría.</div></li>
-                        <li><span class="param-name">👃 Perfil de compuestos volátiles</span><div class="param-desc">Sensores MOS para seguimiento de aromas (terpenos).</div></li>
-                        <li><span class="param-name">⚡ Eficiencia fotónica e hídrica</span><div class="param-desc">gramos por kWh y litros de agua por gramo de biomasa.</div></li>
-                    </ul>
-                    <div class="badge-light">+ Turgencia, consistencia fenotípica, rendimiento en aceites esenciales</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Bucle IA + diseño 3D -->
-        <section>
-            <h2 class="section-title">🧠 Enfoque tecnológico</h2>
-            <div class="grid-2col">
-                <div class="tech-card">
-                    <h3>🔄 Ciclo de aprendizaje automático</h3>
-                    <p>Los algoritmos buscarán correlaciones entre las variables de entrada y las métricas de salida para proponer recetas de cultivo optimizadas. Se aplicarán modelos de regresión multivariable y redes ligeras de visión. Todo el sistema está diseñado para funcionar en lazo cerrado, con mecanismos de seguridad ante desviaciones fisiológicas.</p>
-                </div>
-                <div class="tech-card">
-                    <h3>🖨️ Diseño paramétrico 3D</h3>
-                    <p>La cámara de crecimiento y los módulos de siembra se fabricarán mediante impresión 3D en materiales PETG/ASA. Esto permite microcanales radiculares, conductos de aire optimizados y una disposición modular que facilita la instrumentación. El diseño se adaptará a distintas especies vegetales.</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="section-title">🌱 Equipo fundador</h2>
-            <div class="team-grid">
-                <div class="member-card">
-                    <div class="member-role">⚡ Hardware & Finanzas</div>
-                    <h3>Leo</h3>
-                    <p class="member-desc">Estudiante de Ingeniería Electrónica (UniOvi). Responsable del diseño de sensores, actuadores y viabilidad técnica-económica del prototipo.</p>
-                </div>
-                <div class="member-card">
-                    <div class="member-role">💻 Software & IA</div>
-                    <h3>Christian</h3>
-                    <p class="member-desc">Desarrollador de software. Encargado de la integración de visión artificial, base de datos temporal y motor de aprendizaje.</p>
-                </div>
-                <div class="member-card">
-                    <div class="member-role">🌿 Asesoría agronómica</div>
-                    <h3>Sofía</h3>
-                    <p class="member-desc">Colaboradora con experiencia en fisiología vegetal. Apoya en la definición de necesidades biológicas y parametros iniciales.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Roadmap mejorado con animaciones -->
-        <section>
-            <h2 class="section-title">📅 Hoja de ruta</h2>
-            <div class="roadmap">
-                <div class="milestone">
-                    <div class="milestone-date">Verano 2025</div>
-                    <div class="milestone-content">
-                        <h4>Estudio conceptual</h4>
-                        <p>Revisión bibliográfica, simulación de dinámica de fluidos y primeras pruebas con componentes electrónicos de bajo coste.</p>
-                    </div>
-                </div>
-                <div class="milestone">
-                    <div class="milestone-date">2025 - 2026</div>
-                    <div class="milestone-content">
-                        <h4>Diseño de hardware y CAD</h4>
-                        <p>Modelado 3D paramétrico de la cámara, definición de la arquitectura de sensores y selección de actuadores.</p>
-                    </div>
-                </div>
-                <div class="milestone">
-                    <div class="milestone-date">Verano 2026 (MVP)</div>
-                    <div class="milestone-content">
-                        <h4>Construcción del primer prototipo funcional</h4>
-                        <p>Desarrollo de un sistema para 2-3 plantas, con adquisición de datos en tiempo real. Inicio de pruebas con cultivo modelo (albahaca) para calibrar sensores y validar lazos de control.</p>
-                    </div>
-                </div>
-                <div class="milestone">
-                    <div class="milestone-date">Q4 2026 → 2027</div>
-                    <div class="milestone-content">
-                        <h4>Escalado y optimización</h4>
-                        <p>Ampliación a bancada de 12 plantas, integración de análisis químico externo (cromatografía) y refinamiento del modelo predictivo.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Especificaciones técnicas del MVP (futuro, después del roadmap) -->
-        <section>
-            <h2 class="section-title">🔧 Especificaciones del MVP (Verano 2026)</h2>
-            <p class="section-sub">El prototipo que desarrollaremos para empezar a medir todas las variables mencionadas y establecer la primera base de datos de entrenamiento.</p>
-            <div class="spec-grid">
-                <div class="spec-item">
-                    <h4>📡 Sensores previstos</h4>
-                    <p>SHT40 (Tª/HR ambiente), DS18B20 (Tª raíz), sonda EC/pH (Atlas Scientific), MLX90614 (Tª foliar), SCD40 (CO₂), SGP30 (VOCs), ESP32-CAM.</p>
-                </div>
-                <div class="spec-item">
-                    <h4>⚙️ Actuadores</h4>
-                    <p>Piezoeléctrico de 1.7MHz, tiras LED PWM (660nm/450nm), ventilador 12V con deflector, bomba peristáltica para control de pH/EC.</p>
-                </div>
-                <div class="spec-item">
-                    <h4>🧠 Unidad de control</h4>
-                    <p>ESP32-S3 para adquisición en tiempo real + Raspberry Pi 4 para procesamiento de visión y coordinación de modelos. Comunicación MQTT, base de datos y desarrollo de dashboard.</p>
-                </div>
-                <div class="spec-item">
-                    <h4>📜 Firmware</h4>
-                    <p>Control PID para EC/pH, lazo cerrado de VPD, gestión de espectro por etapa fenológica y protecciones de seguridad (temperatura, nivel bajo de agua).</p>
-                </div>
-            </div>
-            <div class="future-note">
-                🌱 Nota: La validación inicial se realizará con albahaca (<em>Ocimum basilicum</em>) para obtener métricas de referencia. Este cultivo modelo nos permitirá ajustar sensores y algoritmos antes de avanzar a otras especies de interés comercial.
-            </div>
-        </section>
-
-        <!-- Inversión / partnerships -->
-        <section class="investment-section">
-            <div class="cta-box">
-                <h2 style="margin: 0 0 12px; color: var(--ai-white);">🚀 Colabora con la investigación</h2>
-                <p style="color: var(--text-dim);">Buscamos partners tecnológicos, instituciones de I+D e inversores early-stage interesados en agricultura de precisión y biotecnología. Actualmente en fase pre-seed, construyendo el primer prototipo funcional.</p>
-                <a href="mailto:leandro@agroailab.com" class="btn-contact" style="margin-top: 28px;">Contactar a los fundadores</a>
-            </div>
-        </section>
+<div class="container">
+    <!-- Pestañas -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="inicio">📌 Inicio</button>
+        <button class="tab-btn" data-tab="proyecto">🔬 Proyecto I+D</button>
+        <button class="tab-btn" data-tab="roadmap">📅 Hoja de ruta</button>
+        <button class="tab-btn" data-tab="demo">📊 Demo técnica</button>
+        <button class="tab-btn" data-tab="colabora">🤝 Equipo + Alianzas</button>
     </div>
 
-    <footer>
-        <p>AgroAILab · Proyecto de investigación con sede en Asturias, España</p>
-        <p style="margin-top: 6px;">contacto: leandro@agroailab.com</p>
-        <p style="margin-top: 12px; font-size: 0.7rem;">deep tech en aeroponía evolutiva · fase conceptual y desarrollo de MVP</p>
-    </footer>
+    <!-- Inicio -->
+    <div id="inicio" class="tab-content active">
+        <div class="card">
+            <span class="badge">Fase de I+D · pre‑seed</span>
+            <h2>Agricultura de precisión basada en IA y aeroponía</h2>
+            <p style="font-size: 1.05rem; margin: 20px 0; max-width: 800px;">Desarrollamos una plataforma que integra sensores de bajo coste, diseño 3D paramétrico y algoritmos de machine learning para optimizar el metabolismo vegetal, reduciendo drásticamente el consumo de agua y energía.</p>
+            <div class="grid-2" style="margin-top: 28px;">
+                <div><strong>🎯 Objetivo 2026</strong><br>Construcción del primer prototipo funcional (MVP) para 2-3 plantas, validación con albahaca.</div>
+                <div><strong>💧 Meta técnica</strong><br>Alcanzar una reducción del 90% en consumo hídrico frente a hidroponía convencional.</div>
+                <div><strong>🌿 Cultivo modelo</strong><br>Albahaca (<em>Ocimum basilicum</em>) como banco de pruebas para calibrar sensores y algoritmos.</div>
+            </div>
+            <div style="margin-top: 28px;">
+                <a href="#" class="btn-outline" data-tab-link="demo">🔍 Explorar demostración técnica →</a>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Mercados potenciales</h3>
+            <div class="grid-2">
+                <div>🌱 Plantas aromáticas y medicinales (menta, albahaca, cannabis medicinal)</div>
+                <div>🧪 Biomasa de alta pureza para nutracéuticos</div>
+                <div>🌎 Agricultura vertical en zonas áridas</div>
+                <div>📊 I+D farmacéutico (metabolitos secundarios estandarizados)</div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Script de partículas (mejorado visualmente) -->
-    <script>
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+    <!-- Proyecto I+D (más serio y realista) -->
+    <div id="proyecto" class="tab-content">
+        <div class="card">
+            <h2>Investigación aplicada en aeroponía de precisión</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>📡 Variables de control (inputs)</h3>
+                    <ul class="tech-list">
+                        <li>Espectro lumínico dinámico (Rojo 660nm / Azul 450nm) modulado por PWM</li>
+                        <li>Nebulización ultrasónica con gotas de 5-10 µm (ciclos programables)</li>
+                        <li>Control de VPD (déficit de presión de vapor) mediante temperatura y HR</li>
+                        <li>Gestión de CE, pH y temperatura de la solución nutritiva</li>
+                        <li>Ventilación direccional y control de CO₂ ambiental</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>📊 Métricas de respuesta (outputs)</h3>
+                    <ul class="tech-list">
+                        <li>Biomasa y área foliar (visión artificial, cm²/día)</li>
+                        <li>Índice de clorofila y detección temprana de estrés</li>
+                        <li>Perfil de compuestos volátiles (terpenos) mediante sensores MOS</li>
+                        <li>Eficiencia hídrica (mL de agua por gramo de biomasa fresca)</li>
+                        <li>Eficiencia fotónica (gramos por kWh lumínico)</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <h3>🧠 Bucle de aprendizaje automático</h3>
+            <p>Los modelos de regresión multivariable y redes neuronales ligeras establecerán correlaciones entre las entradas y salidas. En la fase actual estamos desarrollando el hardware de adquisición y recopilando datos sintéticos. El MVP (Verano 2026) permitirá entrenar los primeros modelos con datos reales.</p>
+            <div class="badge" style="margin-top: 12px;">Arquitectura: ESP32-S3, Raspberry Pi, InfluxDB, TensorFlow Lite</div>
+        </div>
+        <div class="card">
+            <h3>🖨️ Diseño 3D paramétrico (enfoque práctico)</h3>
+            <p>Hemos diseñado una cámara de crecimiento modular fabricada mediante impresión 3D (PETG/ASA) que integra:</p>
+            <ul class="tech-list">
+                <li>Microcanales radiculares para guiar las raíces hacia la zona de nebulización.</li>
+                <li>Conductos de aire optimizados mediante simulación CFD básica, evitando zonas muertas.</li>
+                <li>Alojamientos específicos para sensores (Tª, humedad, EC, pH) y actuadores.</li>
+                <li>Posibilidad de reconfigurar el tamaño y disposición de las plantas según la especie.</li>
+            </ul>
+            <p class="note" style="margin-top: 16px; text-align:left;">El diseño está disponible en formato STEP/STL y será de acceso abierto tras la validación del MVP.</p>
+        </div>
+    </div>
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
+    <!-- Roadmap -->
+    <div id="roadmap" class="tab-content">
+        <div class="card">
+            <h2>Hoja de ruta</h2>
+            <div style="margin-top: 24px;">
+                <div style="margin-bottom: 28px;">
+                    <span class="badge">✅ Verano 2025</span>
+                    <h3>Estudio conceptual</h3>
+                    <p>Simulaciones de fluidos, selección de componentes low‑cost, primeras pruebas de nebulización e iluminación.</p>
+                </div>
+                <div style="margin-bottom: 28px;">
+                    <span class="badge">🔄 2025-2026</span>
+                    <h3>Diseño CAD y arquitectura de sensores</h3>
+                    <p>Modelado 3D de la cámara, definición de PCB, comunicación MQTT, desarrollo del dashboard base.</p>
+                </div>
+                <div style="margin-bottom: 28px; border-left: 3px solid #2a9d6e; padding-left: 20px;">
+                    <span class="badge" style="background:#e1f0ea; color:#1e6a47;">🎯 Próximo hito</span>
+                    <h3>Verano 2026 · MVP funcional</h3>
+                    <p>Construcción del primer prototipo para 2-3 plantas. Validación con albahaca, adquisición de datos reales y lazos de control autónomo.</p>
+                </div>
+                <div>
+                    <span class="badge">📅 Q4 2026 → 2027</span>
+                    <h3>Escalado y optimización IA</h3>
+                    <p>Ampliación a bancada de 12 plantas, integración de análisis químico externo (cromatografía de gases) y refinamiento del modelo predictivo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Dashboard con gráfico radar y controles modernos -->
+    <div id="demo" class="tab-content">
+        <div class="dashboard-wrapper">
+            <div class="demo-grid">
+                <div class="controls-area">
+                    <h3 style="margin-bottom: 28px;">🎚️ Parámetros ajustables</h3>
+                    <div class="slider-group">
+                        <label>🔴 Luz roja (660nm) · horas/día <span id="redVal">12</span></label>
+                        <input type="range" id="redSlider" min="0" max="18" value="12" step="1">
+                    </div>
+                    <div class="slider-group">
+                        <label>🔵 Luz azul (450nm) · horas/día <span id="blueVal">6</span></label>
+                        <input type="range" id="blueSlider" min="0" max="16" value="6" step="1">
+                    </div>
+                    <div class="slider-group">
+                        <label>🌱 Edad planta (días) <span id="ageVal">20</span></label>
+                        <input type="range" id="ageSlider" min="5" max="45" value="20" step="1">
+                    </div>
+                    <div class="slider-group">
+                        <label>💧 VPD (kPa) · estrés hídrico <span id="vpdVal">0.9</span></label>
+                        <input type="range" id="vpdSlider" min="0.4" max="1.6" value="0.9" step="0.02">
+                    </div>
+                    <div class="slider-group">
+                        <label>🌀 Nebulización (ciclos/hora) <span id="mistVal">18</span></label>
+                        <input type="range" id="mistSlider" min="6" max="30" value="18" step="1">
+                    </div>
+                </div>
+                <div class="charts-area">
+                    <h3>📈 Perfil de rendimiento</h3>
+                    <canvas id="radarChart" width="400" height="300" style="max-width:100%; height:auto; margin:0 auto;"></canvas>
+                    <div class="metric-row">
+                        <div class="metric-card"><span class="metric-value" id="growthMetric">—</span><br>Crecimiento (cm²/día)</div>
+                        <div class="metric-card"><span class="metric-value" id="waterMetric">—</span><br>Eficiencia hídrica (mL/g)</div>
+                        <div class="metric-card"><span class="metric-value" id="terpMetric">—</span><br>Terpenos (u.a.)</div>
+                        <div class="metric-card"><span class="metric-value" id="healthMetric">—</span><br>Salud foliar (%)</div>
+                    </div>
+                    <div class="note">* Simulación basada en modelos predictivos. Los valores serán calibrados con el MVP.</div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 24px;">
+            <h3>Interpretación del gráfico radar</h3>
+            <p>El gráfico muestra la normalización (0-100) de cuatro métricas clave. Permite visualizar de forma intuitiva cómo los parámetros ajustados afectan el rendimiento general de la planta. El objetivo del proyecto es validar estas relaciones en un entorno real y automatizar el control mediante IA.</p>
+        </div>
+    </div>
+
+    <!-- Equipo y Colaboración (sutil) -->
+    <div id="colabora" class="tab-content">
+        <div class="card">
+            <h2>Equipo fundador</h2>
+            <div class="grid-2">
+                <div><strong>⚡ Leo</strong><br>Ingeniería Electrónica (UniOvi). Hardware, sensores, actuadores y viabilidad técnica.</div>
+                <div><strong>💻 Christian</strong><br>Desarrollador full‑stack. Visión artificial, bases de datos, motor de IA.</div>
+                <div><strong>🌿 Sofía</strong><br>Asesora agronómica. Fisiología vegetal y definición de parámetros biológicos.</div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Colaboraciones abiertas</h3>
+            <p>Estamos abiertos a establecer alianzas con centros de I+D, empresas de tecnología agrícola y entidades interesadas en validar soluciones de aeroponía de precisión. Actualmente nos encontramos en fase de desarrollo del primer prototipo y buscamos:</p>
+            <ul style="margin: 20px 0 0 30px;">
+                <li>🤝 Partners técnicos (fabricación 3D, componentes electrónicos de precisión)</li>
+                <li>🧪 Instituciones para validación biológica y ensayos de cultivo</li>
+                <li>📢 Apoyo institucional para difusión y co‑financiación del MVP</li>
+            </ul>
+            <div style="margin-top: 28px;">
+                <a href="mailto:contacto@agroailab.com" class="btn-outline">📩 Contactar con el equipo</a>
+                <span style="margin-left: 20px; font-size: 0.8rem;">contacto@agroailab.com</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>AgroAILab · Proyecto de I+D con sede en Asturias, España</p>
+    <p>Contacto: <a href="mailto:contacto@agroailab.com" style="color:#2a7f55;">contacto@agroailab.com</a> — Documentación técnica disponible bajo solicitud</p>
+    <p style="margin-top: 12px;">© 2026 · Todos los datos de la demo son simulaciones basadas en modelos preliminares.</p>
+</footer>
+
+<script>
+    // TABS
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    function activateTab(tabId) {
+        tabContents.forEach(content => content.classList.remove('active'));
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        const targetBtn = Array.from(tabBtns).find(btn => btn.getAttribute('data-tab') === tabId);
+        if(targetBtn) targetBtn.classList.add('active');
+    }
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.getAttribute('data-tab');
+            activateTab(tabId);
+        });
+    });
+    document.querySelectorAll('[data-tab-link]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tabId = link.getAttribute('data-tab-link');
+            activateTab(tabId);
+        });
+    });
+
+    // GRÁFICO RADAR
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    const radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['Crecimiento', 'Eficiencia hídrica', 'Terpenos', 'Salud foliar'],
+            datasets: [{
+                label: 'Rendimiento normalizado (%)',
+                data: [65, 70, 55, 80],
+                backgroundColor: 'rgba(42, 157, 110, 0.3)',
+                borderColor: '#2a9d6e',
+                borderWidth: 2,
+                pointBackgroundColor: '#1f8a4c',
+                pointBorderColor: '#fff',
+                pointRadius: 4,
+                pointHoverRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: { stepSize: 20, backdropColor: 'transparent' },
+                    grid: { color: '#d4e6df' },
+                    angleLines: { color: '#d4e6df' }
+                }
+            },
+            plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)} %` } } }
         }
+    });
 
-        function initParticles() {
-            particles = [];
-            const count = Math.min(220, Math.floor((canvas.width * canvas.height) / 10000));
-            for (let i = 0; i < count; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    radius: Math.random() * 2.2 + 0.5,
-                    speedX: (Math.random() - 0.5) * 0.55,
-                    speedY: Math.random() * -1.1 - 0.4,
-                    color: `rgba(${Math.random() > 0.65 ? '0,255,102' : '0,229,255'}, ${Math.random() * 0.35 + 0.2})`
-                });
-            }
-        }
+    // ACTUALIZAR DEMO
+    function updateDemo() {
+        const red = parseFloat(document.getElementById('redSlider').value);
+        const blue = parseFloat(document.getElementById('blueSlider').value);
+        const age = parseFloat(document.getElementById('ageSlider').value);
+        const vpd = parseFloat(document.getElementById('vpdSlider').value);
+        const mist = parseFloat(document.getElementById('mistSlider').value);
 
-        function animateParticles() {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let p of particles) {
-                p.x += p.speedX;
-                p.y += p.speedY;
-                if (p.y < 0) { p.y = canvas.height; p.x = Math.random() * canvas.width; }
-                if (p.x < 0) p.x = canvas.width;
-                if (p.x > canvas.width) p.x = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
-                ctx.fill();
-            }
-            requestAnimationFrame(animateParticles);
-        }
+        document.getElementById('redVal').innerText = red;
+        document.getElementById('blueVal').innerText = blue;
+        document.getElementById('ageVal').innerText = age;
+        document.getElementById('vpdVal').innerText = vpd.toFixed(2);
+        document.getElementById('mistVal').innerText = mist;
 
-        window.addEventListener('resize', () => resizeCanvas());
-        resizeCanvas();
-        animateParticles();
-    </script>
+        // Modelo predictivo simulado
+        let growth = 3 + (red/18)*5 + (blue/16)*3;
+        let ageFactor = Math.min(1.2, age/35);
+        let vpdStress = 1 - Math.abs(vpd - 0.9) * 0.7;
+        let mistEff = 1 - Math.abs(mist-18)*0.025;
+        growth = growth * ageFactor * vpdStress * mistEff;
+        growth = Math.min(22, Math.max(1.5, growth));
+
+        let waterEff = 110 - (mistEff*20) - (red/18)*10 + (vpdStress*10);
+        waterEff = Math.min(130, Math.max(30, waterEff));
+
+        let terpenes = 0.3 + (red/18)*0.6 * vpdStress * mistEff;
+        terpenes = Math.min(0.9, Math.max(0.2, terpenes));
+
+        let health = (vpdStress*0.7 + mistEff*0.3) * 100;
+        health = Math.min(98, Math.max(18, Math.floor(health)));
+
+        document.getElementById('growthMetric').innerText = growth.toFixed(1);
+        document.getElementById('waterMetric').innerText = Math.round(waterEff);
+        document.getElementById('terpMetric').innerText = terpenes.toFixed(2);
+        document.getElementById('healthMetric').innerText = health;
+
+        // Normalizar a 0-100
+        const growthNorm = Math.min(100, (growth / 22) * 100);
+        const waterNorm = Math.min(100, ((130 - waterEff) / 100) * 100); // inverso: menor consumo mejor
+        const terpNorm = (terpenes / 0.9) * 100;
+        const healthNorm = health;
+        radarChart.data.datasets[0].data = [growthNorm, waterNorm, terpNorm, healthNorm];
+        radarChart.update();
+    }
+
+    const sliders = ['redSlider', 'blueSlider', 'ageSlider', 'vpdSlider', 'mistSlider'];
+    sliders.forEach(id => {
+        document.getElementById(id).addEventListener('input', updateDemo);
+    });
+    updateDemo();
+</script>
 </body>
 </html>
