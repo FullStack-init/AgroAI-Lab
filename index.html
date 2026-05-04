@@ -24,7 +24,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Header y navegación */
+        /* Header único */
         .site-header {
             background: #ffffff;
             border-bottom: 1px solid #dce5e0;
@@ -82,40 +82,24 @@
             color: #2c5142;
             font-weight: 500;
             transition: 0.2s;
+            cursor: pointer;
         }
         .nav-links a:hover {
             color: #1f8a4c;
         }
+        .nav-links a.active {
+            color: #1f8a4c;
+            border-bottom: 2px solid #1f8a4c;
+            padding-bottom: 4px;
+        }
 
-        /* Pestañas */
-        .tabs {
-            display: flex;
-            gap: 12px;
-            margin: 40px 0 32px;
-            border-bottom: 1px solid #dce5e0;
-            padding-bottom: 10px;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 8px 28px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #4a6b5e;
-            cursor: pointer;
-            border-radius: 40px;
-            transition: 0.2s;
-        }
-        .tab-btn.active {
-            background: #1f5e3f;
-            color: white;
-        }
-        .tab-content {
+        /* Contenido de secciones (sin tabs adicionales) */
+        .section {
             display: none;
             animation: fade 0.25s ease;
+            margin: 40px 0;
         }
-        .tab-content.active {
+        .section.active {
             display: block;
         }
         @keyframes fade {
@@ -123,7 +107,7 @@
             to { opacity: 1; transform: translateY(0);}
         }
 
-        /* Cards generales */
+        /* Cards */
         .card {
             background: white;
             border-radius: 28px;
@@ -265,13 +249,16 @@
             color: #c0ffd0;
             font-family: monospace;
         }
-        canvas#radarChart {
-            max-height: 280px;
-            width: 100%;
-            margin: 0 auto;
+        .radar-container {
             background: #1a2622;
             border-radius: 24px;
-            padding: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        canvas#radarChart {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
         }
         .note {
             font-size: 0.7rem;
@@ -346,27 +333,18 @@
             <div class="logo-text">AgroAILab <span>aeroponía evolutiva</span></div>
         </div>
         <div class="nav-links">
-            <a href="#" data-tab-link="inicio">Inicio</a>
-            <a href="#" data-tab-link="proyecto">Proyecto I+D</a>
-            <a href="#" data-tab-link="roadmap">Roadmap</a>
-            <a href="#" data-tab-link="demo">Demo SCADA</a>
-            <a href="#" data-tab-link="colabora">Equipo & Contacto</a>
+            <a data-section="inicio" class="active">Inicio</a>
+            <a data-section="proyecto">Proyecto I+D</a>
+            <a data-section="roadmap">Roadmap</a>
+            <a data-section="demo">Demo SCADA</a>
+            <a data-section="colabora">Equipo & Contacto</a>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <!-- Tabs -->
-    <div class="tabs">
-        <button class="tab-btn active" data-tab="inicio">📌 Inicio</button>
-        <button class="tab-btn" data-tab="proyecto">🔬 Proyecto I+D</button>
-        <button class="tab-btn" data-tab="roadmap">📅 Hoja de ruta</button>
-        <button class="tab-btn" data-tab="demo">📊 Demo SCADA</button>
-        <button class="tab-btn" data-tab="colabora">🤝 Equipo + Contacto</button>
-    </div>
-
-    <!-- Inicio -->
-    <div id="inicio" class="tab-content active">
+    <!-- Sección Inicio -->
+    <div id="inicio" class="section active">
         <div class="card">
             <span class="badge">Fase I+D · pre‑seed</span>
             <h2>Agricultura de precisión basada en IA y aeroponía</h2>
@@ -375,9 +353,6 @@
                 <div><strong>🎯 Objetivo 2026</strong><br>Construcción del primer prototipo funcional (MVP) para 2-3 plantas, validación con albahaca.</div>
                 <div><strong>💧 Meta técnica</strong><br>Alcanzar una reducción del 90% en consumo hídrico frente a hidroponía convencional.</div>
                 <div><strong>🌿 Cultivo modelo</strong><br>Albahaca (<em>Ocimum basilicum</em>) como banco de pruebas para calibrar sensores y algoritmos.</div>
-            </div>
-            <div style="margin-top: 28px;">
-                <a href="#" class="btn-outline" data-tab-link="demo">🔍 Explorar Demo SCADA →</a>
             </div>
         </div>
         <div class="card">
@@ -391,8 +366,8 @@
         </div>
     </div>
 
-    <!-- Proyecto I+D (serio) -->
-    <div id="proyecto" class="tab-content">
+    <!-- Proyecto I+D -->
+    <div id="proyecto" class="section">
         <div class="card">
             <h2>Investigación aplicada en aeroponía de precisión</h2>
             <div class="grid-2">
@@ -436,7 +411,7 @@
     </div>
 
     <!-- Roadmap -->
-    <div id="roadmap" class="tab-content">
+    <div id="roadmap" class="section">
         <div class="card">
             <h2>Hoja de ruta</h2>
             <div style="margin-top: 24px;">
@@ -464,8 +439,8 @@
         </div>
     </div>
 
-    <!-- Demo con estilo SCADA / industrial + gráfico radar -->
-    <div id="demo" class="tab-content">
+    <!-- Demo SCADA con radar -->
+    <div id="demo" class="section">
         <div class="dashboard-wrapper">
             <div class="demo-grid">
                 <div class="controls-area">
@@ -493,7 +468,9 @@
                 </div>
                 <div class="charts-area">
                     <h3 style="color:#c0e0d0;">📈 MÉTRICAS DE RENDIMIENTO</h3>
-                    <canvas id="radarChart" width="400" height="280"></canvas>
+                    <div class="radar-container">
+                        <canvas id="radarChart" width="500" height="300" style="width:100%; height:auto; max-height:300px"></canvas>
+                    </div>
                     <div class="metric-row">
                         <div class="metric-card"><span class="metric-value" id="growthMetric">—</span><br>Crecimiento (cm²/día)</div>
                         <div class="metric-card"><span class="metric-value" id="waterMetric">—</span><br>Eficiencia hídrica (mL/g)</div>
@@ -510,8 +487,8 @@
         </div>
     </div>
 
-    <!-- Equipo + Mapa + Formulario de contacto -->
-    <div id="colabora" class="tab-content">
+    <!-- Equipo + Mapa + Formulario -->
+    <div id="colabora" class="section">
         <div class="card">
             <h2>Equipo fundador</h2>
             <div class="grid-2">
@@ -553,45 +530,46 @@
 </footer>
 
 <script>
-    // TABS
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-    function activateTab(tabId) {
-        tabContents.forEach(content => content.classList.remove('active'));
-        tabBtns.forEach(btn => btn.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        const targetBtn = Array.from(tabBtns).find(btn => btn.getAttribute('data-tab') === tabId);
-        if(targetBtn) targetBtn.classList.add('active');
-    }
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tabId = btn.getAttribute('data-tab');
-            activateTab(tabId);
+    // Navegación única por secciones (sin tabs duplicados)
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('.section');
+
+    function activateSection(sectionId) {
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        navLinks.forEach(link => {
+            if(link.getAttribute('data-section') === sectionId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
         });
-    });
-    document.querySelectorAll('[data-tab-link]').forEach(link => {
+    }
+
+    navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const tabId = link.getAttribute('data-tab-link');
-            activateTab(tabId);
+            const sectionId = link.getAttribute('data-section');
+            if(sectionId) activateSection(sectionId);
         });
     });
 
-    // GRÁFICO RADAR
+    // Gráfico Radar con Chart.js (asegurando tamaño correcto)
     const ctx = document.getElementById('radarChart').getContext('2d');
-    const radarChart = new Chart(ctx, {
+    let radarChart = new Chart(ctx, {
         type: 'radar',
         data: {
             labels: ['Crecimiento', 'Eficiencia hídrica', 'Terpenos', 'Salud foliar'],
             datasets: [{
                 label: 'Rendimiento normalizado (%)',
                 data: [65, 70, 55, 80],
-                backgroundColor: 'rgba(42, 157, 110, 0.5)',
+                backgroundColor: 'rgba(42, 157, 110, 0.4)',
                 borderColor: '#60c090',
                 borderWidth: 2,
                 pointBackgroundColor: '#c0ffd0',
                 pointBorderColor: '#1e2a26',
-                pointRadius: 4
+                pointRadius: 5,
+                pointHoverRadius: 7
             }]
         },
         options: {
@@ -603,14 +581,18 @@
                     max: 100,
                     ticks: { stepSize: 20, backdropColor: 'transparent', color: '#bde5d4' },
                     grid: { color: '#3e5f52', circular: true },
-                    angleLines: { color: '#3e5f52' }
+                    angleLines: { color: '#3e5f52' },
+                    pointLabels: { color: '#c0e0d0', font: { size: 11 } }
                 }
             },
-            plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)} %` } } }
+            plugins: {
+                tooltip: { callbacks: { label: (ctx) => `${ctx.raw.toFixed(1)} %` } },
+                legend: { labels: { color: '#c0e0d0' } }
+            }
         }
     });
 
-    // ACTUALIZAR DEMO
+    // Actualizar demo
     function updateDemo() {
         const red = parseFloat(document.getElementById('redSlider').value);
         const blue = parseFloat(document.getElementById('blueSlider').value);
@@ -658,6 +640,16 @@
         document.getElementById(id).addEventListener('input', updateDemo);
     });
     updateDemo();
+
+    // Forzar redibujo del radar al cambiar de pestaña (por si el canvas no se ve)
+    window.addEventListener('resize', () => { radarChart.resize(); });
+    // Opcional: al activar la demo, redibujar
+    const observer = new MutationObserver(() => {
+        if(document.getElementById('demo').classList.contains('active')) {
+            radarChart.update();
+        }
+    });
+    observer.observe(document.getElementById('demo'), { attributes: true, attributeFilter: ['class'] });
 </script>
 </body>
 </html>
