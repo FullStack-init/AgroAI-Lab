@@ -328,10 +328,13 @@
 
 <div class="site-header">
     <div class="container header-inner">
-        <div class="logo-area">
-            <img src="logo.png" alt="AgroAILab" class="logo-img" onerror="this.style.display='none'">
-            <div class="logo-text">AgroAILab <span>aeroponía evolutiva</span></div>
-        </div>
+<div class="logo-area">
+    <img src="logo.png" alt="AgroAILab" class="logo-img" 
+         onload="document.getElementById('brand-text').style.display='none'"
+         onerror="this.style.display='none'; document.getElementById('brand-text').style.display='block'">
+    
+    <div id="brand-text" class="logo-text">AgroAILab <span>aeroponía evolutiva</span></div>
+</div>
         <div class="nav-links">
             <a data-section="inicio" class="active">Inicio</a>
             <a data-section="proyecto">Proyecto I+D</a>
