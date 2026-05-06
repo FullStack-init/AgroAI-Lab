@@ -138,6 +138,14 @@
                         radial-gradient(900px 480px at 85% 15%, rgba(59,130,246,0.08), transparent);
         }
         .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 38px; align-items: center; }
+        .hero-overline {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
         h1 { font-family: var(--font-title); font-weight: 600; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.02em; }
         h2 { font-family: var(--font-title); font-weight: 600; font-size: clamp(1.5rem, 2.8vw, 2.1rem); margin-bottom: 10px; letter-spacing: -0.01em; }
         h3 { font-family: var(--font-title); font-weight: 500; font-size: 1.15rem; margin-bottom: 8px; }
@@ -371,8 +379,9 @@
 <header class="hero" id="inicio">
     <div class="container hero-grid">
         <div>
-            <h1>Cultivo de precisión con optimización biológica en tiempo real</h1>
-            <p class="subtitle">Plataforma industrial de producción de biomasa de alta pureza. Sustituye el sustrato por atomización sobre raíces + entorno ciberfísico gestionado por IA. Mide 10+ variables, adapta recetas por etapa fenológica y retroalimenta cada ciclo para mejorar rendimiento, eficiencia y perfil organoléptico.</p>
+            <div class="hero-overline">PIONEROS EN AEROPONÍA 4.0</div>
+            <h1>Cultivo Evolutivo: Optimización Biológica con IA en Tiempo Real</h1>
+            <p class="subtitle">Diseñamos sistemas para maximizar la producción mediante un entorno ciberfísico gestionado por IA. Sustituimos el sustrato por atomización radicular de alta precisión, monitorizando mediante visión artificial el estado del cultivo para adaptar dinámicamente cada ciclo. Mejora el rendimiento, la eficiencia energética y la calidad de tus cultivos de alta pureza.</p>
             <div class="cta-row">
                 <a href="#demo" class="btn btn-primary">Ver Panel de Control</a>
                 <a href="#colabora" class="btn btn-outline">Contactar</a>
@@ -388,19 +397,19 @@
 <section>
     <div class="container">
         <h2>Problema & Solución</h2>
-        <p class="section-lead">La producción tradicional de hierbas frescas enfrenta merma logística, calidad inconsistente, alto consumo hídrico, dependencia climática y uso de agroquímicos. AgroAI Lab busca resolver estos desafíos mediante aeroponía controlada por IA que elimina agroquímicos, reduce el consumo hídrico, garantiza calidad uniforme con monitoreo en tiempo real, opera sin dependencia climática y cumple estándares orgánicos internacionales. Un modelo escalable, transparente y orientado a mercados premium.</p>
+        <p class="section-lead">La producción tradicional de hierbas frescas enfrenta merma logística, calidad inconsistente, alto consumo hídrico, dependencia climática y uso de agroquímicos. AgroAI Lab aborda estos desafíos mediante un sistema aeropónico autónomo que elimina agroquímicos, reduce drásticamente el consumo de agua, garantiza calidad uniforme con monitoreo en tiempo real y opera sin dependencia climática. Un modelo escalable, transparente y orientado a mercados premium.</p>
         <div class="grid-3">
             <div class="card">
                 <h3>💧 Eficiencia Hídrica</h3>
-                <p>Reducción de hasta <span class="highlight">90% de agua</span> vs suelo, ~60% vs hidroponía NFT.</p>
+                <p>Reducción de hasta <span class="highlight">90% de agua</span> frente a cultivo en suelo, y aproximadamente un 60% comparado con hidroponía NFT convencional.</p>
             </div>
             <div class="card">
                 <h3>⚡ Eficiencia Energética</h3>
-                <p>Optimización espectral y temporal que busca reducir el consumo energético por unidad de biomasa (<span class="highlight">kWh/g</span>) hasta en un <span class="highlight">50%</span> frente a sistemas convencionales.</p>
+                <p>Optimización espectral y temporal que reduce el consumo energético por unidad de biomasa (<span class="highlight">kWh/g</span>) hasta en un <span class="highlight">50%</span> frente a sistemas LED estáticos.</p>
             </div>
             <div class="card">
                 <h3>📈 Trazabilidad & Control</h3>
-                <p>Dashboard en tiempo real, métricas de eficiencia (L/g, kWh/g) y decisiones de IA auditables.</p>
+                <p>Dashboard en tiempo real, métricas de eficiencia (L/g, kWh/g) y decisiones de IA auditables para certificación de cultivo limpio.</p>
             </div>
         </div>
     </div>
@@ -410,13 +419,13 @@
 <section id="proyecto">
     <div class="container">
         <h2>Investigación Aplicada</h2>
-        <p class="section-lead">Variables de control y métricas de respuesta que la IA modula activamente.</p>
+        <p class="section-lead">Variables de control y métricas de respuesta que la IA modula activamente para cada etapa fenológica.</p>
         <div class="grid-2">
             <div class="card">
                 <h3>📡 Inputs de Control</h3>
                 <ul style="margin-left:20px;">
-                    <li>Espectro LED dinámico (660/450 nm) PWM</li>
-                    <li>Nebulización ultrasónica (5-10 µm)</li>
+                    <li>Espectro LED dinámico PWM de alta eficiencia</li>
+                    <li>Nebulización ultrasónica (tamaño de gota optimizable)</li>
                     <li>Control de VPD, EC, pH y temperatura</li>
                     <li>Ventilación direccional y CO₂</li>
                 </ul>
@@ -424,16 +433,17 @@
             <div class="card">
                 <h3>📊 Outputs Biológicos</h3>
                 <ul style="margin-left:20px;">
-                    <li>Biomasa y área foliar (cm²/día)</li>
-                    <li>Índice de clorofila y estrés temprano</li>
-                    <li>Perfil VOCs (proxy terpenos)</li>
+                    <li>Biomasa y tasa de expansión foliar (cm²/día)</li>
+                    <li>Índice de clorofila y detección temprana de estrés</li>
+                    <li>Perfil estimado de compuestos volátiles (proxy organoléptico)</li>
                     <li>Eficiencia hídrica y fotónica</li>
                 </ul>
             </div>
         </div>
         <div class="card" style="margin-top:22px;">
-            <h3>🧠 Bucle de Aprendizaje</h3>
-            <p>Sistema de control adaptativo en edge basado en microcontrolador ESP32-S3 con capacidades de visión embebida. Integra adquisición de datos multivariable y feedback visual para estimar el estado fisiológico de la planta (color, vigor, expansión foliar). Mediante modelos ligeros de regresión incremental y lógica heurística, el sistema ajusta dinámicamente los parámetros de cultivo en ciclos cerrados, optimizando el rendimiento a partir de datos históricos y evolución temporal.</p>
+            <h3>🧠 Bucle de Aprendizaje Continuo</h3>
+            <p>Sistema de control adaptativo en edge basado en microcontrolador de alto rendimiento con aceleración para visión embebida. Integra adquisición de datos multivariable y feedback visual para estimar el estado fisiológico de la planta (color, vigor, expansión foliar). Mediante modelos ligeros de regresión incremental y lógica heurística, el sistema ajusta dinámicamente los parámetros de cultivo en ciclos cerrados, optimizando el rendimiento a partir de datos históricos y evolución temporal.</p>
+            <div class="note">🔒 Trabajamos activamente en la protección industrial de nuestra arquitectura de control y sistema de iluminación selectiva. Para acceder a detalles técnicos específicos, contacta bajo acuerdo de confidencialidad.</div>
         </div>
         <div class="card" style="margin-top:22px;">
             <h3>🖨️ Diseño 3D Paramétrico y Modular</h3>
@@ -450,8 +460,8 @@
             <div class="roadmap-step">
                 <div class="roadmap-step-content">
                     <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">✅ Verano 2025</span>
-                    <div class="roadmap-step-title">Estudio conceptual</div>
-                    <p style="color:var(--muted);">Simulaciones de fluidos computacionales, selección rigurosa de componentes y primeras pruebas de nebulización e iluminación en bancada abierta.</p>
+                    <div class="roadmap-step-title">Estudio conceptual y primeras pruebas</div>
+                    <p style="color:var(--muted);">Simulaciones de fluidos computacionales, selección rigurosa de componentes y pruebas de nebulización e iluminación en bancada abierta.</p>
                 </div>
             </div>
             <div class="roadmap-step">
@@ -471,7 +481,7 @@
             <div class="roadmap-step">
                 <div class="roadmap-step-content">
                     <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">📅 Q4 2026 → 2027</span>
-                    <div class="roadmap-step-title">Escalado y optimización IA</div>
+                    <div class="roadmap-step-title">Escalado y optimización de modelos</div>
                     <p style="color:var(--muted);">Ampliación a bancada de 12 plantas, integración con análisis químico externo (GC-MS) y refinamiento del modelo predictivo por ciclo.</p>
                 </div>
             </div>
@@ -519,7 +529,7 @@
                         <div class="metric-card"><span class="metric-value" id="terpMetric">—</span><br>Terpenos (u.a.)</div>
                         <div class="metric-card"><span class="metric-value" id="healthMetric">—</span><br>Salud foliar (%)</div>
                     </div>
-                    <div class="note">* Simulación estimada sobre parámetros predictivos (validación con MVP en 2026)</div>
+                    <div class="note">* Simulación estimada sobre parámetros genéricos. Los algoritmos reales son propiedad intelectual de AgroAI Lab y no se reflejan en esta demo.</div>
                 </div>
             </div>
         </div>
@@ -541,7 +551,7 @@
             <div class="founder-icon">💻</div>
             <h3>Christian</h3>
             <div class="founder-role">CTO / Asesor Informático</div>
-            <p>Desarrollador con 10 años de experiencia en Fintech. Formación en Ingeniera Informática.</p>
+            <p>Desarrollador con 10 años de experiencia en Fintech. Formación en Ingeniería Informática.</p>
         </div>
         <div class="card founder-card">
             <div class="founder-icon">🌿</div>
@@ -554,7 +564,6 @@
         <h2>Contacto</h2>
         <div class="card contact-form" style="padding:32px;">
             <form id="my-form" action="https://formspree.io/f/mbdwggjy" method="POST">
-                <!-- CAMBIO: Se reemplaza grid-2 por form-row-duo para un responsive correcto -->
                 <div class="form-row-duo">
                     <div class="form-group"><input type="text" name="nombre" placeholder="Tu nombre" required></div>
                     <div class="form-group"><input type="email" name="email" placeholder="Correo electrónico" required></div>
@@ -581,6 +590,7 @@
         <p>AgroAI Lab · Asturias, España</p>
         <p>contacto@agroailab.com</p>
         <p style="margin-top:6px;">© 2026 · Datos de demo simulados, basados en investigación previa.</p>
+        <p style="margin-top:12px; font-size:0.75rem;">🔒 Trabajamos en la protección industrial de nuestra tecnología. Toda la información técnica es confidencial.</p>
     </div>
 </footer>
 
@@ -660,7 +670,6 @@
         themeToggle.addEventListener('click', () => {
             const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
-            // Actualizar gráfico ECharts con nuevo tema
             if (window.radarChart) {
                 window.radarChart.clear();
                 window.radarChart.setOption(getEChartsOption(newTheme));
@@ -721,28 +730,22 @@
             };
         }
 
-        // Inicializar ECharts SOLO cuando el DOM y la librería estén listos
         function initRadar() {
             const radarDom = document.getElementById('radarChart');
             if (!radarDom || !window.echarts) {
-                // Reintentar si aún no está disponible
                 setTimeout(initRadar, 50);
                 return;
             }
             window.radarChart = echarts.init(radarDom);
             window.radarChart.setOption(getEChartsOption(getCurrentTheme()));
-
-            // Asegurar tamaño tras un pequeño retraso
             setTimeout(() => {
                 if (window.radarChart) window.radarChart.resize();
             }, 150);
-
             window.addEventListener('resize', () => {
                 if (window.radarChart) window.radarChart.resize();
             });
         }
 
-        // Arrancar cuando el DOM esté listo
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initRadar);
         } else {
@@ -797,7 +800,6 @@
             });
         };
 
-        // Conectar sliders después de una pequeña pausa para asegurar que existen
         function bindSliders() {
             const ids = ['redSlider','blueSlider','ageSlider','vpdSlider','mistSlider'];
             ids.forEach(id => {
