@@ -10,7 +10,7 @@
     <!-- Tipografías profesionales -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- ECharts -->
+    <!-- ECharts (necesario para la demo) -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
     <!-- Formspree AJAX -->
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
@@ -109,7 +109,7 @@
         .logo {
             display: flex; align-items: center; cursor: pointer;
         }
-        .logo img { height: 48px; width: auto; border-radius: 10px; }
+        .logo img { height: 40px; width: auto; border-radius: 10px; }
         .nav-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
         .nav-links a {
             color: var(--muted); font-size: 0.88rem; font-weight: 500;
@@ -489,7 +489,8 @@
     </div>
 </section>
 
-<!-- Demo -->
+<!-- ========== INICIO BLOQUE DEMO (todo lo necesario) ========== -->
+<!-- Incluye: HTML, estilos específicos (ya en <style> global) y JavaScript (ECharts + lógica de la demo) -->
 <section id="demo">
     <div class="container">
         <h2>Panel de Control Interactivo</h2>
@@ -535,6 +536,7 @@
         </div>
     </div>
 </section>
+<!-- ========== FIN BLOQUE DEMO (HTML) ========== -->
 
 <!-- Equipo & Contacto -->
 <section id="colabora">
@@ -693,7 +695,8 @@
             });
         });
 
-        // ===== ECHARTS RADAR =====
+        // ========== INICIO BLOQUE DEMO (JavaScript específico) ==========
+        // Funciones necesarias para la demo: radar chart, actualización de sliders, etc.
         function getEChartsOption(theme) {
             const isLight = theme === 'light';
             return {
@@ -746,13 +749,6 @@
             });
         }
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initRadar);
-        } else {
-            initRadar();
-        }
-
-        // ===== DEMO UPDATE =====
         window.updateDemo = function() {
             if (!window.radarChart) return;
             const red = +document.getElementById('redSlider').value;
@@ -808,7 +804,18 @@
             });
             if (window.radarChart) window.updateDemo();
         }
-        setTimeout(bindSliders, 100);
+
+        // Inicializar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                initRadar();
+                setTimeout(bindSliders, 100);
+            });
+        } else {
+            initRadar();
+            setTimeout(bindSliders, 100);
+        }
+        // ========== FIN BLOQUE DEMO (JavaScript) ==========
 
         // ===== FORMSPREE =====
         window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
