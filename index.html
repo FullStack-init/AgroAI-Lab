@@ -8,14 +8,19 @@
     <link rel="icon" href="icono.png" type="image/png">
 
     <!-- Tipografías profesionales -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome para iconos del dashboard -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- ECharts (necesario para la demo) -->
+    <!-- ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
+    
     <!-- Formspree AJAX -->
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
     <style>
+        /* ========== VARIABLES GLOBALES ========== */
         :root {
             --bg: #0b1116;
             --surface: #121a21;
@@ -44,6 +49,11 @@
             --demo-slider-thumb: #2dd4bf;
             --demo-metric-bg: #1d2a32;
             --demo-label: #bde5d4;
+            --btn-hover: rgba(45, 212, 191, 0.1);
+            --btn-active: rgba(45, 212, 191, 0.2);
+            --color-planta: #6ee7b7;
+            --color-crecimiento: #34d399;
+            --color-venta: #fbbf24;
         }
 
         [data-theme="light"] {
@@ -67,10 +77,16 @@
             --demo-slider-thumb: #1f5e3f;
             --demo-metric-bg: #f0f7f3;
             --demo-label: #2c5142;
+            --btn-hover: rgba(31, 138, 76, 0.1);
+            --btn-active: rgba(31, 138, 76, 0.2);
+            --color-planta: #6ee7b7;
+            --color-crecimiento: #34d399;
+            --color-venta: #f59e0b;
         }
 
+        /* ========== BASE ========== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
         body {
             background: var(--bg);
             color: var(--text);
@@ -80,6 +96,9 @@
             transition: background 0.3s, color 0.3s;
             overflow-x: hidden;
             position: relative;
+            min-height: 100vh;
+            padding: clamp(6px, 1.5vw, 12px);
+            touch-action: manipulation;
         }
 
         /* Canvas de microgotas spray */
@@ -97,6 +116,7 @@
         a:hover { text-decoration: underline; }
         .container { max-width: 1240px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 1; }
 
+        /* ========== NAVBAR ========== */
         nav {
             position: sticky; top: 0; z-index: 50;
             background: var(--header-bg);
@@ -106,9 +126,7 @@
         .nav-inner {
             display: flex; align-items: center; justify-content: space-between; padding: 12px 0;
         }
-        .logo {
-            display: flex; align-items: center; cursor: pointer;
-        }
+        .logo { display: flex; align-items: center; cursor: pointer; }
         .logo img { height: 40px; width: auto; border-radius: 10px; }
         .nav-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
         .nav-links a {
@@ -132,6 +150,7 @@
         }
         .theme-toggle:hover { background: var(--card); }
 
+        /* ========== HERO ========== */
         header.hero {
             padding: 56px 0 42px;
             background: radial-gradient(1100px 550px at 15% -5%, rgba(45,212,191,0.10), transparent),
@@ -174,6 +193,7 @@
             -webkit-mask-image: radial-gradient(circle, black 55%, transparent 100%);
         }
 
+        /* ========== SECCIONES GENERALES ========== */
         section { padding: 52px 0; }
         .section-lead { color: var(--muted); max-width: 820px; margin-bottom: 26px; }
         .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px; }
@@ -244,58 +264,7 @@
             letter-spacing: 0.02em;
         }
 
-        /* Demo */
-        .dashboard-wrapper {
-            background: var(--demo-bg); border-radius: 32px;
-            border: 1px solid var(--border-light); overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-        .demo-grid { display: flex; flex-wrap: wrap; }
-        .controls-area {
-            flex: 1.2; padding: 28px; background: var(--demo-controls-bg);
-            border-right: 2px solid var(--border-light);
-        }
-        .charts-area { flex: 1.8; padding: 28px; background: var(--demo-charts-bg); }
-        .slider-group { margin-bottom: 28px; }
-        .slider-group label {
-            display: flex; justify-content: space-between; font-weight: 600;
-            font-size: 0.8rem; margin-bottom: 8px; color: var(--demo-label);
-            text-transform: uppercase; letter-spacing: 0.5px;
-            font-family: var(--font);
-        }
-        .slider-group input {
-            width: 100%; height: 8px; background: var(--demo-slider-track);
-            border-radius: 10px; -webkit-appearance: none; outline: none;
-            border: 1px solid var(--border-light);
-        }
-        .slider-group input::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 20px; height: 20px;
-            background: var(--demo-slider-thumb); border-radius: 50%;
-            cursor: pointer; box-shadow: 0 0 6px var(--accent);
-            border: 2px solid var(--accent);
-        }
-        .value-indicator {
-            font-family: monospace; background: var(--surface); padding: 2px 10px;
-            border-radius: 20px; font-size: 0.75rem; color: var(--accent);
-        }
-        .metric-row {
-            display: flex; justify-content: space-between; gap: 16px;
-            margin-top: 28px; flex-wrap: wrap;
-        }
-        .metric-card {
-            background: var(--demo-metric-bg); border-radius: 20px; padding: 16px;
-            flex: 1; text-align: center; border-bottom: 3px solid var(--accent);
-        }
-        .metric-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); font-family: monospace; }
-        .radar-container {
-            background: var(--surface); border-radius: 24px; padding: 16px; margin-bottom: 16px;
-            min-height: 340px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        #radarChart { width: 100% !important; height: 320px !important; max-width: 420px; }
-        .note { font-size: 0.8rem; color: var(--muted); text-align: center; margin-top: 20px; }
-
-        /* Formulario */
+        /* ========== FORMULARIO ========== */
         .contact-form { max-width: 100%; }
         .form-group { margin-bottom: 20px; }
         .form-group input, .form-group textarea, .form-group select {
@@ -315,31 +284,359 @@
         #form-status.success { color: var(--success); }
         #form-status.error { color: var(--danger); }
 
-        /* Filas del formulario responsivas (nombre y email) */
+        /* Filas del formulario responsivas */
         .form-row-duo {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        @media (max-width: 600px) {
-            .form-row-duo {
-                grid-template-columns: 1fr;
-            }
-        }
 
+        /* ========== FOOTER ========== */
         footer {
             padding: 34px 0; border-top: 1px solid var(--border-light);
             color: var(--muted); font-size: 0.88rem; text-align: center;
             background: var(--surface);
         }
 
+        /* ========== DASHBOARD AVANZADO ========== */
+        .dashboard-wrapper {
+            background: var(--demo-bg); border-radius: clamp(16px, 2.5vw, 28px);
+            border: 1px solid var(--border-light); overflow: hidden;
+            box-shadow: var(--shadow);
+            max-width: 1400px; margin: 0 auto;
+        }
+        .dashboard-container { display: flex; flex-direction: column; }
+
+        .simulation-section {
+            padding: clamp(8px, 1.5vw, 14px) clamp(10px, 2vw, 18px);
+            border-bottom: 1px solid var(--border-light);
+            background: var(--surface);
+        }
+        .sim-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: clamp(8px, 1.4vw, 12px); flex-wrap: wrap; gap: 4px;
+        }
+        .sim-title {
+            font-family: var(--font); font-weight: 600;
+            font-size: clamp(0.75rem, 1vw, 0.9rem);
+            letter-spacing: 0.5px; text-transform: uppercase;
+            color: var(--accent); margin: 0;
+        }
+        .etapas-row {
+            display: flex; justify-content: space-around;
+            margin-bottom: clamp(8px, 1.2vw, 14px);
+            gap: clamp(4px, 1vw, 10px); flex-wrap: nowrap;
+        }
+        .etapa-item {
+            flex: 1; text-align: center; transition: 0.4s;
+            opacity: 0.35; transform: translateY(4px); filter: grayscale(0.4);
+        }
+        .etapa-item.active {
+            opacity: 1; transform: translateY(0); filter: grayscale(0);
+        }
+        .etapa-item i {
+            font-size: clamp(1.2rem, 1.6vw, 1.4rem);
+            margin-bottom: 2px; display: block; color: var(--c);
+        }
+        .etapa-item span {
+            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
+            font-weight: 600; letter-spacing: 0.2px;
+            color: var(--c); text-transform: uppercase;
+        }
+
+        /* Barra de progreso */
+        .progress-area {
+            position: relative; height: clamp(5px, 0.9vw, 9px);
+            background: rgba(255, 255, 255, 0.04); border-radius: 10px;
+            margin-bottom: clamp(10px, 1.8vw, 18px);
+            box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.4);
+            overflow: visible;
+        }
+        .progress-track {
+            position: absolute; height: 100%; width: 100%;
+            border-radius: 10px;
+            background: linear-gradient(to right,
+                var(--color-planta) 0% 33%,
+                var(--color-crecimiento) 33% 66%,
+                var(--color-venta) 66% 100%);
+            opacity: 0.7; filter: saturate(1.1); transition: opacity 0.3s;
+        }
+        input[type=range].progress-slider {
+            -webkit-appearance: none; appearance: none;
+            position: absolute; width: 100%; top: 50%;
+            transform: translateY(-50%); background: transparent;
+            z-index: 10; height: 100%; margin: 0; cursor: pointer;
+            touch-action: manipulation;
+        }
+        input[type=range].progress-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: clamp(18px, 2.4vw, 24px);
+            width: clamp(18px, 2.4vw, 24px);
+            border-radius: 50%; background: #ffffff;
+            border: 3px solid var(--bg);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer; transition: 0.2s;
+        }
+        input[type=range].progress-slider::-moz-range-thumb {
+            height: 24px; width: 24px; border-radius: 50%;
+            background: #ffffff; border: 3px solid var(--bg);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            cursor: pointer; transform: translateY(-50%);
+        }
+
+        .status-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: clamp(8px, 1.5vw, 16px); flex-wrap: nowrap;
+        }
+        .btn-main {
+            width: clamp(36px, 4.5vw, 48px); height: clamp(36px, 4.5vw, 48px);
+            border-radius: 50%; border: none;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            color: var(--accent); font-size: clamp(0.8rem, 1.1vw, 1rem);
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3), -1px -1px 5px rgba(255, 255, 255, 0.04);
+            transition: 0.3s; flex-shrink: 0; touch-action: manipulation;
+            -webkit-user-select: none; user-select: none;
+        }
+        .btn-main:active { transform: scale(0.96); }
+
+        .big-counter {
+            font-family: 'Inter', sans-serif; font-weight: 700;
+            color: var(--text); text-align: center; line-height: 1.1;
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .big-counter b {
+            font-family: 'Orbitron', 'Inter', monospace;
+            font-size: clamp(1.1rem, 1.8vw, 1.6rem); font-weight: 700;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
+            transition: color 0.2s, text-shadow 0.2s, transform 0.2s;
+        }
+        .big-counter span {
+            font-family: 'Inter', sans-serif; color: var(--muted);
+            font-size: clamp(0.7rem, 1.1vw, 0.9rem); font-weight: 500;
+        }
+
+        @keyframes pulse-age {
+            0% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.2); transform: scale(1); }
+            50% { color: var(--gold); text-shadow: 0 0 18px rgba(245, 158, 11, 0.8); transform: scale(1.1); }
+            100% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.2); transform: scale(1); }
+        }
+        .pulse-animation { animation: pulse-age 0.6s ease-in-out; }
+
+        .main-section { display: flex; flex-wrap: wrap; }
+        .charts-area { order: 1; }
+        .controls-area { order: 2; }
+
+        .controls-area {
+            flex: 1.2; padding: clamp(8px, 1.8vw, 16px);
+            background: var(--demo-controls-bg);
+            border-right: 2px solid var(--border-light);
+        }
+        .charts-area {
+            flex: 1.8; padding: clamp(8px, 1.8vw, 16px);
+            background: var(--demo-charts-bg);
+        }
+
+        .sliders-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: clamp(8px, 1.4vw, 14px) clamp(10px, 1.8vw, 18px);
+            align-items: end;
+        }
+        .slider-group { display: flex; flex-direction: column; margin-bottom: 0; }
+        .slider-group label {
+            display: flex; justify-content: space-between;
+            font-weight: 600; font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+            margin-bottom: 4px; color: var(--demo-label);
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .slider-group input {
+            width: 100%; height: 6px; background: var(--demo-slider-track);
+            border-radius: 6px; -webkit-appearance: none; appearance: none;
+            outline: none; border: 1px solid var(--border-light); margin: 0;
+        }
+        .slider-group input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: clamp(12px, 1.4vw, 15px);
+            height: clamp(12px, 1.4vw, 15px);
+            background: var(--demo-slider-thumb); border-radius: 50%;
+            cursor: pointer; box-shadow: 0 0 4px var(--accent);
+            border: 2px solid var(--accent);
+        }
+        .slider-group input::-moz-range-thumb {
+            width: 15px; height: 15px; background: var(--demo-slider-thumb);
+            border-radius: 50%; cursor: pointer; border: 2px solid var(--accent);
+            transform: translateY(-50%);
+        }
+        .value-indicator {
+            font-family: monospace; background: var(--surface);
+            padding: 1px 6px; border-radius: 12px;
+            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
+            color: var(--accent); align-self: center;
+        }
+
+        .control-group {
+            margin-bottom: clamp(8px, 1.2vw, 12px);
+            padding-bottom: clamp(6px, 1vw, 10px);
+        }
+        .control-group:last-child {
+            border-bottom: none; padding-bottom: 0; margin-bottom: 0;
+        }
+        .control-heading {
+            margin-bottom: clamp(12px, 1.5vw, 16px);
+            padding-top: clamp(4px, 0.8vw, 8px);
+            font-family: var(--font); font-weight: 600;
+            font-size: clamp(0.75rem, 1vw, 0.9rem);
+            letter-spacing: 0.5px; text-transform: uppercase;
+            color: var(--accent); margin: 0;
+        }
+
+        .ia-presets {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: clamp(6px, 1vw, 10px); margin-bottom: clamp(6px, 1vw, 10px);
+        }
+        .ia-preset-btn {
+            background: var(--card); border: 1px solid var(--border-light);
+            border-radius: 10px; height: 70px;
+            padding: clamp(6px, 1vw, 10px) clamp(4px, 0.6vw, 6px);
+            text-align: center; cursor: pointer; transition: all 0.2s ease;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 4px;
+            font-size: clamp(0.65rem, 0.85vw, 0.8rem);
+            position: relative; touch-action: manipulation;
+            overflow: hidden;
+        }
+        .ia-preset-btn i {
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            line-height: 1; display: block;
+        }
+        .ia-preset-btn span {
+            display: block; font-size: clamp(0.55rem, 0.7vw, 0.65rem);
+            font-weight: 500; line-height: 1.1;
+        }
+        .ia-tooltip {
+            position: absolute; bottom: 100%; left: 50%;
+            transform: translateX(-50%); background: var(--surface);
+            color: var(--text); text-align: center; border-radius: 6px;
+            padding: 4px 7px; font-size: 0.55rem; line-height: 1.3;
+            width: 160px; margin-bottom: 6px; opacity: 0;
+            visibility: hidden; transition: all 0.3s; z-index: 10;
+            border: 1px solid var(--border-light); box-shadow: var(--shadow);
+            pointer-events: none;
+        }
+        .ia-tooltip::after {
+            content: ""; position: absolute; top: 100%; left: 50%;
+            margin-left: -5px; border-width: 5px; border-style: solid;
+            border-color: var(--border-light) transparent transparent transparent;
+        }
+        .ia-preset-btn:hover .ia-tooltip { opacity: 1; visibility: visible; }
+        .ia-preset-btn.active {
+            background: var(--btn-active); border-color: var(--accent);
+            color: var(--accent); transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(45, 212, 191, 0.12);
+        }
+
+        .radar-container {
+            background: var(--surface); border-radius: 16px;
+            padding: clamp(4px, 0.8vw, 8px);
+            margin: clamp(3px, 0.6vw, 6px) 0 clamp(6px, 1vw, 12px);
+        }
+        #radarChart { width: 100%; height: clamp(190px, 28vw, 300px) !important; }
+
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: clamp(5px, 0.9vw, 9px); margin: clamp(6px, 1vw, 12px) 0;
+        }
+        .metric-card {
+            background: var(--demo-metric-bg); border-radius: 10px;
+            padding: clamp(6px, 0.9vw, 9px) clamp(4px, 0.6vw, 6px);
+            text-align: center; transition: 0.2s; cursor: default; height: 100%;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        .metric-value {
+            font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+            font-weight: 700; color: var(--accent);
+            display: inline-block; line-height: 1.2;
+        }
+        .metric-label {
+            font-size: clamp(0.45rem, 0.58vw, 0.55rem);
+            text-transform: uppercase; letter-spacing: 0.3px;
+            color: var(--muted); display: block; margin-top: 2px;
+        }
+        .metric-unit {
+            font-size: clamp(0.45rem, 0.58vw, 0.55rem);
+            font-weight: normal; color: var(--muted); margin-left: 2px;
+        }
+        .sim-note-footnote {
+            font-size: clamp(0.48rem, 0.6vw, 0.6rem); color: var(--muted);
+            text-align: center; margin-top: clamp(8px, 1.2vw, 12px);
+            border-top: 1px solid var(--border-light);
+            padding-top: clamp(8px, 1.2vw, 12px); line-height: 1.3;
+        }
+
+        .ia-toast {
+            position: fixed; bottom: 25px; left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: var(--accent); color: #071014;
+            padding: 8px 20px; border-radius: 30px;
+            font-weight: 600; font-size: clamp(0.7rem, 1vw, 0.85rem);
+            z-index: 1000; opacity: 0; pointer-events: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            white-space: nowrap; transition: opacity 0.3s ease, transform 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+        .ia-toast.show {
+            opacity: 1; transform: translateX(-50%) translateY(0);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1100px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 950px) {
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .ia-presets { grid-template-columns: repeat(4, 1fr); }
+            #radarChart { height: clamp(170px, 25vw, 240px) !important; }
+        }
         @media (max-width: 860px) {
             .hero-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .hamburger { display: block; }
             .mobile-menu.open { display: flex; }
-            .demo-grid { flex-direction: column; }
-            .controls-area { border-right: none; border-bottom: 2px solid var(--border-light); }
+            .main-section { flex-direction: column; }
+            .charts-area { order: 1; border-bottom: 2px solid var(--border-light); padding: clamp(6px, 1.4vw, 12px); }
+            .controls-area { order: 2; border-right: none; padding: clamp(6px, 1.4vw, 12px); }
+            .ia-presets { grid-template-columns: repeat(2, 1fr); }
+            #radarChart { height: clamp(160px, 28vw, 210px) !important; }
+        }
+        @media (max-width: 600px) {
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
+            .sliders-grid { gap: 6px 8px; }
+            .slider-group label { font-size: 0.52rem; }
+            .ia-presets { grid-template-columns: repeat(2, 1fr); }
+            .simulation-section { padding: 6px 8px; }
+            .etapas-row { gap: 2px; }
+            .etapa-item i { font-size: 1rem; }
+            .etapa-item span { font-size: 0.46rem; }
+            .progress-area { height: 4px; margin-bottom: 10px; }
+            input[type=range].progress-slider::-webkit-slider-thumb { height: 16px; width: 16px; border-width: 2px; }
+            .big-counter b { font-size: 1rem; }
+            .big-counter span { font-size: 0.7rem; }
+            .btn-main { width: 32px; height: 32px; font-size: 0.8rem; }
+            .ia-preset-btn { height: 60px; font-size: 0.6rem; }
+            .ia-preset-btn i { font-size: 0.95rem; }
+            .ia-preset-btn span { font-size: 0.5rem; }
+            .form-row-duo { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 500px) {
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
+            .sliders-grid { gap: 4px 6px; }
+        }
+        @media (max-width: 380px) {
+            .big-counter b { font-size: 0.9rem; }
+            .btn-main { width: 28px; height: 28px; font-size: 0.7rem; }
+            .ia-preset-btn { height: 55px; }
         }
     </style>
 </head>
@@ -489,54 +786,129 @@
     </div>
 </section>
 
-<!-- ========== INICIO BLOQUE DEMO (todo lo necesario) ========== -->
-<!-- Incluye: HTML, estilos específicos (ya en <style> global) y JavaScript (ECharts + lógica de la demo) -->
+<!-- ========== DASHBOARD AVANZADO INTEGRADO ========== -->
 <section id="demo">
     <div class="container">
         <h2>Panel de Control Interactivo</h2>
+        
         <div class="dashboard-wrapper">
-            <div class="demo-grid">
-                <div class="controls-area">
-                    <h3 style="margin-bottom:28px;">🎛️ PARÁMETROS</h3>
-                    <div class="slider-group">
-                        <label>🔴 ROJO (h/d) <span id="redVal" class="value-indicator">12</span></label>
-                        <input type="range" id="redSlider" min="0" max="18" value="12" step="1">
+            <div class="dashboard-container">
+                <!-- SECCIÓN SUPERIOR: Simulación de crecimiento -->
+                <div class="simulation-section">
+                    <div class="sim-header">
+                        <div class="sim-title">📈 Simulación de Crecimiento</div>
                     </div>
-                    <div class="slider-group">
-                        <label>🔵 AZUL (h/d) <span id="blueVal" class="value-indicator">6</span></label>
-                        <input type="range" id="blueSlider" min="0" max="16" value="6" step="1">
+                    <div class="etapas-row" id="etapasRow">
+                        <div class="etapa-item active" style="--c: var(--color-planta)">
+                            <i class="fa-solid fa-seedling"></i><span>Plántula</span>
+                        </div>
+                        <div class="etapa-item" style="--c: var(--color-crecimiento)">
+                            <i class="fa-solid fa-leaf"></i><span>Crecimiento</span>
+                        </div>
+                        <div class="etapa-item" style="--c: var(--color-venta)">
+                            <i class="fa-solid fa-basket-shopping"></i><span>Venta</span>
+                        </div>
                     </div>
-                    <div class="slider-group">
-                        <label>🌱 EDAD (días) <span id="ageVal" class="value-indicator">20</span></label>
-                        <input type="range" id="ageSlider" min="5" max="45" value="20" step="1">
+                    <div class="progress-area">
+                        <div class="progress-track"></div>
+                        <input type="range" class="progress-slider" id="ageSlider" min="0" max="45" value="20" step="1">
                     </div>
-                    <div class="slider-group">
-                        <label>💧 VPD (kPa) <span id="vpdVal" class="value-indicator">0.9</span></label>
-                        <input type="range" id="vpdSlider" min="0.4" max="1.6" value="0.9" step="0.02">
-                    </div>
-                    <div class="slider-group">
-                        <label>🌀 NEBULIZACIÓN (ciclos/h) <span id="mistVal" class="value-indicator">18</span></label>
-                        <input type="range" id="mistSlider" min="6" max="30" value="18" step="1">
+                    <div class="status-footer">
+                        <div class="controls-box">
+                            <button class="btn-main" id="playGrowthBtn">
+                                <i class="fa-solid fa-play" id="iconPlay"></i>
+                            </button>
+                        </div>
+                        <div class="big-counter">
+                            <b id="ageDisplay">20</b><span> / <span id="maxDayDisplay">45</span> DÍAS</span>
+                        </div>
                     </div>
                 </div>
-                <div class="charts-area">
-                    <h3 style="margin-bottom:20px;">📈 RENDIMIENTO SIMULADO</h3>
-                    <div class="radar-container">
-                        <div id="radarChart"></div>
+
+                <!-- SECCIÓN INFERIOR: Controles y gráficos -->
+                <div class="main-section">
+                    <div class="charts-area">
+                        <div class="control-heading" style="margin-top:0;">📊 Resultados del cultivo</div>
+                        <div class="radar-container">
+                            <div id="radarChart"></div>
+                        </div>
+                        <div class="metrics-grid">
+                            <div class="metric-card"><span class="metric-value" id="growthMetric">—</span><div class="metric-label">🌱 Crecimiento</div><span class="metric-unit">cm²/día</span></div>
+                            <div class="metric-card"><span class="metric-value" id="waterMetric">—</span><div class="metric-label">💧 Efic. hídrica</div><span class="metric-unit">mL/g</span></div>
+                            <div class="metric-card"><span class="metric-value" id="terpMetric">—</span><div class="metric-label">🍃 Aroma</div><span class="metric-unit">u.a.</span></div>
+                            <div class="metric-card"><span class="metric-value" id="healthMetric">—</span><div class="metric-label">🌿 Salud</div><span class="metric-unit">%</span></div>
+                            <div class="metric-card"><span class="metric-value" id="roiMetric">—</span>%<div class="metric-label">💰 ROI</div><span class="metric-unit">%/m²</span></div>
+                            <div class="metric-card"><span class="metric-value" id="ahorroMetric">—</span> €<div class="metric-label">⚡ Ahorro E.</div><span class="metric-unit">€/m²·año</span></div>
+                            <div class="metric-card"><span class="metric-value" id="kWmetric">—</span> kW<div class="metric-label">🔌 Potencia</div><span class="metric-unit">kW/m²</span></div>
+                            <div class="metric-card"><span class="metric-value" id="aguaAhorroMetric">—</span> €<div class="metric-label">💦 Ahorro H.</div><span class="metric-unit">€/m²·año</span></div>
+                        </div>
                     </div>
-                    <div class="metric-row">
-                        <div class="metric-card"><span class="metric-value" id="growthMetric">—</span><br>Crecimiento (cm²/día)</div>
-                        <div class="metric-card"><span class="metric-value" id="waterMetric">—</span><br>Efic. hídrica (mL/g)</div>
-                        <div class="metric-card"><span class="metric-value" id="terpMetric">—</span><br>Terpenos (u.a.)</div>
-                        <div class="metric-card"><span class="metric-value" id="healthMetric">—</span><br>Salud foliar (%)</div>
+
+                    <div class="controls-area">
+                        <div class="control-group">
+                            <div class="control-heading">🌡️ Parámetros de cultivo</div>
+                            <div class="sliders-grid">
+                                <div class="slider-group">
+                                    <label>🔴 ROJO (h/d) <span id="redVal" class="value-indicator">12</span></label>
+                                    <input type="range" id="redSlider" min="0" max="18" value="12" step="1">
+                                </div>
+                                <div class="slider-group">
+                                    <label>🔵 AZUL (h/d) <span id="blueVal" class="value-indicator">6</span></label>
+                                    <input type="range" id="blueSlider" min="0" max="16" value="6" step="1">
+                                </div>
+                                <div class="slider-group">
+                                    <label>💡 INTENSIDAD LUZ (%) <span id="intensidadVal" class="value-indicator">85</span></label>
+                                    <input type="range" id="intensidadSlider" min="40" max="100" value="85" step="5">
+                                </div>
+                                <div class="slider-group">
+                                    <label>💧 VPD (kPa) <span id="vpdVal" class="value-indicator">0.9</span></label>
+                                    <input type="range" id="vpdSlider" min="0.4" max="1.6" value="0.9" step="0.02">
+                                </div>
+                                <div class="slider-group">
+                                    <label>🌀 NEBULIZACIÓN (ciclos/h) <span id="mistVal" class="value-indicator">18</span></label>
+                                    <input type="range" id="mistSlider" min="6" max="30" value="18" step="1">
+                                </div>
+                                <div class="slider-group">
+                                    <label>🌫️ CO₂ (ppm) <span id="co2Val" class="value-indicator">420</span></label>
+                                    <input type="range" id="co2Slider" min="350" max="1200" value="420" step="5">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-heading">🧠 Parámetros inteligentes</div>
+                            <div class="ia-presets" id="iaPresets">
+                                <div class="ia-preset-btn active" data-objetivo="personalizado">
+                                    <i>✏️</i><span>A medida</span>
+                                    <div class="ia-tooltip">Configuración manual de todos los parámetros</div>
+                                </div>
+                                <div class="ia-preset-btn" data-objetivo="sabor">
+                                    <i>🍓</i><span>Potenciar sabor</span>
+                                    <div class="ia-tooltip">Optimiza los parámetros para maximizar compuestos aromáticos</div>
+                                </div>
+                                <div class="ia-preset-btn" data-objetivo="velocidad">
+                                    <i>⚡</i><span>Máx. velocidad</span>
+                                    <div class="ia-tooltip">Acelera el ciclo completo a 30 días ajustando luz, CO₂ e intensidad</div>
+                                </div>
+                                <div class="ia-preset-btn" data-objetivo="eficiencia">
+                                    <i>💡</i><span>Máx. efic. energética</span>
+                                    <div class="ia-tooltip">Optimiza el consumo eléctrico mediante barrido láser selectivo</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sim-note-footnote">
+                            ⚙️ Valores simulados con fines demostrativos. Los resultados reales pueden variar según condiciones específicas.
+                        </div>
                     </div>
-                    <div class="note">* Simulación estimada sobre parámetros genéricos. Los algoritmos reales son propiedad intelectual de AgroAI Lab y no se reflejan en esta demo.</div>
                 </div>
             </div>
         </div>
+        
+        <div id="iaToast" class="ia-toast"></div>
     </div>
 </section>
-<!-- ========== FIN BLOQUE DEMO (HTML) ========== -->
+<!-- ========== FIN DASHBOARD ========== -->
 
 <!-- Equipo & Contacto -->
 <section id="colabora">
@@ -597,242 +969,445 @@
 </footer>
 
 <script>
-    (function() {
-        // ===== SPRAY CANVAS =====
-        const canvas = document.getElementById('sprayCanvas');
-        if (canvas) {
-            const ctxSpray = canvas.getContext('2d');
-            let particles = [];
-            let animId;
+(function() {
+    // ===== SPRAY CANVAS =====
+    const canvas = document.getElementById('sprayCanvas');
+    if (canvas) {
+        const ctxSpray = canvas.getContext('2d');
+        let particles = [];
+        let animId;
 
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Droplet {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 200;
+                this.size = Math.random() * 2.5 + 0.8;
+                this.speedY = -(Math.random() * 0.6 + 0.2);
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.35 + 0.08;
+                this.wobble = Math.random() * Math.PI * 2;
+                this.wobbleSpeed = (Math.random() - 0.5) * 0.015;
+                this.life = 0;
+                this.maxLife = 300 + Math.random() * 500;
             }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            class Droplet {
-                constructor() {
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.wobble) * 0.3;
+                this.wobble += this.wobbleSpeed;
+                this.life++;
+                if (this.y < -20 || this.life > this.maxLife || this.x < -20 || this.x > canvas.width + 20) {
                     this.reset();
                 }
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = canvas.height + Math.random() * 200;
-                    this.size = Math.random() * 2.5 + 0.8;
-                    this.speedY = -(Math.random() * 0.6 + 0.2);
-                    this.speedX = (Math.random() - 0.5) * 0.4;
-                    this.opacity = Math.random() * 0.35 + 0.08;
-                    this.wobble = Math.random() * Math.PI * 2;
-                    this.wobbleSpeed = (Math.random() - 0.5) * 0.015;
-                    this.life = 0;
-                    this.maxLife = 300 + Math.random() * 500;
-                }
-                update() {
-                    this.y += this.speedY;
-                    this.x += this.speedX + Math.sin(this.wobble) * 0.3;
-                    this.wobble += this.wobbleSpeed;
-                    this.life++;
-                    if (this.y < -20 || this.life > this.maxLife || this.x < -20 || this.x > canvas.width + 20) {
-                        this.reset();
-                    }
-                }
-                draw(ctx) {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(200,230,255,${this.opacity})`;
-                    ctx.fill();
-                    ctx.shadowBlur = 6;
-                    ctx.shadowColor = `rgba(180,220,255,${this.opacity * 0.6})`;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                }
             }
-
-            const PARTICLE_COUNT = 70;
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new Droplet());
+            draw(ctx) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200,230,255,${this.opacity})`;
+                ctx.fill();
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = `rgba(180,220,255,${this.opacity * 0.6})`;
+                ctx.fill();
+                ctx.shadowBlur = 0;
             }
-
-            function animateSpray() {
-                ctxSpray.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw(ctxSpray);
-                });
-                animId = requestAnimationFrame(animateSpray);
-            }
-            animateSpray();
         }
 
-        // ===== THEME TOGGLE =====
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-        function getCurrentTheme() { return html.getAttribute('data-theme'); }
-        themeToggle.addEventListener('click', () => {
-            const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            if (window.radarChart) {
-                window.radarChart.clear();
-                window.radarChart.setOption(getEChartsOption(newTheme));
+        const PARTICLE_COUNT = 70;
+        for (let i = 0; i < PARTICLE_COUNT; i++) { particles.push(new Droplet()); }
+
+        function animateSpray() {
+            ctxSpray.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(ctxSpray); });
+            animId = requestAnimationFrame(animateSpray);
+        }
+        animateSpray();
+    }
+
+    // ===== THEME TOGGLE =====
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    function getCurrentTheme() { return html.getAttribute('data-theme'); }
+    themeToggle.addEventListener('click', () => {
+        const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        if (window.radarChart) {
+            window.radarChart.clear();
+            window.radarChart.setOption(getEChartsOption(newTheme));
+        }
+    });
+
+    // ===== MOBILE MENU =====
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // ========== DASHBOARD AVANZADO: FUNCIONES ==========
+    
+    function formatSigFig(value) {
+        if (value === undefined || isNaN(value)) return "—";
+        if (Math.abs(value) >= 100) return Math.round(value).toString();
+        if (Math.abs(value) >= 10) return value.toFixed(1);
+        if (Math.abs(value) >= 1) return value.toPrecision(3);
+        return value.toPrecision(2);
+    }
+
+    function showToast(message, duration = 1000) {
+        const toast = document.getElementById('iaToast');
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), duration);
+    }
+
+    function getFenologicPhase(age, maxAge = 45) {
+        const ratio = age / maxAge;
+        if (ratio < 0.33) return "plantula";
+        if (ratio < 0.66) return "crecimiento";
+        return "venta";
+    }
+
+    const objectivePresets = {
+        personalizado: { red: 12, blue: 8, intensidad: 75, vpd: 0.9, mist: 18, co2: 450, maxAge: 45 },
+        sabor: { red: 14, blue: 12, intensidad: 85, vpd: 0.8, mist: 20, co2: 600, maxAge: 45 },
+        velocidad: { red: 16, blue: 13, intensidad: 95, vpd: 1.0, mist: 24, co2: 1000, maxAge: 30 },
+        eficiencia: { red: 8, blue: 6, intensidad: 60, vpd: 0.9, mist: 16, co2: 420, maxAge: 45 }
+    };
+
+    function applyObjectivePreset(objetivo) {
+        const p = objectivePresets[objetivo];
+        if (!p) return;
+
+        document.getElementById('redSlider').value = p.red;
+        document.getElementById('blueSlider').value = p.blue;
+        document.getElementById('intensidadSlider').value = p.intensidad;
+        document.getElementById('vpdSlider').value = p.vpd;
+        document.getElementById('mistSlider').value = p.mist;
+        document.getElementById('co2Slider').value = p.co2;
+
+        document.getElementById('redVal').innerText = p.red;
+        document.getElementById('blueVal').innerText = p.blue;
+        document.getElementById('intensidadVal').innerText = p.intensidad;
+        document.getElementById('vpdVal').innerText = p.vpd.toFixed(2);
+        document.getElementById('mistVal').innerText = p.mist;
+        document.getElementById('co2Val').innerText = p.co2;
+
+        const ageSlider = document.getElementById('ageSlider');
+        const maxDayDisplay = document.getElementById('maxDayDisplay');
+        if (ageSlider && maxDayDisplay) {
+            const oldMax = parseInt(ageSlider.max);
+            const newMax = p.maxAge;
+            ageSlider.max = newMax;
+            maxDayDisplay.innerText = newMax;
+            if (parseInt(ageSlider.value) > newMax) { ageSlider.value = newMax; }
+            if (oldMax !== newMax) {
+                const bigB = document.querySelector('.big-counter b');
+                bigB.classList.add('pulse-animation');
+                setTimeout(() => bigB.classList.remove('pulse-animation'), 600);
             }
-        });
+        }
 
-        // ===== MOBILE MENU =====
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
-        });
+        if (window.updateDemoAdvanced) window.updateDemoAdvanced();
+        updatePlayButtonIcon();
+    }
 
-        // ===== SMOOTH SCROLL =====
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
+    function activateIAThinking(objetivo) {
+        if (objetivo === 'personalizado') {
+            applyObjectivePreset(objetivo);
+            showToast("✏️ Modo a medida activado", 1000);
+            return;
+        }
+        showToast("🧠 IA pensando...", 1000);
+        setTimeout(() => {
+            applyObjectivePreset(objetivo);
+            const msg = objetivo === 'velocidad' ? '✅ Ciclo acelerado a 30 días' : '✅ Parámetros optimizados';
+            showToast(msg, 1000);
+        }, 1000);
+    }
 
-        // ========== INICIO BLOQUE DEMO (JavaScript específico) ==========
-        // Funciones necesarias para la demo: radar chart, actualización de sliders, etc.
-        function getEChartsOption(theme) {
-            const isLight = theme === 'light';
-            return {
-                radar: {
-                    indicator: [
-                        { name: 'Crecimiento', max: 100 },
-                        { name: 'Efic. hídrica', max: 100 },
-                        { name: 'Terpenos', max: 100 },
-                        { name: 'Salud foliar', max: 100 }
-                    ],
-                    center: ['50%', '50%'],
-                    radius: '75%',
-                    axisName: {
+    function updateEtapasVisuales(age, maxAge) {
+        const items = document.querySelectorAll('#etapasRow .etapa-item');
+        items.forEach(i => i.classList.remove('active'));
+        const phase = getFenologicPhase(age, maxAge);
+        const fases = ['plantula', 'crecimiento', 'venta'];
+        const idx = fases.indexOf(phase);
+        if (idx >= 0) items[idx].classList.add('active');
+    }
+
+    function updatePlayButtonIcon() {
+        const icon = document.getElementById('iconPlay');
+        const age = parseInt(document.getElementById('ageSlider').value);
+        const maxAge = parseInt(document.getElementById('ageSlider').max);
+        const simRunning = window.growthSimulationInterval !== null;
+        if (simRunning) { icon.className = 'fa-solid fa-pause'; }
+        else if (age >= maxAge) { icon.className = 'fa-solid fa-stop'; }
+        else { icon.className = 'fa-solid fa-play'; }
+    }
+
+    function getEChartsOption(theme) {
+        const isLight = theme === 'light';
+        return {
+            radar: {
+                indicator: [
+                    { name: 'Crecimiento', max: 100 },
+                    { name: 'Efic. hídrica', max: 100 },
+                    { name: 'Aroma', max: 100 },
+                    { name: 'Salud foliar', max: 100 },
+                    { name: 'Efic. energética', max: 100 }
+                ],
+                center: ['50%', '50%'], radius: '75%',
+                name: {
+                    textStyle: {
                         color: isLight ? '#1a2e2a' : '#e6eef5',
-                        fontSize: 11,
-                        fontFamily: 'Inter, sans-serif'
-                    },
-                    splitArea: {
-                        areaStyle: { color: [isLight ? 'rgba(31,94,63,0.04)' : 'rgba(45,212,191,0.04)'] }
-                    },
-                    splitLine: { lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' } },
-                    axisLine: { lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' } }
+                        fontSize: 10, fontWeight: '500'
+                    }
                 },
-                series: [{
-                    type: 'radar',
-                    data: [{ value: [65, 70, 55, 80], name: 'Rendimiento (%)' }],
-                    symbol: 'circle',
-                    symbolSize: 8,
-                    lineStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', width: 2 },
-                    areaStyle: { color: isLight ? 'rgba(31,94,63,0.2)' : 'rgba(45,212,191,0.25)' },
-                    itemStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', borderColor: '#fff', borderWidth: 1.5 }
-                }],
-                tooltip: { trigger: 'item' }
-            };
-        }
-
-        function initRadar() {
-            const radarDom = document.getElementById('radarChart');
-            if (!radarDom || !window.echarts) {
-                setTimeout(initRadar, 50);
-                return;
-            }
-            window.radarChart = echarts.init(radarDom);
-            window.radarChart.setOption(getEChartsOption(getCurrentTheme()));
-            setTimeout(() => {
-                if (window.radarChart) window.radarChart.resize();
-            }, 150);
-            window.addEventListener('resize', () => {
-                if (window.radarChart) window.radarChart.resize();
-            });
-        }
-
-        window.updateDemo = function() {
-            if (!window.radarChart) return;
-            const red = +document.getElementById('redSlider').value;
-            const blue = +document.getElementById('blueSlider').value;
-            const age = +document.getElementById('ageSlider').value;
-            const vpd = +document.getElementById('vpdSlider').value;
-            const mist = +document.getElementById('mistSlider').value;
-
-            document.getElementById('redVal').innerText = red;
-            document.getElementById('blueVal').innerText = blue;
-            document.getElementById('ageVal').innerText = age;
-            document.getElementById('vpdVal').innerText = vpd.toFixed(2);
-            document.getElementById('mistVal').innerText = mist;
-
-            let growth = 3 + (red/18)*5 + (blue/16)*3;
-            let ageFactor = Math.min(1.2, age/35);
-            let vpdStress = 1 - Math.abs(vpd - 0.9) * 0.7;
-            let mistEff = 1 - Math.abs(mist-18)*0.025;
-            growth = growth * ageFactor * vpdStress * mistEff;
-            growth = Math.min(22, Math.max(1.5, growth));
-
-            let waterEff = 110 - (mistEff*20) - (red/18)*10 + (vpdStress*10);
-            waterEff = Math.min(130, Math.max(30, waterEff));
-
-            let terpenes = 0.3 + (red/18)*0.6 * vpdStress * mistEff;
-            terpenes = Math.min(0.9, Math.max(0.2, terpenes));
-
-            let health = (vpdStress*0.7 + mistEff*0.3) * 100;
-            health = Math.min(98, Math.max(18, Math.floor(health)));
-
-            document.getElementById('growthMetric').innerText = growth.toFixed(1);
-            document.getElementById('waterMetric').innerText = Math.round(waterEff);
-            document.getElementById('terpMetric').innerText = terpenes.toFixed(2);
-            document.getElementById('healthMetric').innerText = health;
-
-            window.radarChart.setOption({
-                series: [{
-                    data: [{ value: [
-                        Math.min(100, (growth/22)*100),
-                        Math.min(100, ((130-waterEff)/100)*100),
-                        (terpenes/0.9)*100,
-                        health
-                    ], name: 'Rendimiento (%)' }]
-                }]
-            });
+                splitArea: {
+                    areaStyle: { color: [isLight ? 'rgba(31,94,63,0.04)' : 'rgba(45,212,191,0.04)'] }
+                },
+                splitLine: {
+                    lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' }
+                }
+            },
+            series: [{
+                type: 'radar',
+                data: [{ value: [65, 70, 55, 80, 72], name: 'Rendimiento (%)' }],
+                symbol: 'circle', symbolSize: 5,
+                lineStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', width: 1.5 },
+                areaStyle: { color: isLight ? 'rgba(31,94,63,0.2)' : 'rgba(45,212,191,0.25)' },
+                itemStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', borderColor: '#fff', borderWidth: 1 }
+            }],
+            tooltip: { trigger: 'item' }
         };
+    }
 
-        function bindSliders() {
-            const ids = ['redSlider','blueSlider','ageSlider','vpdSlider','mistSlider'];
-            ids.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.addEventListener('input', window.updateDemo);
+    function initRadarAdvanced() {
+        const radarDom = document.getElementById('radarChart');
+        if (!radarDom || !window.echarts) { setTimeout(initRadarAdvanced, 50); return; }
+        window.radarChart = echarts.init(radarDom);
+        window.radarChart.setOption(getEChartsOption(getCurrentTheme()));
+        setTimeout(() => window.radarChart?.resize(), 100);
+        window.addEventListener('resize', () => window.radarChart?.resize());
+        updateDemoAdvanced();
+    }
+
+    function updateDemoAdvanced() {
+        if (!window.radarChart) return;
+
+        let red = +document.getElementById('redSlider').value;
+        let blue = +document.getElementById('blueSlider').value;
+        let intensidad = +document.getElementById('intensidadSlider').value;
+        let age = +document.getElementById('ageSlider').value;
+        let vpd = +document.getElementById('vpdSlider').value;
+        let mist = +document.getElementById('mistSlider').value;
+        let co2 = +document.getElementById('co2Slider').value;
+        const maxAge = +document.getElementById('ageSlider').max;
+
+        document.getElementById('redVal').innerText = red;
+        document.getElementById('blueVal').innerText = blue;
+        document.getElementById('intensidadVal').innerText = intensidad;
+        document.getElementById('vpdVal').innerText = vpd.toFixed(2);
+        document.getElementById('mistVal').innerText = mist;
+        document.getElementById('co2Val').innerText = co2;
+        document.getElementById('ageDisplay').innerText = age;
+        document.getElementById('maxDayDisplay').innerText = maxAge;
+        updateEtapasVisuales(age, maxAge);
+        updatePlayButtonIcon();
+
+        let intensidadFactor = intensidad / 100;
+        let vpdStress = 1 - Math.abs(vpd - 0.9) * 0.6;
+        let mistEff = 1 - Math.abs(mist - 18) * 0.02;
+        let co2Effect = 1 + (co2 - 400) / 1500;
+        co2Effect = Math.min(1.5, Math.max(0.85, co2Effect));
+        let ageFactor = Math.min(1.3, age / (maxAge * 0.78));
+
+        let growthBase = (3 + (red / 18) * 5 + (blue / 16) * 3) * intensidadFactor;
+        let growth = growthBase * ageFactor * vpdStress * mistEff * co2Effect;
+        growth = Math.min(24, Math.max(1.2, growth));
+
+        let waterEff = 110 - (mistEff * 25) - (red / 18) * 12 + (vpdStress * 12);
+        waterEff = Math.min(130, Math.max(28, waterEff));
+
+        let terpenes = 0.3 + (red / 18) * 0.7 * vpdStress * mistEff * (co2Effect * 0.8 + 0.2);
+        terpenes = Math.min(1.0, Math.max(0.2, terpenes));
+
+        let health = (vpdStress * 0.5 + mistEff * 0.3 + (co2Effect - 0.85) * 0.8) * 100;
+        health = Math.min(98, Math.max(15, Math.floor(health)));
+
+        let powerKW = (red / 18) * 0.25 + (blue / 16) * 0.15 + (mist / 30) * 0.08;
+        powerKW = Math.min(0.48, Math.max(0.12, powerKW)) * (1 - (intensidad - 40) / 300);
+        powerKW = Math.min(0.48, Math.max(0.10, powerKW));
+
+        const activePreset = document.querySelector('.ia-preset-btn.active')?.dataset?.objetivo || 'personalizado';
+        if (activePreset === "eficiencia") { powerKW = powerKW * 0.6; growth = growth * 1.25; terpenes = terpenes * 1.2; }
+        if (activePreset === "velocidad") { growth = growth * 1.15; terpenes = terpenes * 0.95; }
+
+        let basePower = 0.8;
+        let kWhAhorro = (basePower - powerKW) * 18 * 365;
+        let ahorroEuro = kWhAhorro * 0.15;
+        ahorroEuro = Math.max(0, Math.min(800, ahorroEuro));
+        if (activePreset === "eficiencia") ahorroEuro = ahorroEuro * 1.5;
+
+        let aguaAhorradaL = (waterEff < 50 ? 500 : 300);
+        let ahorroAguaEuro = (aguaAhorradaL / 1000) * 2;
+        if (activePreset === "eficiencia") ahorroAguaEuro = ahorroAguaEuro * 1.2;
+
+        let mejoraProduccion = (growth / 15) * 300;
+        let beneficioAnual = ahorroEuro + ahorroAguaEuro + mejoraProduccion;
+        let roi = (beneficioAnual / 1200) * 100;
+        roi = Math.min(180, Math.max(15, Math.round(roi)));
+        if (activePreset === "eficiencia") roi = roi * 1.3;
+
+        document.getElementById('growthMetric').innerText = formatSigFig(growth);
+        document.getElementById('waterMetric').innerText = formatSigFig(waterEff);
+        document.getElementById('terpMetric').innerText = formatSigFig(terpenes);
+        document.getElementById('healthMetric').innerText = formatSigFig(health);
+        document.getElementById('kWmetric').innerText = formatSigFig(powerKW);
+        document.getElementById('ahorroMetric').innerText = formatSigFig(ahorroEuro);
+        document.getElementById('aguaAhorroMetric').innerText = formatSigFig(ahorroAguaEuro);
+        document.getElementById('roiMetric').innerText = formatSigFig(roi);
+
+        let radarValues = [
+            Math.min(100, (growth / 24) * 100),
+            Math.min(100, ((130 - waterEff) / 100) * 100),
+            Math.min(100, (terpenes / 1.0) * 100),
+            health,
+            Math.min(100, ((0.48 - powerKW) / 0.38) * 100)
+        ].map(v => Math.min(100, Math.max(0, v)));
+
+        window.radarChart.setOption({
+            radar: {
+                indicator: [
+                    { name: 'Crecimiento', max: 100 },
+                    { name: 'Efic. hídrica', max: 100 },
+                    { name: 'Aroma', max: 100 },
+                    { name: 'Salud foliar', max: 100 },
+                    { name: 'Efic. energética', max: 100 }
+                ]
+            },
+            series: [{
+                type: 'radar',
+                data: [{ value: radarValues, name: 'Rendimiento (%)' }]
+            }]
+        });
+    }
+
+    function bindDashboardControls() {
+        const presetButtons = document.querySelectorAll('.ia-preset-btn');
+        presetButtons.forEach(button => {
+            const handler = (e) => {
+                e.preventDefault();
+                presetButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const objetivo = button.dataset.objetivo;
+                activateIAThinking(objetivo);
+            };
+            button.addEventListener('click', handler);
+            button.addEventListener('touchend', handler);
+        });
+
+        const sliders = ['redSlider', 'blueSlider', 'intensidadSlider', 'vpdSlider', 'mistSlider', 'co2Slider'];
+        sliders.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', () => {
+                if (window.growthSimulationInterval) {
+                    clearInterval(window.growthSimulationInterval);
+                    window.growthSimulationInterval = null;
+                }
+                updateDemoAdvanced();
             });
-            if (window.radarChart) window.updateDemo();
+        });
+
+        const ageSlider = document.getElementById('ageSlider');
+        if (ageSlider) {
+            ageSlider.addEventListener('input', () => {
+                if (window.growthSimulationInterval) {
+                    clearInterval(window.growthSimulationInterval);
+                    window.growthSimulationInterval = null;
+                }
+                updateDemoAdvanced();
+            });
         }
 
-        // Inicializar cuando el DOM esté listo
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                initRadar();
-                setTimeout(bindSliders, 100);
-            });
-        } else {
-            initRadar();
-            setTimeout(bindSliders, 100);
+        const playBtn = document.getElementById('playGrowthBtn');
+        if (playBtn) {
+            const playHandler = (e) => {
+                e.preventDefault();
+                const age = parseInt(document.getElementById('ageSlider').value);
+                const maxAge = parseInt(document.getElementById('ageSlider').max);
+
+                if (window.growthSimulationInterval) {
+                    clearInterval(window.growthSimulationInterval);
+                    window.growthSimulationInterval = null;
+                    updatePlayButtonIcon();
+                    return;
+                }
+                if (age >= maxAge) {
+                    document.getElementById('ageSlider').value = 0;
+                    updateDemoAdvanced();
+                } else {
+                    window.growthSimulationInterval = setInterval(() => {
+                        let currentAge = parseInt(document.getElementById('ageSlider').value);
+                        const currentMax = parseInt(document.getElementById('ageSlider').max);
+                        if (currentAge >= currentMax) {
+                            clearInterval(window.growthSimulationInterval);
+                            window.growthSimulationInterval = null;
+                            updateDemoAdvanced();
+                            return;
+                        }
+                        currentAge++;
+                        document.getElementById('ageSlider').value = currentAge;
+                        document.getElementById('ageDisplay').innerText = currentAge;
+                        updateDemoAdvanced();
+                    }, 300);
+                    updatePlayButtonIcon();
+                }
+            };
+            playBtn.addEventListener('click', playHandler);
+            playBtn.addEventListener('touchend', playHandler);
         }
-        // ========== FIN BLOQUE DEMO (JavaScript) ==========
+    }
 
-        // ===== FORMSPREE =====
-        window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
-        formspree('initForm', { formElement: '#my-form', formId: 'mbdwggjy' });
+    // ===== FORMSPREE =====
+    window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#my-form', formId: 'mbdwggjy' });
 
-        const form = document.getElementById('my-form');
-        const statusDiv = document.getElementById('form-status');
-        form.addEventListener('formspree:success', () => {
-            statusDiv.textContent = '✅ Mensaje enviado. ¡Gracias!';
-            statusDiv.className = 'success';
-            form.reset();
-        });
-        form.addEventListener('formspree:error', () => {
-            statusDiv.textContent = '❌ Error al enviar. Intenta de nuevo.';
-            statusDiv.className = 'error';
-        });
-    })();
+    const form = document.getElementById('my-form');
+    const statusDiv = document.getElementById('form-status');
+    form.addEventListener('formspree:success', () => {
+        statusDiv.textContent = '✅ Mensaje enviado. ¡Gracias!';
+        statusDiv.className = 'success';
+        form.reset();
+    });
+    form.addEventListener('formspree:error', () => {
+        statusDiv.textContent = '❌ Error al enviar. Intenta de nuevo.';
+        statusDiv.className = 'error';
+    });
+
+    // ===== INICIALIZACIÓN =====
+    document.addEventListener('DOMContentLoaded', () => {
+        initRadarAdvanced();
+        bindDashboardControls();
+    });
+})();
 </script>
 </body>
 </html>
