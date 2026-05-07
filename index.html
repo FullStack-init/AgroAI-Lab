@@ -546,7 +546,6 @@
             background: var(--surface); border-radius: 16px;
             padding: clamp(4px, 0.8vw, 8px);
             margin: clamp(3px, 0.6vw, 6px) 0 clamp(6px, 1vw, 12px);
-            /* FIX #1: Margen superior en móvil para evitar corte de etiquetas */
             padding-top: clamp(24px, 3vw, 8px);
         }
         #radarChart { width: 100%; height: clamp(190px, 28vw, 300px) !important; }
@@ -564,6 +563,7 @@
             transform: translateY(-2px);
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
         }
+        /* FIX #5: Valor y unidad en misma línea */
         .metric-value {
             font-size: clamp(0.85rem, 1.2vw, 1.05rem);
             font-weight: 700; color: var(--accent);
@@ -573,7 +573,7 @@
         .metric-unit {
             font-size: clamp(0.45rem, 0.58vw, 0.55rem);
             font-weight: 500; color: var(--muted);
-            margin-left: 2px; display: inline;
+            display: inline;
         }
         .metric-label {
             font-size: clamp(0.45rem, 0.58vw, 0.55rem);
@@ -842,14 +842,14 @@
                             <div id="radarChart"></div>
                         </div>
                         <div class="metrics-grid">
-                            <div class="metric-card"><span class="metric-value" id="growthMetric">—<span class="metric-unit">cm²/día</span></span><div class="metric-label">🌱 Crecimiento</div></div>
-                            <div class="metric-card"><span class="metric-value" id="waterMetric">—<span class="metric-unit">mL/g</span></span><div class="metric-label">💧 Efic. hídrica</div></div>
-                            <div class="metric-card"><span class="metric-value" id="terpMetric">—<span class="metric-unit">u.a.</span></span><div class="metric-label">🍃 Aroma</div></div>
-                            <div class="metric-card"><span class="metric-value" id="healthMetric">—<span class="metric-unit">%</span></span><div class="metric-label">🌿 Salud</div></div>
-                            <div class="metric-card"><span class="metric-value" id="roiMetric">—<span class="metric-unit">%/m²</span></span><div class="metric-label">💰 ROI</div></div>
-                            <div class="metric-card"><span class="metric-value" id="ahorroMetric">—<span class="metric-unit">€/m²·año</span></span><div class="metric-label">⚡ Ahorro E.</div></div>
-                            <div class="metric-card"><span class="metric-value" id="kWmetric">—<span class="metric-unit">kW/m²</span></span><div class="metric-label">🔌 Potencia</div></div>
-                            <div class="metric-card"><span class="metric-value" id="aguaAhorroMetric">—<span class="metric-unit">€/m²·año</span></span><div class="metric-label">💦 Ahorro H.</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="growthMetric">—</span><span class="metric-unit">cm²/día</span></span><div class="metric-label">🌱 Crecimiento</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="waterMetric">—</span><span class="metric-unit">mL/g</span></span><div class="metric-label">💧 Efic. hídrica</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="terpMetric">—</span><span class="metric-unit">u.a.</span></span><div class="metric-label">🍃 Aroma</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="healthMetric">—</span><span class="metric-unit">%</span></span><div class="metric-label">🌿 Salud</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="roiMetric">—</span><span class="metric-unit">%/m²</span></span><div class="metric-label">💰 ROI</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="ahorroMetric">—</span><span class="metric-unit">€/m²·año</span></span><div class="metric-label">⚡ Ahorro E.</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="kWmetric">—</span><span class="metric-unit">kW/m²</span></span><div class="metric-label">🔌 Potencia</div></div>
+                            <div class="metric-card"><span class="metric-value"><span id="aguaAhorroMetric">—</span><span class="metric-unit">€/m²·año</span></span><div class="metric-label">💦 Ahorro H.</div></div>
                         </div>
                     </div>
 
@@ -1176,17 +1176,20 @@
         }
     }
 
-    // FIX #4: Formatter para tooltip con decimales limitados
+    // FIX #4: Formateador corregido para tooltip del radar
     function formatTooltipValue(value) {
-        if (value >= 100) return Math.round(value).toString();
-        if (value >= 10) return value.toFixed(1);
-        if (value >= 1) return value.toPrecision(3);
+        if (isNaN(value)) return "—";
+        if (Math.abs(value) >= 100) return Math.round(value).toString();
+        if (Math.abs(value) >= 10) return value.toFixed(1);
+        if (Math.abs(value) >= 1) return value.toFixed(1);
         return value.toFixed(2);
     }
 
+    var radarNames = ['Crecimiento', 'Efic. hídrica', 'Aroma', 'Salud foliar', 'Efic. energética'];
+
     function getEChartsOption(theme) {
         var isLight = theme === 'light';
-        var fontSize = 10; // FIX #2: Tamaño uniforme para todas las etiquetas
+        var fontSize = 10;
         return {
             radar: {
                 indicator: [
@@ -1201,7 +1204,7 @@
                 name: {
                     textStyle: {
                         color: isLight ? '#1a2e2a' : '#e6eef5',
-                        fontSize: fontSize, // FIX #2: Tamaño uniforme aplicado
+                        fontSize: fontSize,
                         fontWeight: '500'
                     }
                 },
@@ -1234,15 +1237,18 @@
                     borderWidth: 1
                 }
             }],
-            tooltip: { 
+            // FIX #4: Tooltip funcional con decimales limitados
+            tooltip: {
                 trigger: 'item',
-                // FIX #4: Formateador para limitar decimales en tooltip
                 formatter: function(params) {
-                    return params.name + '<br/>' + 
-                        params.data.value.map(function(v, i) {
-                            return params.seriesName + ' - ' + params.marker + ' ' + 
-                                params.radar.indicator[i].name + ': ' + formatTooltipValue(v);
-                        }).join('<br/>');
+                    if (params.componentType === 'radar' && params.value) {
+                        var lines = [];
+                        for (var i = 0; i < params.value.length; i++) {
+                            lines.push(radarNames[i] + ': ' + formatTooltipValue(params.value[i]));
+                        }
+                        return lines.join('<br>');
+                    }
+                    return '';
                 }
             }
         };
@@ -1329,6 +1335,7 @@
         roi = Math.min(180, Math.max(15, Math.round(roi)));
         if (activePreset === "eficiencia") roi = roi * 1.3;
 
+        // FIX #5: Actualizar solo el span numérico, no el contenedor completo
         document.getElementById('growthMetric').innerText = formatSigFig(growth);
         document.getElementById('waterMetric').innerText = formatSigFig(waterEff);
         document.getElementById('terpMetric').innerText = formatSigFig(terpenes);
