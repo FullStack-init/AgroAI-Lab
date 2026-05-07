@@ -404,6 +404,9 @@
             font-family: 'Inter', sans-serif; font-weight: 700;
             color: var(--text); text-align: center; line-height: 1.1;
             white-space: nowrap; flex-shrink: 0;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 2px;
         }
         .big-counter b {
             font-family: 'Orbitron', 'Inter', monospace;
@@ -418,11 +421,14 @@
         }
 
         @keyframes pulse-age {
-            0% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.2); transform: scale(1); }
-            50% { color: var(--gold); text-shadow: 0 0 18px rgba(245, 158, 11, 0.8); transform: scale(1.1); }
-            100% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.2); transform: scale(1); }
+            0% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.3); transform: scale(1); }
+            50% { color: var(--gold); text-shadow: 0 0 24px rgba(245, 158, 11, 1); transform: scale(1.08); }
+            100% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.3); transform: scale(1); }
         }
         .pulse-animation { animation: pulse-age 0.6s ease-in-out; }
+        .pulse-animation b, .pulse-animation span {
+            animation: pulse-age 0.6s ease-in-out;
+        }
 
         .main-section { display: flex; flex-wrap: wrap; }
         .charts-area { order: 1; }
@@ -483,16 +489,12 @@
             border-bottom: none; padding-bottom: 0; margin-bottom: 0;
         }
         .control-heading {
-            margin-bottom: clamp(12px, 1.5vw, 16px);
+            margin-bottom: clamp(8px, 1.4vw, 14px);
             padding-top: clamp(4px, 0.8vw, 8px);
             font-family: var(--font); font-weight: 600;
             font-size: clamp(0.75rem, 1vw, 0.9rem);
             letter-spacing: 0.5px; text-transform: uppercase;
-            color: var(--accent); margin: 0;
-        }
-        /* ✨ Ajuste: margen extra después de títulos de parámetros */
-        .control-group .control-heading {
-            margin-bottom: clamp(14px, 1.8vw, 20px);
+            color: var(--accent); margin-top: 0;
         }
 
         .ia-presets {
@@ -544,13 +546,10 @@
             background: var(--surface); border-radius: 16px;
             padding: clamp(4px, 0.8vw, 8px);
             margin: clamp(3px, 0.6vw, 6px) 0 clamp(6px, 1vw, 12px);
+            /* FIX #1: Margen superior en móvil para evitar corte de etiquetas */
+            padding-top: clamp(24px, 3vw, 8px);
         }
         #radarChart { width: 100%; height: clamp(190px, 28vw, 300px) !important; }
-        /* ✨ Ajuste: más altura en móvil para evitar corte de etiquetas */
-        @media (max-width: 820px) {
-            #radarChart { height: clamp(210px, 32vw, 260px) !important; }
-            .radar-container { padding-top: clamp(8px, 1.2vw, 14px); }
-        }
 
         .metrics-grid {
             display: grid; grid-template-columns: repeat(4, 1fr);
@@ -568,16 +567,18 @@
         .metric-value {
             font-size: clamp(0.85rem, 1.2vw, 1.05rem);
             font-weight: 700; color: var(--accent);
-            display: inline-block; line-height: 1.2;
+            display: inline-flex; align-items: baseline; gap: 2px;
+            line-height: 1.2; white-space: nowrap;
+        }
+        .metric-unit {
+            font-size: clamp(0.45rem, 0.58vw, 0.55rem);
+            font-weight: 500; color: var(--muted);
+            margin-left: 2px; display: inline;
         }
         .metric-label {
             font-size: clamp(0.45rem, 0.58vw, 0.55rem);
             text-transform: uppercase; letter-spacing: 0.3px;
             color: var(--muted); display: block; margin-top: 2px;
-        }
-        .metric-unit {
-            font-size: clamp(0.45rem, 0.58vw, 0.55rem);
-            font-weight: normal; color: var(--muted); margin-left: 2px;
         }
         .sim-note-footnote {
             font-size: clamp(0.48rem, 0.6vw, 0.6rem); color: var(--muted);
@@ -617,7 +618,6 @@
             .charts-area { order: 1; border-bottom: 2px solid var(--border-light); padding: clamp(6px, 1.4vw, 12px); }
             .controls-area { order: 2; border-right: none; padding: clamp(6px, 1.4vw, 12px); }
             .ia-presets { grid-template-columns: repeat(2, 1fr); }
-            #radarChart { height: clamp(160px, 28vw, 210px) !important; }
         }
         @media (max-width: 600px) {
             .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 5px; }
@@ -820,7 +820,6 @@
                     </div>
                     <div class="progress-area">
                         <div class="progress-track"></div>
-                        <!-- ✨ Ajuste: slider inicia en 0 días -->
                         <input type="range" class="progress-slider" id="ageSlider" min="0" max="45" value="0" step="1">
                     </div>
                     <div class="status-footer">
@@ -830,7 +829,6 @@
                             </button>
                         </div>
                         <div class="big-counter">
-                            <!-- ✨ Ajuste: display inicia en 0 -->
                             <b id="ageDisplay">0</b><span> / <span id="maxDayDisplay">45</span> DÍAS</span>
                         </div>
                     </div>
@@ -844,14 +842,14 @@
                             <div id="radarChart"></div>
                         </div>
                         <div class="metrics-grid">
-                            <div class="metric-card"><span class="metric-value" id="growthMetric">—</span><div class="metric-label">🌱 Crecimiento</div><span class="metric-unit">cm²/día</span></div>
-                            <div class="metric-card"><span class="metric-value" id="waterMetric">—</span><div class="metric-label">💧 Efic. hídrica</div><span class="metric-unit">mL/g</span></div>
-                            <div class="metric-card"><span class="metric-value" id="terpMetric">—</span><div class="metric-label">🍃 Aroma</div><span class="metric-unit">u.a.</span></div>
-                            <div class="metric-card"><span class="metric-value" id="healthMetric">—</span><div class="metric-label">🌿 Salud</div><span class="metric-unit">%</span></div>
-                            <div class="metric-card"><span class="metric-value" id="roiMetric">—</span>%<div class="metric-label">💰 ROI</div><span class="metric-unit">%/m²</span></div>
-                            <div class="metric-card"><span class="metric-value" id="ahorroMetric">—</span> €<div class="metric-label">⚡ Ahorro E.</div><span class="metric-unit">€/m²·año</span></div>
-                            <div class="metric-card"><span class="metric-value" id="kWmetric">—</span> kW<div class="metric-label">🔌 Potencia</div><span class="metric-unit">kW/m²</span></div>
-                            <div class="metric-card"><span class="metric-value" id="aguaAhorroMetric">—</span> €<div class="metric-label">💦 Ahorro H.</div><span class="metric-unit">€/m²·año</span></div>
+                            <div class="metric-card"><span class="metric-value" id="growthMetric">—<span class="metric-unit">cm²/día</span></span><div class="metric-label">🌱 Crecimiento</div></div>
+                            <div class="metric-card"><span class="metric-value" id="waterMetric">—<span class="metric-unit">mL/g</span></span><div class="metric-label">💧 Efic. hídrica</div></div>
+                            <div class="metric-card"><span class="metric-value" id="terpMetric">—<span class="metric-unit">u.a.</span></span><div class="metric-label">🍃 Aroma</div></div>
+                            <div class="metric-card"><span class="metric-value" id="healthMetric">—<span class="metric-unit">%</span></span><div class="metric-label">🌿 Salud</div></div>
+                            <div class="metric-card"><span class="metric-value" id="roiMetric">—<span class="metric-unit">%/m²</span></span><div class="metric-label">💰 ROI</div></div>
+                            <div class="metric-card"><span class="metric-value" id="ahorroMetric">—<span class="metric-unit">€/m²·año</span></span><div class="metric-label">⚡ Ahorro E.</div></div>
+                            <div class="metric-card"><span class="metric-value" id="kWmetric">—<span class="metric-unit">kW/m²</span></span><div class="metric-label">🔌 Potencia</div></div>
+                            <div class="metric-card"><span class="metric-value" id="aguaAhorroMetric">—<span class="metric-unit">€/m²·año</span></span><div class="metric-label">💦 Ahorro H.</div></div>
                         </div>
                     </div>
 
@@ -986,7 +984,6 @@
     if (canvas) {
         const ctxSpray = canvas.getContext('2d');
         let particles = [];
-        let animId;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -1021,58 +1018,58 @@
             draw(ctx) {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200,230,255,${this.opacity})`;
+                ctx.fillStyle = 'rgba(200,230,255,' + this.opacity + ')';
                 ctx.fill();
                 ctx.shadowBlur = 6;
-                ctx.shadowColor = `rgba(180,220,255,${this.opacity * 0.6})`;
+                ctx.shadowColor = 'rgba(180,220,255,' + (this.opacity * 0.6) + ')';
                 ctx.fill();
                 ctx.shadowBlur = 0;
             }
         }
 
-        const PARTICLE_COUNT = 70;
-        for (let i = 0; i < PARTICLE_COUNT; i++) { particles.push(new Droplet()); }
+        for (let i = 0; i < 70; i++) { particles.push(new Droplet()); }
 
         function animateSpray() {
             ctxSpray.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(ctxSpray); });
-            animId = requestAnimationFrame(animateSpray);
+            particles.forEach(function(p) { p.update(); p.draw(ctxSpray); });
+            requestAnimationFrame(animateSpray);
         }
         animateSpray();
     }
 
     // ===== THEME TOGGLE =====
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
+    var themeToggle = document.getElementById('themeToggle');
+    var html = document.documentElement;
     function getCurrentTheme() { return html.getAttribute('data-theme'); }
-    themeToggle.addEventListener('click', () => {
-        const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
+    themeToggle.addEventListener('click', function() {
+        var newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
         html.setAttribute('data-theme', newTheme);
         if (window.radarChart) {
             window.radarChart.clear();
             window.radarChart.setOption(getEChartsOption(newTheme));
+            updateDemoAdvanced();
         }
     });
 
     // ===== MOBILE MENU =====
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    var hamburgerBtn = document.getElementById('hamburgerBtn');
+    var mobileMenu = document.getElementById('mobileMenu');
+    hamburgerBtn.addEventListener('click', function() { mobileMenu.classList.toggle('open'); });
+    document.querySelectorAll('.mobile-menu a').forEach(function(link) {
+        link.addEventListener('click', function() { mobileMenu.classList.remove('open'); });
     });
 
     // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if(target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     });
 
-    // ========== DASHBOARD AVANZADO: FUNCIONES ==========
-    
+    // ========== DASHBOARD AVANZADO ==========
+
     function formatSigFig(value) {
         if (value === undefined || isNaN(value)) return "—";
         if (Math.abs(value) >= 100) return Math.round(value).toString();
@@ -1081,22 +1078,24 @@
         return value.toPrecision(2);
     }
 
-    function showToast(message, duration = 1000) {
-        const toast = document.getElementById('iaToast');
+    function showToast(message, duration) {
+        duration = duration || 1000;
+        var toast = document.getElementById('iaToast');
         if (!toast) return;
         toast.textContent = message;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), duration);
+        setTimeout(function() { toast.classList.remove('show'); }, duration);
     }
 
-    function getFenologicPhase(age, maxAge = 45) {
-        const ratio = age / maxAge;
+    function getFenologicPhase(age, maxAge) {
+        maxAge = maxAge || 45;
+        var ratio = age / maxAge;
         if (ratio < 0.33) return "plantula";
         if (ratio < 0.66) return "crecimiento";
         return "venta";
     }
 
-    const objectivePresets = {
+    var objectivePresets = {
         personalizado: { red: 12, blue: 8, intensidad: 75, vpd: 0.9, mist: 18, co2: 450, maxAge: 45 },
         sabor: { red: 14, blue: 12, intensidad: 85, vpd: 0.8, mist: 20, co2: 600, maxAge: 45 },
         velocidad: { red: 16, blue: 13, intensidad: 95, vpd: 1.0, mist: 24, co2: 1000, maxAge: 30 },
@@ -1104,7 +1103,7 @@
     };
 
     function applyObjectivePreset(objetivo) {
-        const p = objectivePresets[objetivo];
+        var p = objectivePresets[objetivo];
         if (!p) return;
 
         document.getElementById('redSlider').value = p.red;
@@ -1121,18 +1120,18 @@
         document.getElementById('mistVal').innerText = p.mist;
         document.getElementById('co2Val').innerText = p.co2;
 
-        const ageSlider = document.getElementById('ageSlider');
-        const maxDayDisplay = document.getElementById('maxDayDisplay');
+        var ageSlider = document.getElementById('ageSlider');
+        var maxDayDisplay = document.getElementById('maxDayDisplay');
         if (ageSlider && maxDayDisplay) {
-            const oldMax = parseInt(ageSlider.max);
-            const newMax = p.maxAge;
+            var oldMax = parseInt(ageSlider.max);
+            var newMax = p.maxAge;
             ageSlider.max = newMax;
             maxDayDisplay.innerText = newMax;
             if (parseInt(ageSlider.value) > newMax) { ageSlider.value = newMax; }
             if (oldMax !== newMax) {
-                const bigB = document.querySelector('.big-counter b');
-                bigB.classList.add('pulse-animation');
-                setTimeout(() => bigB.classList.remove('pulse-animation'), 600);
+                var bigCounter = document.querySelector('.big-counter');
+                bigCounter.classList.add('pulse-animation');
+                setTimeout(function() { bigCounter.classList.remove('pulse-animation'); }, 600);
             }
         }
 
@@ -1147,34 +1146,47 @@
             return;
         }
         showToast("🧠 IA pensando...", 1000);
-        setTimeout(() => {
+        setTimeout(function() {
             applyObjectivePreset(objetivo);
-            const msg = objetivo === 'velocidad' ? '✅ Ciclo acelerado a 30 días' : '✅ Parámetros optimizados';
+            var msg = objetivo === 'velocidad' ? '✅ Ciclo acelerado a 30 días' : '✅ Parámetros optimizados';
             showToast(msg, 1000);
         }, 1000);
     }
 
     function updateEtapasVisuales(age, maxAge) {
-        const items = document.querySelectorAll('#etapasRow .etapa-item');
-        items.forEach(i => i.classList.remove('active'));
-        const phase = getFenologicPhase(age, maxAge);
-        const fases = ['plantula', 'crecimiento', 'venta'];
-        const idx = fases.indexOf(phase);
+        var items = document.querySelectorAll('#etapasRow .etapa-item');
+        items.forEach(function(i) { i.classList.remove('active'); });
+        var phase = getFenologicPhase(age, maxAge);
+        var fases = ['plantula', 'crecimiento', 'venta'];
+        var idx = fases.indexOf(phase);
         if (idx >= 0) items[idx].classList.add('active');
     }
 
     function updatePlayButtonIcon() {
-        const icon = document.getElementById('iconPlay');
-        const age = parseInt(document.getElementById('ageSlider').value);
-        const maxAge = parseInt(document.getElementById('ageSlider').max);
-        const simRunning = window.growthSimulationInterval !== null;
-        if (simRunning) { icon.className = 'fa-solid fa-pause'; }
-        else if (age >= maxAge) { icon.className = 'fa-solid fa-stop'; }
-        else { icon.className = 'fa-solid fa-play'; }
+        var icon = document.getElementById('iconPlay');
+        var age = parseInt(document.getElementById('ageSlider').value);
+        var maxAge = parseInt(document.getElementById('ageSlider').max);
+        var simRunning = window.growthSimulationInterval !== null;
+        if (simRunning) {
+            icon.className = 'fa-solid fa-pause';
+        } else if (age >= maxAge) {
+            icon.className = 'fa-solid fa-stop';
+        } else {
+            icon.className = 'fa-solid fa-play';
+        }
+    }
+
+    // FIX #4: Formatter para tooltip con decimales limitados
+    function formatTooltipValue(value) {
+        if (value >= 100) return Math.round(value).toString();
+        if (value >= 10) return value.toFixed(1);
+        if (value >= 1) return value.toPrecision(3);
+        return value.toFixed(2);
     }
 
     function getEChartsOption(theme) {
-        const isLight = theme === 'light';
+        var isLight = theme === 'light';
+        var fontSize = 10; // FIX #2: Tamaño uniforme para todas las etiquetas
         return {
             radar: {
                 indicator: [
@@ -1184,53 +1196,82 @@
                     { name: 'Salud foliar', max: 100 },
                     { name: 'Efic. energética', max: 100 }
                 ],
-                center: ['50%', '50%'], radius: '75%',
+                center: ['50%', '50%'],
+                radius: '72%',
                 name: {
                     textStyle: {
                         color: isLight ? '#1a2e2a' : '#e6eef5',
-                        fontSize: 10, fontWeight: '500'
+                        fontSize: fontSize, // FIX #2: Tamaño uniforme aplicado
+                        fontWeight: '500'
                     }
                 },
                 splitArea: {
-                    areaStyle: { color: [isLight ? 'rgba(31,94,63,0.04)' : 'rgba(45,212,191,0.04)'] }
+                    areaStyle: {
+                        color: [isLight ? 'rgba(31,94,63,0.04)' : 'rgba(45,212,191,0.04)']
+                    }
                 },
                 splitLine: {
-                    lineStyle: { color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)' }
+                    lineStyle: {
+                        color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'
+                    }
                 }
             },
             series: [{
                 type: 'radar',
                 data: [{ value: [65, 70, 55, 80, 72], name: 'Rendimiento (%)' }],
-                symbol: 'circle', symbolSize: 5,
-                lineStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', width: 1.5 },
-                areaStyle: { color: isLight ? 'rgba(31,94,63,0.2)' : 'rgba(45,212,191,0.25)' },
-                itemStyle: { color: isLight ? '#1f5e3f' : '#2dd4bf', borderColor: '#fff', borderWidth: 1 }
+                symbol: 'circle',
+                symbolSize: 5,
+                lineStyle: {
+                    color: isLight ? '#1f5e3f' : '#2dd4bf',
+                    width: 1.5
+                },
+                areaStyle: {
+                    color: isLight ? 'rgba(31,94,63,0.2)' : 'rgba(45,212,191,0.25)'
+                },
+                itemStyle: {
+                    color: isLight ? '#1f5e3f' : '#2dd4bf',
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }
             }],
-            tooltip: { trigger: 'item' }
+            tooltip: { 
+                trigger: 'item',
+                // FIX #4: Formateador para limitar decimales en tooltip
+                formatter: function(params) {
+                    return params.name + '<br/>' + 
+                        params.data.value.map(function(v, i) {
+                            return params.seriesName + ' - ' + params.marker + ' ' + 
+                                params.radar.indicator[i].name + ': ' + formatTooltipValue(v);
+                        }).join('<br/>');
+                }
+            }
         };
     }
 
     function initRadarAdvanced() {
-        const radarDom = document.getElementById('radarChart');
-        if (!radarDom || !window.echarts) { setTimeout(initRadarAdvanced, 50); return; }
+        var radarDom = document.getElementById('radarChart');
+        if (!radarDom || !window.echarts) {
+            setTimeout(initRadarAdvanced, 50);
+            return;
+        }
         window.radarChart = echarts.init(radarDom);
         window.radarChart.setOption(getEChartsOption(getCurrentTheme()));
-        setTimeout(() => window.radarChart?.resize(), 100);
-        window.addEventListener('resize', () => window.radarChart?.resize());
+        setTimeout(function() { if (window.radarChart) window.radarChart.resize(); }, 100);
+        window.addEventListener('resize', function() { if (window.radarChart) window.radarChart.resize(); });
         updateDemoAdvanced();
     }
 
     function updateDemoAdvanced() {
         if (!window.radarChart) return;
 
-        let red = +document.getElementById('redSlider').value;
-        let blue = +document.getElementById('blueSlider').value;
-        let intensidad = +document.getElementById('intensidadSlider').value;
-        let age = +document.getElementById('ageSlider').value;
-        let vpd = +document.getElementById('vpdSlider').value;
-        let mist = +document.getElementById('mistSlider').value;
-        let co2 = +document.getElementById('co2Slider').value;
-        const maxAge = +document.getElementById('ageSlider').max;
+        var red = +document.getElementById('redSlider').value;
+        var blue = +document.getElementById('blueSlider').value;
+        var intensidad = +document.getElementById('intensidadSlider').value;
+        var age = +document.getElementById('ageSlider').value;
+        var vpd = +document.getElementById('vpdSlider').value;
+        var mist = +document.getElementById('mistSlider').value;
+        var co2 = +document.getElementById('co2Slider').value;
+        var maxAge = +document.getElementById('ageSlider').max;
 
         document.getElementById('redVal').innerText = red;
         document.getElementById('blueVal').innerText = blue;
@@ -1243,47 +1284,48 @@
         updateEtapasVisuales(age, maxAge);
         updatePlayButtonIcon();
 
-        let intensidadFactor = intensidad / 100;
-        let vpdStress = 1 - Math.abs(vpd - 0.9) * 0.6;
-        let mistEff = 1 - Math.abs(mist - 18) * 0.02;
-        let co2Effect = 1 + (co2 - 400) / 1500;
+        var intensidadFactor = intensidad / 100;
+        var vpdStress = 1 - Math.abs(vpd - 0.9) * 0.6;
+        var mistEff = 1 - Math.abs(mist - 18) * 0.02;
+        var co2Effect = 1 + (co2 - 400) / 1500;
         co2Effect = Math.min(1.5, Math.max(0.85, co2Effect));
-        let ageFactor = Math.min(1.3, age / (maxAge * 0.78));
+        var ageFactor = Math.min(1.3, age / (maxAge * 0.78));
 
-        let growthBase = (3 + (red / 18) * 5 + (blue / 16) * 3) * intensidadFactor;
-        let growth = growthBase * ageFactor * vpdStress * mistEff * co2Effect;
+        var growthBase = (3 + (red / 18) * 5 + (blue / 16) * 3) * intensidadFactor;
+        var growth = growthBase * ageFactor * vpdStress * mistEff * co2Effect;
         growth = Math.min(24, Math.max(1.2, growth));
 
-        let waterEff = 110 - (mistEff * 25) - (red / 18) * 12 + (vpdStress * 12);
+        var waterEff = 110 - (mistEff * 25) - (red / 18) * 12 + (vpdStress * 12);
         waterEff = Math.min(130, Math.max(28, waterEff));
 
-        let terpenes = 0.3 + (red / 18) * 0.7 * vpdStress * mistEff * (co2Effect * 0.8 + 0.2);
+        var terpenes = 0.3 + (red / 18) * 0.7 * vpdStress * mistEff * (co2Effect * 0.8 + 0.2);
         terpenes = Math.min(1.0, Math.max(0.2, terpenes));
 
-        let health = (vpdStress * 0.5 + mistEff * 0.3 + (co2Effect - 0.85) * 0.8) * 100;
+        var health = (vpdStress * 0.5 + mistEff * 0.3 + (co2Effect - 0.85) * 0.8) * 100;
         health = Math.min(98, Math.max(15, Math.floor(health)));
 
-        let powerKW = (red / 18) * 0.25 + (blue / 16) * 0.15 + (mist / 30) * 0.08;
+        var powerKW = (red / 18) * 0.25 + (blue / 16) * 0.15 + (mist / 30) * 0.08;
         powerKW = Math.min(0.48, Math.max(0.12, powerKW)) * (1 - (intensidad - 40) / 300);
         powerKW = Math.min(0.48, Math.max(0.10, powerKW));
 
-        const activePreset = document.querySelector('.ia-preset-btn.active')?.dataset?.objetivo || 'personalizado';
+        var activePresetEl = document.querySelector('.ia-preset-btn.active');
+        var activePreset = activePresetEl ? activePresetEl.dataset.objetivo : 'personalizado';
         if (activePreset === "eficiencia") { powerKW = powerKW * 0.6; growth = growth * 1.25; terpenes = terpenes * 1.2; }
         if (activePreset === "velocidad") { growth = growth * 1.15; terpenes = terpenes * 0.95; }
 
-        let basePower = 0.8;
-        let kWhAhorro = (basePower - powerKW) * 18 * 365;
-        let ahorroEuro = kWhAhorro * 0.15;
+        var basePower = 0.8;
+        var kWhAhorro = (basePower - powerKW) * 18 * 365;
+        var ahorroEuro = kWhAhorro * 0.15;
         ahorroEuro = Math.max(0, Math.min(800, ahorroEuro));
         if (activePreset === "eficiencia") ahorroEuro = ahorroEuro * 1.5;
 
-        let aguaAhorradaL = (waterEff < 50 ? 500 : 300);
-        let ahorroAguaEuro = (aguaAhorradaL / 1000) * 2;
+        var aguaAhorradaL = (waterEff < 50 ? 500 : 300);
+        var ahorroAguaEuro = (aguaAhorradaL / 1000) * 2;
         if (activePreset === "eficiencia") ahorroAguaEuro = ahorroAguaEuro * 1.2;
 
-        let mejoraProduccion = (growth / 15) * 300;
-        let beneficioAnual = ahorroEuro + ahorroAguaEuro + mejoraProduccion;
-        let roi = (beneficioAnual / 1200) * 100;
+        var mejoraProduccion = (growth / 15) * 300;
+        var beneficioAnual = ahorroEuro + ahorroAguaEuro + mejoraProduccion;
+        var roi = (beneficioAnual / 1200) * 100;
         roi = Math.min(180, Math.max(15, Math.round(roi)));
         if (activePreset === "eficiencia") roi = roi * 1.3;
 
@@ -1296,49 +1338,41 @@
         document.getElementById('aguaAhorroMetric').innerText = formatSigFig(ahorroAguaEuro);
         document.getElementById('roiMetric').innerText = formatSigFig(roi);
 
-        let radarValues = [
+        var radarValues = [
             Math.min(100, (growth / 24) * 100),
             Math.min(100, ((130 - waterEff) / 100) * 100),
             Math.min(100, (terpenes / 1.0) * 100),
             health,
             Math.min(100, ((0.48 - powerKW) / 0.38) * 100)
-        ].map(v => Math.min(100, Math.max(0, v)));
+        ].map(function(v) { return Math.min(100, Math.max(0, v)); });
 
         window.radarChart.setOption({
-            radar: {
-                indicator: [
-                    { name: 'Crecimiento', max: 100 },
-                    { name: 'Efic. hídrica', max: 100 },
-                    { name: 'Aroma', max: 100 },
-                    { name: 'Salud foliar', max: 100 },
-                    { name: 'Efic. energética', max: 100 }
-                ]
-            },
             series: [{
-                type: 'radar',
                 data: [{ value: radarValues, name: 'Rendimiento (%)' }]
             }]
         });
     }
 
+    window.growthSimulationInterval = null;
+
     function bindDashboardControls() {
-        const presetButtons = document.querySelectorAll('.ia-preset-btn');
-        presetButtons.forEach(button => {
-            const handler = (e) => {
+        var presetButtons = document.querySelectorAll('.ia-preset-btn');
+        presetButtons.forEach(function(button) {
+            var handler = function(e) {
                 e.preventDefault();
-                presetButtons.forEach(btn => btn.classList.remove('active'));
+                presetButtons.forEach(function(btn) { btn.classList.remove('active'); });
                 button.classList.add('active');
-                const objetivo = button.dataset.objetivo;
+                var objetivo = button.dataset.objetivo;
                 activateIAThinking(objetivo);
             };
             button.addEventListener('click', handler);
             button.addEventListener('touchend', handler);
         });
 
-        const sliders = ['redSlider', 'blueSlider', 'intensidadSlider', 'vpdSlider', 'mistSlider', 'co2Slider'];
-        sliders.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('input', () => {
+        var sliders = ['redSlider', 'blueSlider', 'intensidadSlider', 'vpdSlider', 'mistSlider', 'co2Slider'];
+        sliders.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', function() {
                 if (window.growthSimulationInterval) {
                     clearInterval(window.growthSimulationInterval);
                     window.growthSimulationInterval = null;
@@ -1347,9 +1381,9 @@
             });
         });
 
-        const ageSlider = document.getElementById('ageSlider');
+        var ageSlider = document.getElementById('ageSlider');
         if (ageSlider) {
-            ageSlider.addEventListener('input', () => {
+            ageSlider.addEventListener('input', function() {
                 if (window.growthSimulationInterval) {
                     clearInterval(window.growthSimulationInterval);
                     window.growthSimulationInterval = null;
@@ -1358,12 +1392,12 @@
             });
         }
 
-        const playBtn = document.getElementById('playGrowthBtn');
+        var playBtn = document.getElementById('playGrowthBtn');
         if (playBtn) {
-            const playHandler = (e) => {
+            var playHandler = function(e) {
                 e.preventDefault();
-                const age = parseInt(document.getElementById('ageSlider').value);
-                const maxAge = parseInt(document.getElementById('ageSlider').max);
+                var age = parseInt(document.getElementById('ageSlider').value);
+                var maxAge = parseInt(document.getElementById('ageSlider').max);
 
                 if (window.growthSimulationInterval) {
                     clearInterval(window.growthSimulationInterval);
@@ -1375,9 +1409,9 @@
                     document.getElementById('ageSlider').value = 0;
                     updateDemoAdvanced();
                 } else {
-                    window.growthSimulationInterval = setInterval(() => {
-                        let currentAge = parseInt(document.getElementById('ageSlider').value);
-                        const currentMax = parseInt(document.getElementById('ageSlider').max);
+                    window.growthSimulationInterval = setInterval(function() {
+                        var currentAge = parseInt(document.getElementById('ageSlider').value);
+                        var currentMax = parseInt(document.getElementById('ageSlider').max);
                         if (currentAge >= currentMax) {
                             clearInterval(window.growthSimulationInterval);
                             window.growthSimulationInterval = null;
@@ -1401,20 +1435,20 @@
     window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
     formspree('initForm', { formElement: '#my-form', formId: 'mbdwggjy' });
 
-    const form = document.getElementById('my-form');
-    const statusDiv = document.getElementById('form-status');
-    form.addEventListener('formspree:success', () => {
+    var form = document.getElementById('my-form');
+    var statusDiv = document.getElementById('form-status');
+    form.addEventListener('formspree:success', function() {
         statusDiv.textContent = '✅ Mensaje enviado. ¡Gracias!';
         statusDiv.className = 'success';
         form.reset();
     });
-    form.addEventListener('formspree:error', () => {
+    form.addEventListener('formspree:error', function() {
         statusDiv.textContent = '❌ Error al enviar. Intenta de nuevo.';
         statusDiv.className = 'error';
     });
 
     // ===== INICIALIZACIÓN =====
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', function() {
         initRadarAdvanced();
         bindDashboardControls();
     });
