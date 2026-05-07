@@ -490,6 +490,10 @@
             letter-spacing: 0.5px; text-transform: uppercase;
             color: var(--accent); margin: 0;
         }
+        /* ✨ Ajuste: margen extra después de títulos de parámetros */
+        .control-group .control-heading {
+            margin-bottom: clamp(14px, 1.8vw, 20px);
+        }
 
         .ia-presets {
             display: grid; grid-template-columns: repeat(4, 1fr);
@@ -542,6 +546,11 @@
             margin: clamp(3px, 0.6vw, 6px) 0 clamp(6px, 1vw, 12px);
         }
         #radarChart { width: 100%; height: clamp(190px, 28vw, 300px) !important; }
+        /* ✨ Ajuste: más altura en móvil para evitar corte de etiquetas */
+        @media (max-width: 820px) {
+            #radarChart { height: clamp(210px, 32vw, 260px) !important; }
+            .radar-container { padding-top: clamp(8px, 1.2vw, 14px); }
+        }
 
         .metrics-grid {
             display: grid; grid-template-columns: repeat(4, 1fr);
@@ -811,7 +820,8 @@
                     </div>
                     <div class="progress-area">
                         <div class="progress-track"></div>
-                        <input type="range" class="progress-slider" id="ageSlider" min="0" max="45" value="20" step="1">
+                        <!-- ✨ Ajuste: slider inicia en 0 días -->
+                        <input type="range" class="progress-slider" id="ageSlider" min="0" max="45" value="0" step="1">
                     </div>
                     <div class="status-footer">
                         <div class="controls-box">
@@ -820,7 +830,8 @@
                             </button>
                         </div>
                         <div class="big-counter">
-                            <b id="ageDisplay">20</b><span> / <span id="maxDayDisplay">45</span> DÍAS</span>
+                            <!-- ✨ Ajuste: display inicia en 0 -->
+                            <b id="ageDisplay">0</b><span> / <span id="maxDayDisplay">45</span> DÍAS</span>
                         </div>
                     </div>
                 </div>
