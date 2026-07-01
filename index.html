@@ -1,99 +1,138 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="AgroAI Lab: Plataforma aeropónica inteligente con control autónomo por IA, sensores multivariable, iluminación espectral y optimización biológica en tiempo real.">
-    <title>AgroAI Lab | Aeroponía Evolutiva descentralizada</title>
+    <meta name="description" content="AgroAI Lab: Tu huerta virtual automatizada con IA. Diseñá el sabor, nosotros cultivamos. Aeroponía, robótica y datos que transforman la agricultura.">
+    <title>AgroAI Lab | Tu huerta virtual automatizada con IA</title>
     <link rel="icon" href="icono.png" type="image/png">
 
     <!-- Tipografías profesionales -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- Font Awesome para iconos del dashboard -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- ECharts -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
-    
+
     <!-- Formspree AJAX -->
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
     <style>
-        /* ==========  VARIABLES GLOBALES  ========== */
+        /* ==========  VARIABLES GLOBALES (NEUMORPHISM)  ========== */
         :root {
-            --bg: #0b1116;
-            --surface: #121a21;
-            --card: #162029;
-            --text: #e6eef5;
-            --muted: #8a9baa;
-            --accent: #2dd4bf;
-            --accent2: #3b82f6;
-            --gold: #f59e0b;
+            /* Modo claro (tonos tierra) */
+            --bg: #e8ede4;
+            --bg-alt: #e3e8df;
+            --surface: #f5f7f3;
+            --card: #f5f7f3;
+            --text: #1e2a1f;
+            --text-secondary: #3d4f40;
+            --muted: #5b6e60;
+            --accent: #4a874d;
+            --accent-strong: #3b6e3e;
+            --accent-light: #a8d4a9;
+            --accent-bg: #dce8db;
+            --accent2: #2563eb;
+            --gold: #b8860b;
             --success: #10b981;
             --danger: #ef4444;
-            --radius: 14px;
-            --shadow: 0 10px 28px rgba(0,0,0,0.5);
+            --radius-sm: 10px;
+            --radius: 16px;
+            --radius-lg: 22px;
+            --radius-xl: 28px;
+            --radius-full: 9999px;
+            --shadow-dark: rgba(139, 150, 140, 0.45);
+            --shadow-light: rgba(255, 255, 255, 0.85);
+            --shadow-dark-sm: rgba(139, 150, 140, 0.3);
+            --shadow-light-sm: rgba(255, 255, 255, 0.7);
             --font: 'Inter', system-ui, -apple-system, sans-serif;
             --font-title: 'Outfit', 'Inter', system-ui, sans-serif;
-            --header-bg: rgba(11,17,22,0.88);
-            --border-light: rgba(255,255,255,0.08);
-            --btn-primary-bg: var(--accent);
-            --btn-primary-text: #071014;
-            --input-bg: #1a2630;
-            --input-border: #2d3c48;
-            --demo-bg: #162029;
-            --demo-controls-bg: #1d2a32;
-            --demo-charts-bg: #162029;
-            --demo-slider-track: #2d3c48;
-            --demo-slider-thumb: #2dd4bf;
-            --demo-metric-bg: #1d2a32;
-            --demo-label: #bde5d4;
-            --btn-hover: rgba(45, 212, 191, 0.1);
-            --btn-active: rgba(45, 212, 191, 0.2);
-            --color-planta: #6ee7b7;
-            --color-crecimiento: #34d399;
-            --color-venta: #fbbf24;
-        }
-
-        [data-theme="light"] {
-            --bg: #f0f4f2;
-            --surface: #ffffff;
-            --card: #ffffff;
-            --text: #1a2e2a;
-            --muted: #5b6e66;
-            --accent: #1f8a4c;
-            --accent2: #2563eb;
-            --header-bg: rgba(255,255,255,0.92);
-            --border-light: rgba(0,0,0,0.06);
-            --btn-primary-bg: #1f5e3f;
-            --btn-primary-text: #ffffff;
+            --header-bg: rgba(232, 237, 228, 0.82);
+            --border-light: rgba(139, 150, 140, 0.18);
+            --btn-primary-bg: #dce8db;
+            --btn-primary-text: #3b6e3e;
             --input-bg: #fefefe;
-            --input-border: #d0e0d8;
-            --demo-bg: #ffffff;
-            --demo-controls-bg: #f8fbf9;
-            --demo-charts-bg: #ffffff;
-            --demo-slider-track: #e0ece6;
-            --demo-slider-thumb: #1f5e3f;
-            --demo-metric-bg: #f0f7f3;
+            --input-border: #d0d8ce;
+            --demo-bg: #f5f7f3;
+            --demo-controls-bg: #eef2eb;
+            --demo-charts-bg: #f5f7f3;
+            --demo-slider-track: #dde4d9;
+            --demo-slider-thumb: #4a874d;
+            --demo-metric-bg: #eef2eb;
             --demo-label: #2c5142;
-            --btn-hover: rgba(31, 138, 76, 0.1);
-            --btn-active: rgba(31, 138, 76, 0.2);
+            --btn-hover: rgba(74, 135, 77, 0.08);
+            --btn-active: rgba(74, 135, 77, 0.15);
             --color-planta: #6ee7b7;
             --color-crecimiento: #34d399;
             --color-venta: #f59e0b;
+            --neu-elevation: 6px 6px 14px var(--shadow-dark), -6px -6px 14px var(--shadow-light);
+            --neu-elevation-sm: 3px 3px 8px var(--shadow-dark-sm), -3px -3px 8px var(--shadow-light-sm);
+            --neu-elevation-lg: 10px 10px 22px var(--shadow-dark), -10px -10px 22px var(--shadow-light);
+            --neu-inset: inset 5px 5px 12px var(--shadow-dark), inset -5px -5px 12px var(--shadow-light);
+            --neu-inset-sm: inset 2px 2px 6px var(--shadow-dark-sm), inset -2px -2px 6px var(--shadow-light-sm);
+        }
+
+        [data-theme="dark"] {
+            /* Modo oscuro con tonos azulados */
+            --bg: #141c22;           /* azul muy oscuro */
+            --bg-alt: #181f26;
+            --surface: #1a242d;
+            --card: #1d2832;
+            --text: #e2e9f0;
+            --text-secondary: #bcc7d0;
+            --muted: #7d8b96;
+            --accent: #5b9bd5;       /* azul acento */
+            --accent-strong: #6faedc;
+            --accent-light: #3a5f80;
+            --accent-bg: #1e3140;
+            --accent2: #4b8bf5;
+            --gold: #f0b429;
+            --header-bg: rgba(20, 28, 34, 0.88);
+            --border-light: rgba(255, 255, 255, 0.07);
+            --btn-primary-bg: #1e3140;
+            --btn-primary-text: #6faedc;
+            --input-bg: #1a242d;
+            --input-border: #2d3c48;
+            --demo-bg: #1d2832;
+            --demo-controls-bg: #19232c;
+            --demo-charts-bg: #1d2832;
+            --demo-slider-track: #2d3c48;
+            --demo-slider-thumb: #5b9bd5;
+            --demo-metric-bg: #19232c;
+            --demo-label: #bdd5e8;
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+            --shadow-light: rgba(255, 255, 255, 0.04);
+            --shadow-dark-sm: rgba(0, 0, 0, 0.4);
+            --shadow-light-sm: rgba(255, 255, 255, 0.03);
+            --neu-elevation: 8px 8px 18px rgba(0, 0, 0, 0.5), -4px -4px 12px rgba(255, 255, 255, 0.03);
+            --neu-elevation-sm: 4px 4px 10px rgba(0, 0, 0, 0.4), -2px -2px 6px rgba(255, 255, 255, 0.02);
+            --neu-elevation-lg: 12px 12px 26px rgba(0, 0, 0, 0.55), -6px -6px 16px rgba(255, 255, 255, 0.03);
+            --neu-inset: inset 6px 6px 14px rgba(0, 0, 0, 0.5), inset -4px -4px 10px rgba(255, 255, 255, 0.025);
+            --neu-inset-sm: inset 3px 3px 7px rgba(0, 0, 0, 0.4), inset -2px -2px 5px rgba(255, 255, 255, 0.02);
         }
 
         /* ========== BASE ========== */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
         body {
             background: var(--bg);
             color: var(--text);
             font-family: var(--font);
-            line-height: 1.55;
-            -webkit-font-smoothing: antialiased;
-            transition: background 0.3s, color 0.3s;
+            line-height: 1.6;
+            letter-spacing: -0.01em;
+            transition: background 0.35s ease, color 0.35s ease;
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
@@ -101,130 +140,453 @@
             touch-action: manipulation;
         }
 
-        /* Canvas de microgotas spray */
         #sprayCanvas {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.4;
+            opacity: 0.3;
         }
-        [data-theme="light"] #sprayCanvas { opacity: 0.25; }
+        [data-theme="dark"] #sprayCanvas {
+            opacity: 0.35;
+        }
 
-        a { color: var(--accent); text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .container { max-width: 1240px; margin: 0 auto; padding: 0 22px; position: relative; z-index: 1; }
+        a {
+            color: var(--accent-strong);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        a:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 22px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-title);
+            letter-spacing: -0.025em;
+            line-height: 1.18;
+            font-weight: 700;
+        }
+        h1 {
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            font-weight: 800;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+        h2 {
+            font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        h3 {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        p {
+            color: var(--text-secondary);
+        }
+        .highlight {
+            color: var(--accent-strong);
+            font-weight: 700;
+        }
 
         /* ========== NAVBAR ========== */
         nav {
-            position: sticky; top: 0; z-index: 50;
+            position: sticky;
+            top: 0;
+            z-index: 50;
             background: var(--header-bg);
-            backdrop-filter: blur(14px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-light);
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            margin-bottom: 8px;
         }
         .nav-inner {
-            display: flex; align-items: center; justify-content: space-between; padding: 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
         }
-        .logo { display: flex; align-items: center; cursor: pointer; }
-        .logo img { height: 40px; width: auto; border-radius: 10px; }
-        .nav-links { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .logo-img {
+            height: 42px;
+            width: auto;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--neu-inset-sm);
+            transition: opacity 0.3s;
+        }
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
         .nav-links a {
-            color: var(--muted); font-size: 0.88rem; font-weight: 500;
-            padding: 4px 0; transition: color 0.2s; cursor: pointer;
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 4px 0;
+            transition: color 0.2s;
+            cursor: pointer;
             font-family: var(--font);
+            position: relative;
         }
-        .nav-links a:hover, .nav-links a.active { color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); }
-        .nav-links a.active { color: var(--accent); }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--accent-strong);
+            transition: width 0.25s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a.active {
+            color: var(--accent-strong);
+        }
 
-        .hamburger { display: none; background: none; border: none; color: var(--text); cursor: pointer; }
-        .hamburger svg { width: 26px; height: 26px; }
-        .mobile-menu { display: none; flex-direction: column; background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 12px; position: absolute; top: 60px; right: 20px; z-index: 100; }
-        .mobile-menu a { padding: 8px 12px; color: var(--text); font-weight: 500; }
-        .mobile-menu a:hover { background: var(--card); border-radius: 6px; }
+        .hamburger {
+            display: none;
+            background: var(--bg);
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--neu-elevation-sm);
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+        .hamburger:active {
+            box-shadow: var(--neu-inset-sm);
+        }
+        .hamburger svg {
+            width: 22px;
+            height: 22px;
+        }
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            z-index: 100;
+            box-shadow: var(--neu-elevation-lg);
+        }
+        .mobile-menu a {
+            padding: 10px 14px;
+            color: var(--text);
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+        .mobile-menu a:hover {
+            background: var(--accent-bg);
+            color: var(--accent-strong);
+        }
 
         .theme-toggle {
-            background: none; border: 1px solid var(--border-light); color: var(--text);
-            padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem;
-            margin-left: 8px; transition: background 0.2s;
+            background: var(--bg);
+            border: 1px solid var(--border-light);
+            color: var(--text);
+            padding: 7px 11px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 8px;
+            transition: all 0.25s ease;
+            box-shadow: var(--neu-elevation-sm);
         }
-        .theme-toggle:hover { background: var(--card); }
+        .theme-toggle:hover {
+            box-shadow: var(--neu-elevation);
+            transform: translateY(-1px);
+        }
+        .theme-toggle:active {
+            box-shadow: var(--neu-inset-sm);
+            transform: translateY(1px);
+        }
+
+        /* ========== BOTONES NEUMÓRFICOS ========== */
+        .btn {
+            padding: 12px 22px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            font-family: var(--font);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            background: var(--bg);
+            box-shadow: var(--neu-elevation);
+            color: var(--text);
+        }
+        .btn:hover {
+            box-shadow: 8px 8px 20px var(--shadow-dark), -8px -8px 20px var(--shadow-light);
+            transform: translateY(-2px);
+            text-decoration: none;
+            opacity: 1;
+        }
+        .btn:active {
+            box-shadow: var(--neu-inset);
+            transform: translateY(1px);
+        }
+        .btn-primary {
+            background: var(--accent-bg);
+            color: var(--accent-strong);
+            font-weight: 700;
+            box-shadow: var(--neu-elevation);
+        }
+        .btn-primary:hover {
+            box-shadow: 8px 8px 20px var(--shadow-dark), -8px -8px 20px var(--shadow-light);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text);
+            box-shadow: var(--neu-elevation-sm);
+        }
+
+        .neu-pill {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            border-radius: var(--radius-full);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: var(--bg);
+            box-shadow: var(--neu-elevation-sm);
+            color: var(--text-secondary);
+        }
+        .neu-pill-accent {
+            background: var(--accent-bg);
+            color: var(--accent-strong);
+        }
 
         /* ========== HERO ========== */
         header.hero {
             padding: 56px 0 42px;
-            background: radial-gradient(1100px 550px at 15% -5%, rgba(45,212,191,0.10), transparent),
-                        radial-gradient(900px 480px at 85% 15%, rgba(59,130,246,0.08), transparent);
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(1100px 550px at 15% -5%, rgba(74, 135, 77, 0.08), transparent),
+                radial-gradient(900px 480px at 85% 15%, rgba(37, 99, 235, 0.05), transparent);
         }
-        .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 38px; align-items: center; }
-        .hero-overline {
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 0.75rem;
+        [data-theme="dark"] header.hero {
+            background:
+                radial-gradient(1100px 550px at 15% -5%, rgba(91, 155, 213, 0.08), transparent),
+                radial-gradient(900px 480px at 85% 15%, rgba(75, 139, 245, 0.05), transparent);
         }
-        h1 { font-family: var(--font-title); font-weight: 600; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.15; margin-bottom: 14px; letter-spacing: -0.02em; }
-        h2 { font-family: var(--font-title); font-weight: 600; font-size: clamp(1.5rem, 2.8vw, 2.1rem); margin-bottom: 10px; letter-spacing: -0.01em; }
-        h3 { font-family: var(--font-title); font-weight: 500; font-size: 1.15rem; margin-bottom: 8px; }
-        .subtitle { color: var(--muted); font-size: 1.05rem; margin-bottom: 22px; }
-        .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
-        .btn {
-            padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; border: none;
-            transition: transform 0.15s ease, box-shadow 0.15s ease; text-decoration: none;
-            font-family: var(--font);
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 38px;
+            align-items: center;
         }
-        .btn-primary { background: var(--btn-primary-bg); color: var(--btn-primary-text); }
-        .btn-outline { background: transparent; border: 1px solid var(--border-light); color: var(--text); }
-        .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); text-decoration: none; }
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.05rem;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+        .cta-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
         .hero-visual {
-            background: var(--card); border-radius: var(--radius);
-            border: 1px solid var(--border-light); min-height: 280px;
-            display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
+            background: var(--card);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--neu-elevation-lg);
+            border: 1px solid var(--border-light);
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
         .hero-visual img {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: var(--radius);
+            border-radius: var(--radius-xl);
             min-height: 220px;
             mask-image: radial-gradient(circle, black 55%, transparent 100%);
             -webkit-mask-image: radial-gradient(circle, black 55%, transparent 100%);
         }
 
         /* ========== SECCIONES GENERALES ========== */
-        section { padding: 52px 0; }
-        .section-lead { color: var(--muted); max-width: 820px; margin-bottom: 26px; }
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card {
-            background: var(--card); border: 1px solid var(--border-light); border-radius: var(--radius);
-            padding: 22px; box-shadow: var(--shadow); transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s;
+        section {
+            padding: 52px 0;
         }
-        .card p, .card li { color: var(--muted); font-size: 0.94rem; }
-        .highlight { color: var(--accent); font-weight: 600; }
-        .note {
-            background: rgba(59,130,246,0.08); border: 1px dashed rgba(59,130,246,0.30);
-            padding: 14px; border-radius: 10px; color: var(--muted); font-size: 0.88rem; margin-top: 14px;
+        .section-lead {
+            color: var(--muted);
+            max-width: 820px;
+            margin-bottom: 26px;
+            font-size: 0.95rem;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .section-header h2 {
+            margin-bottom: 0.5rem;
+        }
+        .section-header p {
+            max-width: 560px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 22px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
         }
 
-        /* Tarjetas fundadores con hover */
+        /* ========== CARDS NEUMÓRFICAS ========== */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--neu-elevation);
+            transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.35s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--neu-elevation-lg);
+        }
+        .card p, .card li {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+        }
+        .card h3 {
+            margin-bottom: 0.6rem;
+        }
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--bg);
+            box-shadow: var(--neu-inset);
+        }
+        .note {
+            background: var(--accent-bg);
+            border: 1px dashed var(--accent-light);
+            padding: 16px;
+            border-radius: var(--radius);
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-top: 14px;
+            box-shadow: var(--neu-inset-sm);
+        }
+        .quote-block {
+            border-left: 3px solid var(--accent-light);
+            padding-left: 1rem;
+            font-style: italic;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin: 0.8rem 0;
+        }
+
+        /* ========== TARJETAS FUNDADORES ========== */
         .founder-card {
-            text-align: center; padding: 28px 20px;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            text-align: center;
+            padding: 28px 20px;
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+            box-shadow: var(--neu-elevation);
         }
         .founder-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 18px 40px rgba(0,0,0,0.4);
-            border-color: var(--accent);
+            box-shadow: var(--neu-elevation-lg);
+            border-color: var(--accent-strong);
         }
-        .founder-card .founder-icon { font-size: 2.8rem; margin-bottom: 12px; }
-        .founder-card h3 { font-size: 1.2rem; margin-bottom: 4px; }
-        .founder-card .founder-role { color: var(--accent); font-size: 0.82rem; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
-        .founder-card p { font-size: 0.9rem; line-height: 1.6; }
+        .founder-card .founder-icon {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+        }
+        .founder-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        .founder-card .founder-role {
+            color: var(--accent-strong);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .founder-card p {
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
 
-        /* Roadmap vertical */
+        /* ========== ROADMAP ========== */
         .roadmap-vertical {
             display: flex;
             flex-direction: column;
@@ -236,7 +598,7 @@
             align-items: flex-start;
             gap: 20px;
             padding: 20px 0 20px 28px;
-            border-left: 3px solid var(--accent);
+            border-left: 3px solid var(--accent-strong);
             position: relative;
             transition: border-color 0.3s;
         }
@@ -245,46 +607,125 @@
         .roadmap-step:nth-child(4) { border-left-color: var(--accent2); }
         .roadmap-step::before {
             content: "";
-            width: 16px; height: 16px;
-            background: var(--accent);
+            width: 16px;
+            height: 16px;
+            background: var(--accent-strong);
             border-radius: 50%;
             position: absolute;
             left: -10px;
             top: 24px;
-            box-shadow: 0 0 10px var(--accent);
+            box-shadow: 0 0 12px var(--accent-strong);
         }
-        .roadmap-step:nth-child(2)::before { background: var(--accent2); box-shadow: 0 0 10px var(--accent2); }
-        .roadmap-step:nth-child(3)::before { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
-        .roadmap-step:nth-child(4)::before { background: var(--accent2); box-shadow: 0 0 10px var(--accent2); }
+        .roadmap-step:nth-child(2)::before { background: var(--accent2); box-shadow: 0 0 12px var(--accent2); }
+        .roadmap-step:nth-child(3)::before { background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+        .roadmap-step:nth-child(4)::before { background: var(--accent2); box-shadow: 0 0 12px var(--accent2); }
         .roadmap-step-content { flex: 1; }
-        .roadmap-step-title { font-family: var(--font-title); font-size: 1.15rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .roadmap-step-title {
+            font-family: var(--font-title);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
         .roadmap-step-badge {
-            display: inline-block; padding: 4px 12px; border-radius: 20px;
-            font-size: 0.78rem; font-weight: 600; margin-bottom: 8px;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            margin-bottom: 8px;
             letter-spacing: 0.02em;
+            box-shadow: var(--neu-elevation-sm);
+        }
+
+        /* ========== MODELO COMERCIAL ========== */
+        .modelo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        .modelo-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: var(--radius-xl);
+        }
+        .modelo-card .mini-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+        .mini-stat {
+            padding: 0.8rem 0.5rem;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            background: var(--bg);
+            box-shadow: var(--neu-inset-sm);
+        }
+        .mini-stat .stat-num {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent-strong);
+            display: block;
+            line-height: 1;
+        }
+        .mini-stat .stat-label {
+            font-size: 0.6rem;
+            color: var(--muted);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-top: 0.2rem;
         }
 
         /* ========== FORMULARIO ========== */
         .contact-form { max-width: 100%; }
         .form-group { margin-bottom: 20px; }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 14px 18px; border-radius: 24px;
-            border: 1px solid var(--input-border); background: var(--input-bg);
-            color: var(--text); font-family: var(--font); font-size: 0.95rem;
-        }
-        .form-group textarea { resize: vertical; }
-        button[type="submit"] {
-            background: var(--btn-primary-bg); color: var(--btn-primary-text);
-            border: none; padding: 12px 28px; border-radius: 40px;
-            font-weight: 600; cursor: pointer; transition: 0.2s;
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
+            color: var(--text);
             font-family: var(--font);
+            font-size: 0.95rem;
+            box-shadow: var(--neu-inset-sm);
+            transition: all 0.25s ease;
         }
-        button[type="submit"]:hover { opacity: 0.9; }
+        .form-group textarea { border-radius: var(--radius-lg); resize: vertical; }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-strong);
+            box-shadow: var(--neu-inset-sm), 0 0 0 3px rgba(74, 135, 77, 0.1);
+        }
+        button[type="submit"] {
+            background: var(--accent-bg);
+            color: var(--accent-strong);
+            border: none;
+            padding: 14px 30px;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.28s ease;
+            font-family: var(--font);
+            box-shadow: var(--neu-elevation);
+            font-size: 0.95rem;
+        }
+        button[type="submit"]:hover {
+            box-shadow: 8px 8px 20px var(--shadow-dark), -8px -8px 20px var(--shadow-light);
+            transform: translateY(-2px);
+        }
+        button[type="submit"]:active {
+            box-shadow: var(--neu-inset);
+            transform: translateY(1px);
+        }
         #form-status { margin-top: 16px; font-size: 0.9rem; font-weight: 500; }
         #form-status.success { color: var(--success); }
         #form-status.error { color: var(--danger); }
-
-        /* Filas del formulario responsivas */
         .form-row-duo {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -293,20 +734,38 @@
 
         /* ========== FOOTER ========== */
         footer {
-            padding: 34px 0; border-top: 1px solid var(--border-light);
-            color: var(--muted); font-size: 0.88rem; text-align: center;
+            padding: 34px 0;
+            border-top: 1px solid var(--border-light);
+            color: var(--muted);
+            font-size: 0.88rem;
+            text-align: center;
             background: var(--surface);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
         }
 
-        /* ========== DASHBOARD AVANZADO ========== */
+        /* ========== DIVIDER ========== */
+        .divider-soft {
+            width: 100%;
+            max-width: 400px;
+            height: 2px;
+            margin: 0 auto;
+            border-radius: 2px;
+            background: var(--bg);
+            box-shadow: var(--neu-inset-sm);
+            border: none;
+        }
+
+        /* ========== DASHBOARD AVANZADO (sin cambios) ========== */
         .dashboard-wrapper {
-            background: var(--demo-bg); border-radius: clamp(16px, 2.5vw, 28px);
-            border: 1px solid var(--border-light); overflow: hidden;
-            box-shadow: var(--shadow);
-            max-width: 1400px; margin: 0 auto;
+            background: var(--demo-bg);
+            border-radius: clamp(18px, 2.5vw, 28px);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+            box-shadow: var(--neu-elevation-lg);
+            max-width: 1400px;
+            margin: 0 auto;
         }
         .dashboard-container { display: flex; flex-direction: column; }
-
         .simulation-section {
             padding: clamp(8px, 1.5vw, 14px) clamp(10px, 2vw, 18px);
             border-bottom: 1px solid var(--border-light);
@@ -318,9 +777,8 @@
         }
         .sim-title {
             font-family: var(--font); font-weight: 600;
-            font-size: clamp(0.75rem, 1vw, 0.9rem);
-            letter-spacing: 0.5px; text-transform: uppercase;
-            color: var(--accent); margin: 0;
+            font-size: clamp(0.75rem, 1vw, 0.9rem); letter-spacing: 0.5px;
+            text-transform: uppercase; color: var(--accent-strong); margin: 0;
         }
         .etapas-row {
             display: flex; justify-content: space-around;
@@ -331,30 +789,23 @@
             flex: 1; text-align: center; transition: 0.4s;
             opacity: 0.35; transform: translateY(4px); filter: grayscale(0.4);
         }
-        .etapa-item.active {
-            opacity: 1; transform: translateY(0); filter: grayscale(0);
-        }
+        .etapa-item.active { opacity: 1; transform: translateY(0); filter: grayscale(0); }
         .etapa-item i {
-            font-size: clamp(1.2rem, 1.6vw, 1.4rem);
-            margin-bottom: 2px; display: block; color: var(--c);
+            font-size: clamp(1.2rem, 1.6vw, 1.4rem); margin-bottom: 2px;
+            display: block; color: var(--c);
         }
         .etapa-item span {
-            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
-            font-weight: 600; letter-spacing: 0.2px;
-            color: var(--c); text-transform: uppercase;
+            font-size: clamp(0.5rem, 0.65vw, 0.6rem); font-weight: 600;
+            letter-spacing: 0.2px; color: var(--c); text-transform: uppercase;
         }
-
-        /* Barra de progreso */
         .progress-area {
             position: relative; height: clamp(5px, 0.9vw, 9px);
-            background: rgba(255, 255, 255, 0.04); border-radius: 10px;
+            background: var(--bg); border-radius: 10px;
             margin-bottom: clamp(10px, 1.8vw, 18px);
-            box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.4);
-            overflow: visible;
+            box-shadow: var(--neu-inset-sm); overflow: visible;
         }
         .progress-track {
-            position: absolute; height: 100%; width: 100%;
-            border-radius: 10px;
+            position: absolute; height: 100%; width: 100%; border-radius: 10px;
             background: linear-gradient(to right,
                 var(--color-planta) 0% 33%,
                 var(--color-crecimiento) 33% 66%,
@@ -363,172 +814,134 @@
         }
         input[type=range].progress-slider {
             -webkit-appearance: none; appearance: none;
-            position: absolute; width: 100%; top: 50%;
-            transform: translateY(-50%); background: transparent;
-            z-index: 10; height: 100%; margin: 0; cursor: pointer;
-            touch-action: manipulation;
+            position: absolute; width: 100%; top: 50%; transform: translateY(-50%);
+            background: transparent; z-index: 10; height: 100%; margin: 0;
+            cursor: pointer; touch-action: manipulation;
         }
         input[type=range].progress-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: clamp(18px, 2.4vw, 24px);
-            width: clamp(18px, 2.4vw, 24px);
-            border-radius: 50%; background: #ffffff;
-            border: 3px solid var(--bg);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-            cursor: pointer; transition: 0.2s;
+            height: clamp(18px, 2.4vw, 24px); width: clamp(18px, 2.4vw, 24px);
+            border-radius: 50%; background: #ffffff; border: 3px solid var(--bg);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); cursor: pointer; transition: 0.2s;
         }
         input[type=range].progress-slider::-moz-range-thumb {
-            height: 24px; width: 24px; border-radius: 50%;
-            background: #ffffff; border: 3px solid var(--bg);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            height: 24px; width: 24px; border-radius: 50%; background: #ffffff;
+            border: 3px solid var(--bg); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
             cursor: pointer; transform: translateY(-50%);
         }
-
         .status-footer {
             display: flex; align-items: center; justify-content: space-between;
             gap: clamp(8px, 1.5vw, 16px); flex-wrap: nowrap;
         }
         .btn-main {
             width: clamp(36px, 4.5vw, 48px); height: clamp(36px, 4.5vw, 48px);
-            border-radius: 50%; border: none;
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            color: var(--accent); font-size: clamp(0.8rem, 1.1vw, 1rem);
+            border-radius: 50%; border: none; background: var(--bg);
+            color: var(--accent-strong); font-size: clamp(0.8rem, 1.1vw, 1rem);
             cursor: pointer; display: flex; justify-content: center; align-items: center;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3), -1px -1px 5px rgba(255, 255, 255, 0.04);
-            transition: 0.3s; flex-shrink: 0; touch-action: manipulation;
-            -webkit-user-select: none; user-select: none;
+            box-shadow: var(--neu-elevation); transition: 0.3s; flex-shrink: 0;
+            touch-action: manipulation; -webkit-user-select: none; user-select: none;
         }
-        .btn-main:active { transform: scale(0.96); }
-
+        .btn-main:active { box-shadow: var(--neu-inset); transform: scale(0.96); }
         .big-counter {
-            font-family: 'Inter', sans-serif; font-weight: 700;
-            color: var(--text); text-align: center; line-height: 1.1;
-            white-space: nowrap; flex-shrink: 0;
-            display: inline-flex;
-            align-items: baseline;
-            gap: 2px;
+            font-family: 'Inter', sans-serif; font-weight: 700; color: var(--text);
+            text-align: center; line-height: 1.1; white-space: nowrap; flex-shrink: 0;
+            display: inline-flex; align-items: baseline; gap: 2px;
         }
         .big-counter b {
             font-family: 'Orbitron', 'Inter', monospace;
             font-size: clamp(1.1rem, 1.8vw, 1.6rem); font-weight: 700;
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
+            color: var(--accent-strong); text-shadow: 0 0 10px rgba(74, 135, 77, 0.2);
             transition: color 0.2s, text-shadow 0.2s, transform 0.2s;
+        }
+        [data-theme="dark"] .big-counter b {
+            text-shadow: 0 0 10px rgba(91, 155, 213, 0.25);
         }
         .big-counter span {
             font-family: 'Inter', sans-serif; color: var(--muted);
             font-size: clamp(0.7rem, 1.1vw, 0.9rem); font-weight: 500;
         }
-
         @keyframes pulse-age {
-            0% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.3); transform: scale(1); }
-            50% { color: var(--gold); text-shadow: 0 0 24px rgba(245, 158, 11, 1); transform: scale(1.08); }
-            100% { color: var(--accent); text-shadow: 0 0 10px rgba(45, 212, 191, 0.3); transform: scale(1); }
+            0% { color: var(--accent-strong); text-shadow: 0 0 10px rgba(74, 135, 77, 0.3); transform: scale(1); }
+            50% { color: var(--gold); text-shadow: 0 0 24px rgba(240, 180, 41, 1); transform: scale(1.08); }
+            100% { color: var(--accent-strong); text-shadow: 0 0 10px rgba(74, 135, 77, 0.3); transform: scale(1); }
         }
         .pulse-animation { animation: pulse-age 0.6s ease-in-out; }
-        .pulse-animation b, .pulse-animation span {
-            animation: pulse-age 0.6s ease-in-out;
-        }
-
+        .pulse-animation b, .pulse-animation span { animation: pulse-age 0.6s ease-in-out; }
         .main-section { display: flex; flex-wrap: wrap; }
         .charts-area { order: 1; }
         .controls-area { order: 2; }
-
         .controls-area {
             flex: 1.2; padding: clamp(8px, 1.8vw, 16px);
-            background: var(--demo-controls-bg);
-            border-right: 2px solid var(--border-light);
+            background: var(--demo-controls-bg); border-right: 2px solid var(--border-light);
         }
         .charts-area {
             flex: 1.8; padding: clamp(8px, 1.8vw, 16px);
             background: var(--demo-charts-bg);
         }
-
         .sliders-grid {
             display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: clamp(8px, 1.4vw, 14px) clamp(10px, 1.8vw, 18px);
-            align-items: end;
+            gap: clamp(8px, 1.4vw, 14px) clamp(10px, 1.8vw, 18px); align-items: end;
         }
         .slider-group { display: flex; flex-direction: column; margin-bottom: 0; }
         .slider-group label {
-            display: flex; justify-content: space-between;
-            font-weight: 600; font-size: clamp(0.55rem, 0.7vw, 0.65rem);
-            margin-bottom: 4px; color: var(--demo-label);
-            text-transform: uppercase; letter-spacing: 0.3px;
+            display: flex; justify-content: space-between; font-weight: 600;
+            font-size: clamp(0.55rem, 0.7vw, 0.65rem); margin-bottom: 4px;
+            color: var(--demo-label); text-transform: uppercase; letter-spacing: 0.3px;
         }
         .slider-group input {
             width: 100%; height: 6px; background: var(--demo-slider-track);
             border-radius: 6px; -webkit-appearance: none; appearance: none;
             outline: none; border: 1px solid var(--border-light); margin: 0;
+            box-shadow: var(--neu-inset-sm);
         }
         .slider-group input::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: clamp(12px, 1.4vw, 15px);
-            height: clamp(12px, 1.4vw, 15px);
-            background: var(--demo-slider-thumb); border-radius: 50%;
-            cursor: pointer; box-shadow: 0 0 4px var(--accent);
-            border: 2px solid var(--accent);
+            -webkit-appearance: none; width: clamp(12px, 1.4vw, 15px);
+            height: clamp(12px, 1.4vw, 15px); background: var(--demo-slider-thumb);
+            border-radius: 50%; cursor: pointer; box-shadow: 0 0 6px var(--accent-strong);
+            border: 2px solid var(--accent-strong);
         }
         .slider-group input::-moz-range-thumb {
             width: 15px; height: 15px; background: var(--demo-slider-thumb);
-            border-radius: 50%; cursor: pointer; border: 2px solid var(--accent);
+            border-radius: 50%; cursor: pointer; border: 2px solid var(--accent-strong);
             transform: translateY(-50%);
         }
         .value-indicator {
-            font-family: monospace; background: var(--surface);
-            padding: 1px 6px; border-radius: 12px;
-            font-size: clamp(0.5rem, 0.65vw, 0.6rem);
-            color: var(--accent); align-self: center;
+            font-family: monospace; background: var(--surface); padding: 1px 6px;
+            border-radius: 12px; font-size: clamp(0.5rem, 0.65vw, 0.6rem);
+            color: var(--accent-strong); align-self: center; box-shadow: var(--neu-elevation-sm);
         }
-
         .control-group {
-            margin-bottom: clamp(8px, 1.2vw, 12px);
-            padding-bottom: clamp(6px, 1vw, 10px);
+            margin-bottom: clamp(8px, 1.2vw, 12px); padding-bottom: clamp(6px, 1vw, 10px);
         }
-        .control-group:last-child {
-            border-bottom: none; padding-bottom: 0; margin-bottom: 0;
-        }
+        .control-group:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
         .control-heading {
-            margin-bottom: clamp(8px, 1.4vw, 14px);
-            padding-top: clamp(4px, 0.8vw, 8px);
-            font-family: var(--font); font-weight: 600;
-            font-size: clamp(0.75rem, 1vw, 0.9rem);
-            letter-spacing: 0.5px; text-transform: uppercase;
-            color: var(--accent); margin-top: 0;
+            margin-bottom: clamp(8px, 1.4vw, 14px); padding-top: clamp(4px, 0.8vw, 8px);
+            font-family: var(--font); font-weight: 600; font-size: clamp(0.75rem, 1vw, 0.9rem);
+            letter-spacing: 0.5px; text-transform: uppercase; color: var(--accent-strong); margin-top: 0;
         }
-
         .ia-presets {
             display: grid; grid-template-columns: repeat(4, 1fr);
             gap: clamp(6px, 1vw, 10px); margin-bottom: clamp(6px, 1vw, 10px);
         }
         .ia-preset-btn {
             background: var(--card); border: 1px solid var(--border-light);
-            border-radius: 10px; height: 70px;
+            border-radius: var(--radius); height: 70px;
             padding: clamp(6px, 1vw, 10px) clamp(4px, 0.6vw, 6px);
             text-align: center; cursor: pointer; transition: all 0.2s ease;
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; gap: 4px;
-            font-size: clamp(0.65rem, 0.85vw, 0.8rem);
-            position: relative; touch-action: manipulation;
-            overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 4px; font-size: clamp(0.65rem, 0.85vw, 0.8rem);
+            position: relative; touch-action: manipulation; overflow: hidden;
+            box-shadow: var(--neu-elevation-sm);
         }
-        .ia-preset-btn i {
-            font-size: clamp(1rem, 1.2vw, 1.2rem);
-            line-height: 1; display: block;
-        }
-        .ia-preset-btn span {
-            display: block; font-size: clamp(0.55rem, 0.7vw, 0.65rem);
-            font-weight: 500; line-height: 1.1;
-        }
+        .ia-preset-btn i { font-size: clamp(1rem, 1.2vw, 1.2rem); line-height: 1; display: block; }
+        .ia-preset-btn span { display: block; font-size: clamp(0.55rem, 0.7vw, 0.65rem); font-weight: 500; line-height: 1.1; }
         .ia-tooltip {
-            position: absolute; bottom: 100%; left: 50%;
-            transform: translateX(-50%); background: var(--surface);
-            color: var(--text); text-align: center; border-radius: 6px;
-            padding: 4px 7px; font-size: 0.55rem; line-height: 1.3;
-            width: 160px; margin-bottom: 6px; opacity: 0;
-            visibility: hidden; transition: all 0.3s; z-index: 10;
-            border: 1px solid var(--border-light); box-shadow: var(--shadow);
-            pointer-events: none;
+            position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+            background: var(--surface); color: var(--text); text-align: center;
+            border-radius: 6px; padding: 4px 7px; font-size: 0.55rem; line-height: 1.3;
+            width: 160px; margin-bottom: 6px; opacity: 0; visibility: hidden;
+            transition: all 0.3s; z-index: 10; border: 1px solid var(--border-light);
+            box-shadow: var(--neu-elevation); pointer-events: none;
         }
         .ia-tooltip::after {
             content: ""; position: absolute; top: 100%; left: 50%;
@@ -537,70 +950,81 @@
         }
         .ia-preset-btn:hover .ia-tooltip { opacity: 1; visibility: visible; }
         .ia-preset-btn.active {
-            background: var(--btn-active); border-color: var(--accent);
-            color: var(--accent); transform: translateY(-2px);
-            box-shadow: 0 3px 6px rgba(45, 212, 191, 0.12);
+            background: var(--btn-active); border-color: var(--accent-strong);
+            color: var(--accent-strong); transform: translateY(-2px);
+            box-shadow: var(--neu-elevation);
         }
-
         .radar-container {
-            background: var(--surface); border-radius: 16px;
-            padding: clamp(4px, 0.8vw, 8px);
-            margin: clamp(3px, 0.6vw, 6px) 0 clamp(6px, 1vw, 12px);
-            padding-top: clamp(24px, 3vw, 8px);
+            background: var(--surface); border-radius: var(--radius);
+            padding: clamp(4px, 0.8vw, 8px); margin: clamp(3px, 0.6vw, 6px) 0 clamp(6px, 1vw, 12px);
+            padding-top: clamp(24px, 3vw, 8px); box-shadow: var(--neu-inset-sm);
         }
         #radarChart { width: 100%; height: clamp(190px, 28vw, 300px) !important; }
-
         .metrics-grid {
             display: grid; grid-template-columns: repeat(4, 1fr);
             gap: clamp(5px, 0.9vw, 9px); margin: clamp(6px, 1vw, 12px) 0;
         }
         .metric-card {
-            background: var(--demo-metric-bg); border-radius: 10px;
+            background: var(--demo-metric-bg); border-radius: var(--radius-sm);
             padding: clamp(6px, 0.9vw, 9px) clamp(4px, 0.6vw, 6px);
             text-align: center; transition: 0.2s; cursor: default; height: 100%;
+            box-shadow: var(--neu-elevation-sm);
         }
-        .metric-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-        }
-        /* FIX #5: Valor y unidad en misma línea */
+        .metric-card:hover { transform: translateY(-2px); box-shadow: var(--neu-elevation); }
         .metric-value {
-            font-size: clamp(0.85rem, 1.2vw, 1.05rem);
-            font-weight: 700; color: var(--accent);
-            display: inline-flex; align-items: baseline; gap: 2px;
-            line-height: 1.2; white-space: nowrap;
+            font-size: clamp(0.85rem, 1.2vw, 1.05rem); font-weight: 700;
+            color: var(--accent-strong); display: inline-flex; align-items: baseline;
+            gap: 2px; line-height: 1.2; white-space: nowrap;
         }
-        .metric-unit {
-            font-size: clamp(0.45rem, 0.58vw, 0.55rem);
-            font-weight: 500; color: var(--muted);
-            display: inline;
-        }
-        .metric-label {
-            font-size: clamp(0.45rem, 0.58vw, 0.55rem);
-            text-transform: uppercase; letter-spacing: 0.3px;
-            color: var(--muted); display: block; margin-top: 2px;
-        }
+        .metric-unit { font-size: clamp(0.45rem, 0.58vw, 0.55rem); font-weight: 500; color: var(--muted); display: inline; }
+        .metric-label { font-size: clamp(0.45rem, 0.58vw, 0.55rem); text-transform: uppercase; letter-spacing: 0.3px; color: var(--muted); display: block; margin-top: 2px; }
         .sim-note-footnote {
             font-size: clamp(0.48rem, 0.6vw, 0.6rem); color: var(--muted);
             text-align: center; margin-top: clamp(8px, 1.2vw, 12px);
-            border-top: 1px solid var(--border-light);
-            padding-top: clamp(8px, 1.2vw, 12px); line-height: 1.3;
+            border-top: 1px solid var(--border-light); padding-top: clamp(8px, 1.2vw, 12px); line-height: 1.3;
         }
-
         .ia-toast {
             position: fixed; bottom: 25px; left: 50%;
             transform: translateX(-50%) translateY(120px);
-            background: var(--accent); color: #071014;
-            padding: 8px 20px; border-radius: 30px;
+            background: var(--accent-bg); color: var(--accent-strong);
+            padding: 10px 22px; border-radius: var(--radius-full);
             font-weight: 600; font-size: clamp(0.7rem, 1vw, 0.85rem);
             z-index: 1000; opacity: 0; pointer-events: none;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-            white-space: nowrap; transition: opacity 0.3s ease, transform 0.3s ease;
-            letter-spacing: 0.3px;
+            box-shadow: var(--neu-elevation-lg); white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            letter-spacing: 0.3px; border: 1px solid var(--border-light);
         }
-        .ia-toast.show {
-            opacity: 1; transform: translateX(-50%) translateY(0);
+        .ia-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ========== WHATSAPP FLOAT ========== */
+        .whatsapp-float {
+            position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 200;
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.7rem 1.3rem; border-radius: var(--radius-full);
+            background: var(--bg); box-shadow: var(--neu-elevation);
+            color: var(--text); font-weight: 600; font-size: 0.85rem;
+            transition: all 0.28s ease; letter-spacing: -0.01em;
+            text-decoration: none; border: 1px solid var(--border-light);
         }
+        .whatsapp-float:hover {
+            box-shadow: 8px 8px 20px var(--shadow-dark), -8px -8px 20px var(--shadow-light);
+            transform: translateY(-2px); opacity: 1;
+        }
+        .whatsapp-float:active {
+            box-shadow: var(--neu-inset); transform: translateY(1px);
+        }
+        .whatsapp-float .wa-icon { width: 22px; height: 22px; flex-shrink: 0; color: #25D366; }
+        .whatsapp-float .wa-ring {
+            position: absolute; inset: -6px; border-radius: var(--radius-full);
+            border: 2px solid rgba(37, 211, 102, 0.3);
+            animation: waPulse 2.2s ease-out infinite; pointer-events: none;
+        }
+        @keyframes waPulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.25); opacity: 0; }
+        }
+
+        ::selection { background: rgba(74, 135, 77, 0.2); color: var(--text); }
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 1100px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -608,11 +1032,12 @@
             .metrics-grid { grid-template-columns: repeat(2, 1fr); }
             .ia-presets { grid-template-columns: repeat(4, 1fr); }
             #radarChart { height: clamp(170px, 25vw, 240px) !important; }
+            .modelo-grid { grid-template-columns: 1fr; gap: 2rem; }
         }
         @media (max-width: 860px) {
             .hero-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
-            .hamburger { display: block; }
+            .hamburger { display: flex; }
             .mobile-menu.open { display: flex; }
             .main-section { flex-direction: column; }
             .charts-area { order: 1; border-bottom: 2px solid var(--border-light); padding: clamp(6px, 1.4vw, 12px); }
@@ -637,6 +1062,7 @@
             .ia-preset-btn i { font-size: 0.95rem; }
             .ia-preset-btn span { font-size: 0.5rem; }
             .form-row-duo { grid-template-columns: 1fr; }
+            .whatsapp-float { bottom: 1.2rem; right: 1rem; padding: 0.6rem 1rem; font-size: 0.78rem; gap: 0.35rem; }
         }
         @media (max-width: 500px) {
             .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 4px; }
@@ -651,815 +1077,862 @@
 </head>
 <body>
 
-<!-- Canvas de spray -->
-<canvas id="sprayCanvas"></canvas>
+    <!-- Canvas de spray -->
+    <canvas id="sprayCanvas"></canvas>
 
-<!-- Navbar -->
-<nav>
-    <div class="container nav-inner">
-        <a class="logo" href="#inicio">
-            <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
-        </a>
-        <div class="nav-links" id="desktopNav">
-            <a href="#inicio" class="active">Inicio</a>
-            <a href="#proyecto">Proyecto</a>
-            <a href="#roadmap">Roadmap</a>
+    <!-- ==================== NAVBAR ==================== -->
+    <nav>
+        <div class="container nav-inner">
+            <a class="logo" href="#inicio">
+                <!-- El logo cambia según el tema: logow.png (claro) / logo.png (oscuro) -->
+                <img id="logoImg" src="logow.png" alt="AgroAI Lab" class="logo-img">
+            </a>
+            <div class="nav-links" id="desktopNav">
+                <a href="#inicio" class="active">Inicio</a>
+                <a href="#experiencia">Experiencia</a>
+                <a href="#motor">Tecnología</a>
+                <a href="#investigacion">I+D</a>
+                <a href="#modelo">Modelo</a>
+                <a href="#demo">Demo</a>
+                <a href="#roadmap">Roadmap</a>
+                <a href="#colabora">Contacto</a>
+            </div>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <button class="theme-toggle" id="themeToggle">🌓</button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#inicio">Inicio</a>
+            <a href="#experiencia">Experiencia</a>
+            <a href="#motor">Tecnología</a>
+            <a href="#investigacion">I+D</a>
+            <a href="#modelo">Modelo</a>
             <a href="#demo">Demo</a>
+            <a href="#roadmap">Roadmap</a>
             <a href="#colabora">Contacto</a>
         </div>
-        <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-        <button class="theme-toggle" id="themeToggle">🌓</button>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#inicio">Inicio</a>
-        <a href="#proyecto">Proyecto</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#demo">Demo</a>
-        <a href="#colabora">Contacto</a>
-    </div>
-</nav>
+    </nav>
 
-<!-- Hero -->
-<header class="hero" id="inicio">
-    <div class="container hero-grid">
-        <div>
-            <div class="hero-overline">PIONEROS EN AEROPONÍA 4.0</div>
-            <h1>Cultivo Evolutivo: Optimización Biológica con IA en Tiempo Real</h1>
-            <p class="subtitle">Diseñamos sistemas para maximizar la producción mediante un entorno ciberfísico gestionado por IA. Sustituimos el sustrato por atomización radicular de alta precisión, monitorizando mediante visión artificial el estado del cultivo para adaptar dinámicamente cada ciclo. Mejora el rendimiento, la eficiencia energética y la calidad de tus cultivos de alta pureza.</p>
-            <div class="cta-row">
-                <a href="#demo" class="btn btn-primary">Ver Panel de Control</a>
-                <a href="#colabora" class="btn btn-outline">Contactar</a>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <img src="imagen.png" alt="Cámara aeropónica" onerror="this.parentNode.innerHTML='<div class=img-placeholder style=width:100%;height:100%;min-height:220px;display:grid;place-items:center;color:var(--muted)>[Render técnico]</div>'">
-        </div>
-    </div>
-</header>
-
-<!-- Solución -->
-<section>
-    <div class="container">
-        <h2>Problema & Solución</h2>
-        <p class="section-lead">La producción tradicional de hierbas frescas enfrenta merma logística, calidad inconsistente, alto consumo hídrico, dependencia climática y uso de agroquímicos. AgroAI Lab aborda estos desafíos mediante un sistema aeropónico autónomo que elimina agroquímicos, reduce drásticamente el consumo de agua, garantiza calidad uniforme con monitoreo en tiempo real y opera sin dependencia climática. Un modelo escalable, transparente y orientado a mercados premium.</p>
-        <div class="grid-3">
-            <div class="card">
-                <h3>💧 Eficiencia Hídrica</h3>
-                <p>Reducción de hasta <span class="highlight">90% de agua</span> frente a cultivo en suelo, y aproximadamente un 60% comparado con hidroponía NFT convencional.</p>
-            </div>
-            <div class="card">
-                <h3>⚡ Eficiencia Energética</h3>
-                <p>Optimización espectral y temporal que reduce el consumo energético por unidad de biomasa (<span class="highlight">kWh/g</span>) hasta en un <span class="highlight">50%</span> frente a sistemas LED estáticos.</p>
-            </div>
-            <div class="card">
-                <h3>📈 Trazabilidad & Control</h3>
-                <p>Dashboard en tiempo real, métricas de eficiencia (L/g, kWh/g) y decisiones de IA auditables para certificación de cultivo limpio.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Proyecto -->
-<section id="proyecto">
-    <div class="container">
-        <h2>Investigación Aplicada</h2>
-        <p class="section-lead">Variables de control y métricas de respuesta que la IA modula activamente para cada etapa fenológica.</p>
-        <div class="grid-2">
-            <div class="card">
-                <h3>📡 Inputs de Control</h3>
-                <ul style="margin-left:20px;">
-                    <li>Espectro LED dinámico PWM de alta eficiencia</li>
-                    <li>Nebulización ultrasónica (tamaño de gota optimizable)</li>
-                    <li>Control de VPD, EC, pH y temperatura</li>
-                    <li>Ventilación direccional y CO₂</li>
-                </ul>
-            </div>
-            <div class="card">
-                <h3>📊 Outputs Biológicos</h3>
-                <ul style="margin-left:20px;">
-                    <li>Biomasa y tasa de expansión foliar (cm²/día)</li>
-                    <li>Índice de clorofila y detección temprana de estrés</li>
-                    <li>Perfil estimado de compuestos volátiles (proxy organoléptico)</li>
-                    <li>Eficiencia hídrica y fotónica</li>
-                </ul>
-            </div>
-        </div>
-        <div class="card" style="margin-top:22px;">
-            <h3>🧠 Bucle de Aprendizaje Continuo</h3>
-            <p>Sistema de control adaptativo en edge basado en microcontrolador de alto rendimiento con aceleración para visión embebida. Integra adquisición de datos multivariable y feedback visual para estimar el estado fisiológico de la planta (color, vigor, expansión foliar). Mediante modelos ligeros de regresión incremental y lógica heurística, el sistema ajusta dinámicamente los parámetros de cultivo en ciclos cerrados, optimizando el rendimiento a partir de datos históricos y evolución temporal.</p>
-            <div class="note">🔒 Trabajamos activamente en la protección industrial de nuestra arquitectura de control y sistema de iluminación selectiva. Para acceder a detalles técnicos específicos, contacta bajo acuerdo de confidencialidad.</div>
-        </div>
-        <div class="card" style="margin-top:22px;">
-            <h3>🖨️ Diseño 3D Paramétrico y Modular</h3>
-            <p>Cámara de crecimiento modular desarrollada mediante diseño paramétrico e impresión 3D en PLA para prototipado rápido y validación geométrica. La arquitectura permite adaptar el sistema a distintas especies y configuraciones, incorporando guías radiculares que optimizan la exposición a la niebla y la consistencia del entorno de cultivo. El diseño está orientado a iteración ágil y contempla la migración a materiales técnicos en fases posteriores, manteniendo compatibilidad estructural.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Roadmap -->
-<section id="roadmap">
-    <div class="container">
-        <h2>Roadmap</h2>
-        <div class="roadmap-vertical">
-            <div class="roadmap-step">
-                <div class="roadmap-step-content">
-                    <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">✅ Verano 2025</span>
-                    <div class="roadmap-step-title">Estudio conceptual y primeras pruebas</div>
-                    <p style="color:var(--muted);">Simulaciones de fluidos computacionales, selección rigurosa de componentes y pruebas de nebulización e iluminación en bancada abierta.</p>
+    <!-- ==================== HERO ==================== -->
+    <header class="hero" id="inicio">
+        <div class="container hero-grid">
+            <div>
+                <h1>Cultivo Evolutivo: <span class="highlight">Tu huerta virtual automatizada</span> con Inteligencia Artificial</h1>
+                <p class="subtitle">Estamos diseñando sistemas aeropónicos autónomos gestionados por IA en tiempo real. Vos elegís el perfil de sabor, textura y nutrientes que buscás desde la app, y el sistema se encarga de la siembra, el monitoreo 24/7 y la nutrición de precisión. Sin tierra, sin trabajo y sin desperdicio.</p>
+                <div class="cta-row">
+                    <a href="#demo" class="btn btn-primary">🎛️ Ver Panel de Control</a>
+                    <a href="#colabora" class="btn btn-outline">Contactar</a>
+                </div>
+                <div class="hero-tags">
+                    <span class="neu-pill neu-pill-accent">🤖 IA + Robótica</span>
+                    <span class="neu-pill neu-pill-accent">🌱 Aeroponía 4.0</span>
+                    <span class="neu-pill neu-pill-accent">✂️ Cosecha parcial programada</span>
+                    <span class="neu-pill neu-pill-accent">⚡ Eficiencia energética</span>
                 </div>
             </div>
-            <div class="roadmap-step">
-                <div class="roadmap-step-content">
-                    <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">🔄 2025–2026</span>
-                    <div class="roadmap-step-title">Diseño CAD y arquitectura de sensores</div>
-                    <p style="color:var(--muted);">Modelado 3D completo, definición de PCB personalizada, protocolo MQTT y dashboard base de monitorización.</p>
-                </div>
+            <div class="hero-visual">
+                <img id="heroImage" src="imagenw.png" alt="Cámara aeropónica" onerror="this.src='imagen.png'">
             </div>
-            <div class="roadmap-step">
-                <div class="roadmap-step-content">
-                    <span class="roadmap-step-badge" style="background:var(--gold); color:#000;">🎯 Próximo hito · Verano 2026</span>
-                    <div class="roadmap-step-title">MVP funcional</div>
-                    <p style="color:var(--muted);">Primer prototipo cerrado para 2–3 plantas. Validación biológica con albahaca, adquisición de datos reales y primeros lazos de control autónomo.</p>
-                </div>
+        </div>
+    </header>
+
+    <!-- ==================== DIVIDER ==================== -->
+    <div class="container"><hr class="divider-soft"></div>
+
+    <!-- ==================== EXPERIENCIA DEL USUARIO ==================== -->
+    <section id="experiencia">
+        <div class="container">
+            <div class="section-header">
+                <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">Tu huerta virtual real</span>
+                <h2>Tu huerta en <span class="highlight">tres pasos</span></h2>
+                <p>Cero esfuerzo. Vegetales hiperpersonalizados criados por inteligencia artificial que aprende de cada hoja.</p>
             </div>
-            <div class="roadmap-step">
-                <div class="roadmap-step-content">
-                    <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">📅 Q4 2026 → 2027</span>
-                    <div class="roadmap-step-title">Escalado y optimización de modelos</div>
-                    <p style="color:var(--muted);">Ampliación a bancada de 12 plantas, integración con análisis químico externo (GC-MS) y refinamiento del modelo predictivo por ciclo.</p>
+            <div class="grid-3">
+                <div class="card" style="text-align:center;">
+                    <div class="card-icon">🎨</div>
+                    <h3>1. Diseñás</h3>
+                    <p>Desde la app, <strong>elegís qué cultivar y cómo.</strong> Ajustás las propiedades organolépticas, el dulzor y el aporte nutricional. Creás tu propia receta o usás una diseñada por la comunidad. <span class="highlight">Vegetales a la medida de tu vida.</span></p>
+                </div>
+                <div class="card" style="text-align:center;">
+                    <div class="card-icon">🤖</div>
+                    <h3>2. La IA cultiva</h3>
+                    <p>Confirmás la receta y <strong>el sistema toma el control absoluto.</strong> Los módulos automatizados siembran, la aeroponía nutre las raíces y la IA monitorea cada hoja mediante visión artificial. Vos te olvidás. <span class="highlight">Funciona 24/7.</span></p>
+                </div>
+                <div class="card" style="text-align:center;">
+                    <div class="card-icon">✂️</div>
+                    <h3>3. Cosechás a demanda</h3>
+                    <p>La app te notifica el momento exacto de máxima frescura. <strong>Retirás solo lo que vas a consumir en el día</strong> con la planta aún viva. El resto sigue creciendo en su entorno óptimo. <span class="highlight">Frescura absoluta, cero desperdicio.</span></p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ========== DASHBOARD AVANZADO INTEGRADO ========== -->
-<section id="demo">
-    <div class="container">
-        <h2>Panel de Control Interactivo</h2>
-        
-        <div class="dashboard-wrapper">
-            <div class="dashboard-container">
-                <!-- SECCIÓN SUPERIOR: Simulación de crecimiento -->
-                <div class="simulation-section">
-                    <div class="sim-header">
-                        <div class="sim-title">📈 Simulación de Crecimiento</div>
-                    </div>
-                    <div class="etapas-row" id="etapasRow">
-                        <div class="etapa-item active" style="--c: var(--color-planta)">
-                            <i class="fa-solid fa-seedling"></i><span>Plántula</span>
-                        </div>
-                        <div class="etapa-item" style="--c: var(--color-crecimiento)">
-                            <i class="fa-solid fa-leaf"></i><span>Crecimiento</span>
-                        </div>
-                        <div class="etapa-item" style="--c: var(--color-venta)">
-                            <i class="fa-solid fa-basket-shopping"></i><span>Venta</span>
-                        </div>
-                    </div>
-                    <div class="progress-area">
-                        <div class="progress-track"></div>
-                        <input type="range" class="progress-slider" id="ageSlider" min="0" max="45" value="0" step="1">
-                    </div>
-                    <div class="status-footer">
-                        <div class="controls-box">
-                            <button class="btn-main" id="playGrowthBtn">
-                                <i class="fa-solid fa-play" id="iconPlay"></i>
-                            </button>
-                        </div>
-                        <div class="big-counter">
-                            <b id="ageDisplay">0</b><span> / <span id="maxDayDisplay">45</span> DÍAS</span>
-                        </div>
+    <!-- ==================== DIVIDER ==================== -->
+    <div class="container"><hr class="divider-soft"></div>
+
+    <!-- ==================== EL MOTOR INVISIBLE: LABORATORIO DE DATOS ==================== -->
+    <section id="motor">
+        <div class="container">
+            <div class="section-header">
+                <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">El Oro del Futuro</span>
+                <h2>El Motor Invisible: <span class="highlight">Datos que transforman</span> la agricultura</h2>
+            </div>
+            <!-- Cajita independiente para el párrafo destacado -->
+            <div class="card" style="max-width: 820px; margin: 0 auto 30px; text-align: center;">
+                <p style="margin:0;">Cada cultivo en nuestra red no es solo alimento, es un experimento que genera conocimiento. AgroAILab opera como un laboratorio distribuido donde millones de puntos de datos refinan constantemente los algoritmos. En la economía del futuro, los datos son el activo más valioso; aquí, los usamos para que el sistema aprenda a cultivar cada vez mejor, compartiendo ese conocimiento con toda la red.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>🧠 IA + Visión Artificial</h3>
+                    <p>Cámaras 4K analizan cada hoja en tiempo real. La IA <strong>ajusta la niebla, luz y nutrientes</strong> para lograr el perfil exacto que diseñaste. <span class="highlight">Cada cultivo genera datos que refinan los algoritmos para todos.</span></p>
+                </div>
+                <div class="card">
+                    <h3>💧 Aeroponía de Alta Presión</h3>
+                    <p>Raíces suspendidas en niebla nutritiva. <strong>95% menos agua</strong> que el cultivo tradicional. Sin tierra, sin bandejas, sin plagas. Crecimiento un 30% más rápido que en hidroponía convencional.</p>
+                </div>
+                <div class="card">
+                    <h3>🦾 Robótica Autónoma</h3>
+                    <p>Brazos mecánicos que <strong>ejecutan todo el ciclo sin intervención humana:</strong> siembra, cuidado y cosecha parcial programada. Operan 24/7 con precisión milimétrica. Cero errores, cero fatiga.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== DIVIDER ==================== -->
+    <div class="container"><hr class="divider-soft"></div>
+
+    <!-- ==================== INVESTIGACIÓN APLICADA ==================== -->
+    <section id="investigacion">
+        <div class="container">
+            <div class="section-header">
+                <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">Ficha Técnica Operativa</span>
+                <h2>Variables de control que la <span class="highlight">IA modula activamente</span></h2>
+                <p>Inputs de control y métricas de respuesta para cada etapa fenológica del cultivo.</p>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📡 Inputs de Control</h3>
+                    <ul style="margin-left:20px;">
+                        <li>Espectro LED dinámico PWM de alta eficiencia</li>
+                        <li>Nebulización ultrasónica (tamaño de gota optimizable)</li>
+                        <li>Control de VPD, EC, pH y temperatura</li>
+                        <li>Ventilación direccional y CO₂</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>📊 Outputs Biológicos</h3>
+                    <ul style="margin-left:20px;">
+                        <li>Biomasa y tasa de expansión foliar (cm²/día)</li>
+                        <li>Índice de clorofila y detección temprana de estrés</li>
+                        <li>Perfil estimado de compuestos volátiles (proxy organoléptico)</li>
+                        <li>Eficiencia hídrica y fotónica</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card" style="margin-top:22px;">
+                <h3>🧠 Bucle de Aprendizaje Continuo</h3>
+                <p>Sistema de control adaptativo en edge basado en microcontrolador de alto rendimiento con aceleración para visión embebida. Integra adquisición de datos multivariable y feedback visual para estimar el estado fisiológico de la planta. Mediante modelos ligeros de regresión incremental, el sistema ajusta dinámicamente los parámetros de cultivo en ciclos cerrados.</p>
+                <div class="note">🔒 Trabajamos activamente en la protección industrial de nuestra arquitectura de control y sistema de iluminación selectiva. Para acceder a detalles técnicos específicos, contacta bajo acuerdo de confidencialidad.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== DIVIDER ==================== -->
+    <div class="container"><hr class="divider-soft"></div>
+
+    <!-- ==================== MODELO COMERCIAL ==================== -->
+    <section id="modelo">
+        <div class="container">
+            <div class="modelo-grid">
+                <div>
+                    <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">Suscripción + Marketplace</span>
+                    <h2>Una cuota fija. <span class="highlight">Cosechas ilimitadas.</span> Y un mercado abierto.</h2>
+                    <p style="margin-bottom:0.8rem;">Pagás una suscripción mensual plana y accedés a tu huerta virtual sin límites. <strong>Cultivá todo lo que quieras, cuando quieras.</strong> Pausá, retomá o cancelá en cualquier momento. Es tu espacio, tus reglas.</p>
+                    <p class="quote-block"><strong>Además, la plataforma funciona como un mercado abierto.</strong> Si no querés cultivar en un ciclo, podés comprar vegetales frescos de otros productores locales que usan nuestra infraestructura. O vender tus propios excedentes a la comunidad. La red AgroAILab conecta oferta y demanda a kilómetro cero.</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem;">
+                        <span class="neu-pill neu-pill-accent">💳 Cuota fija</span>
+                        <span class="neu-pill neu-pill-accent">♾️ Sin límites</span>
+                        <span class="neu-pill neu-pill-accent">🛒 Marketplace</span>
                     </div>
                 </div>
-
-                <!-- SECCIÓN INFERIOR: Controles y gráficos -->
-                <div class="main-section">
-                    <div class="charts-area">
-                        <div class="control-heading" style="margin-top:0;">📊 Resultados del cultivo</div>
-                        <div class="radar-container">
-                            <div id="radarChart"></div>
-                        </div>
-                        <div class="metrics-grid">
-                            <div class="metric-card"><span class="metric-value"><span id="growthMetric">—</span><span class="metric-unit">cm²/día</span></span><div class="metric-label">🌱 Crecimiento</div></div>
-                            <div class="metric-card"><span class="metric-value"><span id="waterMetric">—</span><span class="metric-unit">mL/g</span></span><div class="metric-label">💧 Efic. hídrica</div></div>
-                            <div class="metric-card"><span class="metric-value"><span id="terpMetric">—</span><span class="metric-unit">u.a.</span></span><div class="metric-label">🍃 Aroma</div></div>
-                            <div class="metric-card"><span class="metric-value"><span id="healthMetric">—</span><span class="metric-unit">%</span></span><div class="metric-label">🌿 Salud</div></div>
-                            <div class="metric-card"><span class="metric-value"><span id="roiMetric">—</span><span class="metric-unit">%/m²</span></span><div class="metric-label">💰 ROI</div></div>
-                            <div class="metric-card"><span class="metric-value"><span id="ahorroMetric">—</span><span class="metric-unit">€/m²·año</span></span><div class="metric-label">⚡ Ahorro E.</div></div>
-                            <div class="metric-card"><span class="metric-value"><span id="kWmetric">—</span><span class="metric-unit">kW/m²</span></span><div class="metric-label">🔌 Potencia</div></div>
-                            <div class="metric-card"><span class="metric-value"><span id="aguaAhorroMetric">—</span><span class="metric-unit">€/m²·año</span></span><div class="metric-label">💦 Ahorro H.</div></div>
-                        </div>
+                <div class="card modelo-card" style="text-align:center;">
+                    <p style="font-style:italic;color:var(--muted);margin-bottom:1.5rem;">"La mayoría no consume suficientes vegetales porque es caro, incómodo o no sabe cocinarlos. Nosotros borramos esas barreras con tecnología, datos y una suscripción justa."</p>
+                    <div class="mini-stats">
+                        <div class="mini-stat"><span class="stat-num">1</span><span class="stat-label">cuota fija</span></div>
+                        <div class="mini-stat"><span class="stat-num">∞</span><span class="stat-label">cosechas</span></div>
+                        <div class="mini-stat"><span class="stat-num">0</span><span class="stat-label">esfuerzo</span></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <div class="controls-area">
-                        <div class="control-group">
-                            <div class="control-heading">🌡️ Parámetros de cultivo</div>
-                            <div class="sliders-grid">
-                                <div class="slider-group">
-                                    <label>🔴 ROJO (h/d) <span id="redVal" class="value-indicator">12</span></label>
-                                    <input type="range" id="redSlider" min="0" max="18" value="12" step="1">
-                                </div>
-                                <div class="slider-group">
-                                    <label>🔵 AZUL (h/d) <span id="blueVal" class="value-indicator">6</span></label>
-                                    <input type="range" id="blueSlider" min="0" max="16" value="6" step="1">
-                                </div>
-                                <div class="slider-group">
-                                    <label>💡 INTENSIDAD LUZ (%) <span id="intensidadVal" class="value-indicator">85</span></label>
-                                    <input type="range" id="intensidadSlider" min="40" max="100" value="85" step="5">
-                                </div>
-                                <div class="slider-group">
-                                    <label>💧 VPD (kPa) <span id="vpdVal" class="value-indicator">0.9</span></label>
-                                    <input type="range" id="vpdSlider" min="0.4" max="1.6" value="0.9" step="0.02">
-                                </div>
-                                <div class="slider-group">
-                                    <label>🌀 NEBULIZACIÓN (ciclos/h) <span id="mistVal" class="value-indicator">18</span></label>
-                                    <input type="range" id="mistSlider" min="6" max="30" value="18" step="1">
-                                </div>
-                                <div class="slider-group">
-                                    <label>🌫️ CO₂ (ppm) <span id="co2Val" class="value-indicator">420</span></label>
-                                    <input type="range" id="co2Slider" min="350" max="1200" value="420" step="5">
-                                </div>
+    <!-- ==================== DIVIDER ==================== -->
+    <div class="container"><hr class="divider-soft"></div>
+
+    <!-- ========== DASHBOARD AVANZADO INTEGRADO ========== -->
+    <section id="demo">
+        <div class="container">
+            <div class="section-header">
+                <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">Demo Interactiva</span>
+                <h2>Panel de <span class="highlight">Control en Tiempo Real</span></h2>
+            </div>
+
+            <div class="dashboard-wrapper">
+                <div class="dashboard-container">
+                    <div class="simulation-section">
+                        <div class="sim-header">
+                            <div class="sim-title">📈 Simulación de Crecimiento</div>
+                        </div>
+                        <div class="etapas-row" id="etapasRow">
+                            <div class="etapa-item active" style="--c: var(--color-planta)">
+                                <i class="fa-solid fa-seedling"></i><span>Plántula</span>
+                            </div>
+                            <div class="etapa-item" style="--c: var(--color-crecimiento)">
+                                <i class="fa-solid fa-leaf"></i><span>Crecimiento</span>
+                            </div>
+                            <div class="etapa-item" style="--c: var(--color-venta)">
+                                <i class="fa-solid fa-basket-shopping"></i><span>Venta</span>
                             </div>
                         </div>
-
-                        <div class="control-group">
-                            <div class="control-heading">🧠 Parámetros inteligentes</div>
-                            <div class="ia-presets" id="iaPresets">
-                                <div class="ia-preset-btn active" data-objetivo="personalizado">
-                                    <i>✏️</i><span>A medida</span>
-                                    <div class="ia-tooltip">Configuración manual de todos los parámetros</div>
-                                </div>
-                                <div class="ia-preset-btn" data-objetivo="sabor">
-                                    <i>🍓</i><span>Potenciar sabor</span>
-                                    <div class="ia-tooltip">Optimiza los parámetros para maximizar compuestos aromáticos</div>
-                                </div>
-                                <div class="ia-preset-btn" data-objetivo="velocidad">
-                                    <i>⚡</i><span>Máx. velocidad</span>
-                                    <div class="ia-tooltip">Acelera el ciclo completo a 30 días ajustando luz, CO₂ e intensidad</div>
-                                </div>
-                                <div class="ia-preset-btn" data-objetivo="eficiencia">
-                                    <i>💡</i><span>Máx. efic. energética</span>
-                                    <div class="ia-tooltip">Optimiza el consumo eléctrico mediante barrido láser selectivo</div>
-                                </div>
+                        <div class="progress-area">
+                            <div class="progress-track"></div>
+                            <input type="range" class="progress-slider" id="ageSlider" min="0" max="45" value="0" step="1">
+                        </div>
+                        <div class="status-footer">
+                            <div class="controls-box">
+                                <button class="btn-main" id="playGrowthBtn">
+                                    <i class="fa-solid fa-play" id="iconPlay"></i>
+                                </button>
+                            </div>
+                            <div class="big-counter">
+                                <b id="ageDisplay">0</b><span> / <span id="maxDayDisplay">45</span> DÍAS</span>
                             </div>
                         </div>
-
-                        <div class="sim-note-footnote">
-                            ⚙️ Valores simulados con fines demostrativos. Los resultados reales pueden variar según condiciones específicas.
+                    </div>
+                    <div class="main-section">
+                        <div class="charts-area">
+                            <div class="control-heading" style="margin-top:0;">📊 Resultados del cultivo</div>
+                            <div class="radar-container">
+                                <div id="radarChart"></div>
+                            </div>
+                            <div class="metrics-grid">
+                                <div class="metric-card"><span class="metric-value"><span id="growthMetric">—</span><span class="metric-unit">cm²/día</span></span><div class="metric-label">🌱 Crecimiento</div></div>
+                                <div class="metric-card"><span class="metric-value"><span id="waterMetric">—</span><span class="metric-unit">mL/g</span></span><div class="metric-label">💧 Efic. hídrica</div></div>
+                                <div class="metric-card"><span class="metric-value"><span id="terpMetric">—</span><span class="metric-unit">u.a.</span></span><div class="metric-label">🍃 Aroma</div></div>
+                                <div class="metric-card"><span class="metric-value"><span id="healthMetric">—</span><span class="metric-unit">%</span></span><div class="metric-label">🌿 Salud</div></div>
+                                <div class="metric-card"><span class="metric-value"><span id="roiMetric">—</span><span class="metric-unit">%/m²</span></span><div class="metric-label">💰 ROI</div></div>
+                                <div class="metric-card"><span class="metric-value"><span id="ahorroMetric">—</span><span class="metric-unit">€/m²·año</span></span><div class="metric-label">⚡ Ahorro E.</div></div>
+                                <div class="metric-card"><span class="metric-value"><span id="kWmetric">—</span><span class="metric-unit">kW/m²</span></span><div class="metric-label">🔌 Potencia</div></div>
+                                <div class="metric-card"><span class="metric-value"><span id="aguaAhorroMetric">—</span><span class="metric-unit">€/m²·año</span></span><div class="metric-label">💦 Ahorro H.</div></div>
+                            </div>
+                        </div>
+                        <div class="controls-area">
+                            <div class="control-group">
+                                <div class="control-heading">🌡️ Parámetros de cultivo</div>
+                                <div class="sliders-grid">
+                                    <div class="slider-group"><label>🔴 ROJO (h/d) <span id="redVal" class="value-indicator">12</span></label><input type="range" id="redSlider" min="0" max="18" value="12" step="1"></div>
+                                    <div class="slider-group"><label>🔵 AZUL (h/d) <span id="blueVal" class="value-indicator">8</span></label><input type="range" id="blueSlider" min="0" max="16" value="8" step="1"></div>
+                                    <div class="slider-group"><label>💡 INTENSIDAD LUZ (%) <span id="intensidadVal" class="value-indicator">75</span></label><input type="range" id="intensidadSlider" min="40" max="100" value="75" step="5"></div>
+                                    <div class="slider-group"><label>💧 VPD (kPa) <span id="vpdVal" class="value-indicator">0.9</span></label><input type="range" id="vpdSlider" min="0.4" max="1.6" value="0.9" step="0.02"></div>
+                                    <div class="slider-group"><label>🌀 NEBULIZACIÓN (ciclos/h) <span id="mistVal" class="value-indicator">18</span></label><input type="range" id="mistSlider" min="6" max="30" value="18" step="1"></div>
+                                    <div class="slider-group"><label>🌫️ CO₂ (ppm) <span id="co2Val" class="value-indicator">450</span></label><input type="range" id="co2Slider" min="350" max="1200" value="450" step="5"></div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="control-heading">🧠 Parámetros inteligentes</div>
+                                <div class="ia-presets" id="iaPresets">
+                                    <div class="ia-preset-btn active" data-objetivo="personalizado"><i>✏️</i><span>A medida</span><div class="ia-tooltip">Configuración manual de todos los parámetros</div></div>
+                                    <div class="ia-preset-btn" data-objetivo="sabor"><i>🍓</i><span>Potenciar sabor</span><div class="ia-tooltip">Optimiza los parámetros para maximizar compuestos aromáticos</div></div>
+                                    <div class="ia-preset-btn" data-objetivo="velocidad"><i>⚡</i><span>Máx. velocidad</span><div class="ia-tooltip">Acelera el ciclo completo a 30 días ajustando luz, CO₂ e intensidad</div></div>
+                                    <div class="ia-preset-btn" data-objetivo="eficiencia"><i>💡</i><span>Máx. efic. energética</span><div class="ia-tooltip">Optimiza el consumo eléctrico mediante barrido láser selectivo</div></div>
+                                </div>
+                            </div>
+                            <div class="sim-note-footnote">⚙️ Valores simulados con fines demostrativos. Los resultados reales pueden variar según condiciones específicas.</div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="iaToast" class="ia-toast"></div>
         </div>
-        
-        <div id="iaToast" class="ia-toast"></div>
-    </div>
-</section>
-<!-- ========== FIN DASHBOARD ========== -->
+    </section>
+    <!-- ========== FIN DASHBOARD ========== -->
 
-<!-- Equipo & Contacto -->
-<section id="colabora">
-<div class="container">
-    <h2>Equipo Fundador</h2>
-    <div class="grid-3" style="margin-bottom:40px;">
-        <div class="card founder-card">
-            <div class="founder-icon">⚡</div>
-            <h3>Leandro</h3>
-            <div class="founder-role">CEO / CFO</div>
-            <p>Emprendedor con experiencia en Fintech e industria CNC. Formación en finanzas y electrónica industrial.</p>
-        </div>
-        <div class="card founder-card">
-            <div class="founder-icon">💻</div>
-            <h3>Christian</h3>
-            <div class="founder-role">CTO / Asesor Informático</div>
-            <p>Desarrollador con 10 años de experiencia en Fintech. Formación en Ingeniería Informática.</p>
-        </div>
-        <div class="card founder-card">
-            <div class="founder-icon">⚙️</div>
-            <h3>Álvaro</h3>
-            <div class="founder-role">Head of Engineering</div>
-            <p>Formación en Ingeniería Mecánica Industrial. Aporta visión clave en el diseño de maquinaria.</p>
-        </div>
-    </div>
+    <!-- ==================== DIVIDER ==================== -->
+    <div class="container"><hr class="divider-soft"></div>
 
-        <h2>Contacto</h2>
-        <div class="card contact-form" style="padding:32px;">
-            <form id="my-form" action="https://formspree.io/f/mbdwggjy" method="POST">
-                <div class="form-row-duo">
-                    <div class="form-group"><input type="text" name="nombre" placeholder="Tu nombre" required></div>
-                    <div class="form-group"><input type="email" name="email" placeholder="Correo electrónico" required></div>
+    <!-- ==================== ROADMAP ==================== -->
+    <section id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">Roadmap</span>
+                <h2>De la idea al <span class="highlight">impacto real</span></h2>
+            </div>
+            <div class="roadmap-vertical">
+                <div class="roadmap-step">
+                    <div class="roadmap-step-content">
+                        <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">✅ Verano 2025</span>
+                        <div class="roadmap-step-title">Estudio conceptual y primeras pruebas</div>
+                        <p style="color:var(--muted);">Simulaciones de fluidos computacionales, selección rigurosa de componentes y pruebas de nebulización e iluminación en bancada abierta.</p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <select name="tipo" required>
-                        <option disabled selected>¿Cómo te gustaría colaborar?</option>
-                        <option>Soy Inversor</option>
-                        <option>Soy Agricultor Premium</option>
-                        <option>Soy Partner Técnico</option>
-                        <option>Otros</option>
-                    </select>
+                <div class="roadmap-step">
+                    <div class="roadmap-step-content">
+                        <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">🔄 2025–2026</span>
+                        <div class="roadmap-step-title">Diseño CAD y arquitectura de sensores</div>
+                        <p style="color:var(--muted);">Modelado 3D completo, definición de PCB personalizada, protocolo MQTT y dashboard base de monitorización.</p>
+                    </div>
                 </div>
-                <div class="form-group"><textarea name="mensaje" rows="5" placeholder="Cuéntanos más detalles" required></textarea></div>
-                <button type="submit">Enviar mensaje</button>
-                <div id="form-status"></div>
-            </form>
+                <div class="roadmap-step">
+                    <div class="roadmap-step-content">
+                        <span class="roadmap-step-badge" style="background:var(--gold); color:#000;">🎯 Próximo hito · Verano 2026</span>
+                        <div class="roadmap-step-title">MVP funcional</div>
+                        <p style="color:var(--muted);">Primer prototipo cerrado para 2–3 plantas. Validación biológica con albahaca, adquisición de datos reales y primeros lazos de control autónomo.</p>
+                    </div>
+                </div>
+                <div class="roadmap-step">
+                    <div class="roadmap-step-content">
+                        <span class="roadmap-step-badge" style="background:var(--accent2); color:white;">📅 Q4 2026 → 2027</span>
+                        <div class="roadmap-step-title">Escalado y optimización de modelos</div>
+                        <p style="color:var(--muted);">Ampliación a bancada de 12 plantas, integración con análisis químico externo (GC-MS) y refinamiento del modelo predictivo por ciclo.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<footer>
-    <div class="container">
-        <p>AgroAI Lab · Asturias, España</p>
-        <p>Leo@agroailab.com</p>
-        <p style="margin-top:6px;">© 2026 · Datos de demo simulados, basados en investigación previa.</p>
-        <p style="margin-top:12px; font-size:0.75rem;">🔒 Trabajamos en la protección industrial de nuestra tecnología. Toda la información técnica es confidencial.</p>
-    </div>
-</footer>
+    <!-- ==================== DIVIDER ==================== -->
+    <div class="container"><hr class="divider-soft"></div>
 
-<script>
-(function() {
-    // ===== SPRAY CANVAS =====
-    const canvas = document.getElementById('sprayCanvas');
-    if (canvas) {
-        const ctxSpray = canvas.getContext('2d');
-        let particles = [];
+    <!-- ==================== EQUIPO & CONTACTO ==================== -->
+    <section id="colabora">
+        <div class="container">
+            <div class="section-header">
+                <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">Equipo</span>
+                <h2>Nuestro <span class="highlight">Equipo</span></h2>
+            </div>
+            <div class="grid-3" style="margin-bottom:40px;">
+                <!-- Leo -->
+                <div class="card founder-card">
+                    <div class="founder-icon">⚡</div>
+                    <h3>Leo</h3>
+                    <div class="founder-role">Fundador</div>
+                    <p>Emprendedor con experiencia en Fintech e industria CNC. Formación en finanzas y electrónica industrial.</p>
+                </div>
+                <!-- Christian -->
+                <div class="card founder-card">
+                    <div class="founder-icon">💻</div>
+                    <h3>Christian</h3>
+                    <div class="founder-role">Asesor Informático</div>
+                    <p>Desarrollador con 10 años de experiencia en Fintech. Formación en Ingeniería Informática.</p>
+                </div>
+                <!-- Álvaro -->
+                <div class="card founder-card">
+                    <div class="founder-icon">⚙️</div>
+                    <h3>Álvaro</h3>
+                    <div class="founder-role">Ingeniero Mecánico</div>
+                    <p>Formación en Ingeniería Mecánica Industrial. Aporta visión clave en el diseño de maquinaria.</p>
+                </div>
+                <!-- Nicolás -->
+                <div class="card founder-card">
+                    <div class="founder-icon">🧪</div>
+                    <h3>Nicolás</h3>
+                    <div class="founder-role">Electrónico</div>
+                    <p>Especialista en sistemas embebidos y diseño de hardware para agricultura de precisión.</p>
+                </div>
+                <!-- Sofía -->
+                <div class="card founder-card">
+                    <div class="founder-icon">📈</div>
+                    <h3>Sofía</h3>
+                    <div class="founder-role">Agrónoma</div>
+                    <p>Experta en fisiología vegetal y manejo de cultivos en ambientes controlados.</p>
+                </div>
+                <!-- Marco -->
+                <div class="card founder-card">
+                    <div class="founder-icon">🔧</div>
+                    <h3>Marco</h3>
+                    <div class="founder-role">Comunicación e Ingeniería</div>
+                    <p>Híbrido entre divulgación técnica e ingeniería de prototipado. Conecta el laboratorio con el mercado.</p>
+                </div>
+            </div>
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+            <div class="section-header">
+                <span class="neu-pill neu-pill-accent" style="margin-bottom:0.8rem;">Contacto</span>
+                <h2>¿Querés formar parte del <span class="highlight">futuro del cultivo</span>?</h2>
+            </div>
+            <div class="card contact-form" style="padding:32px;">
+                <!-- El formulario envía los datos a leo@agroailab.com mediante Formspree -->
+                <form id="my-form" action="https://formspree.io/f/mbdwggjy" method="POST">
+                    <div class="form-row-duo">
+                        <div class="form-group"><input type="text" name="nombre" placeholder="Tu nombre" required></div>
+                        <div class="form-group"><input type="email" name="email" placeholder="Correo electrónico" required></div>
+                    </div>
+                    <div class="form-group">
+                        <select name="tipo" required>
+                            <option disabled selected>¿Cómo te gustaría colaborar?</option>
+                            <option>Soy Inversor</option>
+                            <option>Soy Agricultor Premium</option>
+                            <option>Soy Partner Técnico</option>
+                            <option>Otros</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><textarea name="mensaje" rows="5" placeholder="Cuéntanos más detalles" required></textarea></div>
+                    <button type="submit">Enviar mensaje</button>
+                    <div id="form-status"></div>
+                </form>
+            </div>
+        </div>
+    </section>
 
-        class Droplet {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 200;
-                this.size = Math.random() * 2.5 + 0.8;
-                this.speedY = -(Math.random() * 0.6 + 0.2);
-                this.speedX = (Math.random() - 0.5) * 0.4;
-                this.opacity = Math.random() * 0.35 + 0.08;
-                this.wobble = Math.random() * Math.PI * 2;
-                this.wobbleSpeed = (Math.random() - 0.5) * 0.015;
-                this.life = 0;
-                this.maxLife = 300 + Math.random() * 500;
-            }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.wobble) * 0.3;
-                this.wobble += this.wobbleSpeed;
-                this.life++;
-                if (this.y < -20 || this.life > this.maxLife || this.x < -20 || this.x > canvas.width + 20) {
-                    this.reset();
-                }
-            }
-            draw(ctx) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(200,230,255,' + this.opacity + ')';
-                ctx.fill();
-                ctx.shadowBlur = 6;
-                ctx.shadowColor = 'rgba(180,220,255,' + (this.opacity * 0.6) + ')';
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-        }
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <p style="font-weight:700;color:var(--text);">Agro<span class="highlight">AI</span> Lab</p>
+            <p>Asturias, España · Leo@agroailab.com</p>
+            <p style="margin-top:6px;">© 2026 · Datos de demo simulados, basados en investigación previa.</p>
+            <p style="margin-top:12px; font-size:0.75rem;">🔒 Trabajamos en la protección industrial de nuestra tecnología. Toda la información técnica es confidencial.</p>
+        </div>
+    </footer>
 
-        for (let i = 0; i < 70; i++) { particles.push(new Droplet()); }
+    <!-- ==================== WHATSAPP FLOTANTE ==================== -->
+    <a href="https://wa.me/34611251053?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20AgroAILab.%20%C2%BFPodemos%20conversar%3F" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <span class="wa-ring"></span>
+        <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+        <span>WhatsApp</span>
+    </a>
 
-        function animateSpray() {
-            ctxSpray.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(function(p) { p.update(); p.draw(ctxSpray); });
-            requestAnimationFrame(animateSpray);
-        }
-        animateSpray();
-    }
+    <script>
+        (function() {
+            // Canvas de microgotas (decorativo)
+            const canvas = document.getElementById('sprayCanvas');
+            if (canvas) {
+                const ctxSpray = canvas.getContext('2d');
+                let particles = [];
 
-    // ===== THEME TOGGLE =====
-    var themeToggle = document.getElementById('themeToggle');
-    var html = document.documentElement;
-    function getCurrentTheme() { return html.getAttribute('data-theme'); }
-    themeToggle.addEventListener('click', function() {
-        var newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        if (window.radarChart) {
-            window.radarChart.clear();
-            window.radarChart.setOption(getEChartsOption(newTheme));
-            updateDemoAdvanced();
-        }
-    });
+                function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
 
-    // ===== MOBILE MENU =====
-    var hamburgerBtn = document.getElementById('hamburgerBtn');
-    var mobileMenu = document.getElementById('mobileMenu');
-    hamburgerBtn.addEventListener('click', function() { mobileMenu.classList.toggle('open'); });
-    document.querySelectorAll('.mobile-menu a').forEach(function(link) {
-        link.addEventListener('click', function() { mobileMenu.classList.remove('open'); });
-    });
-
-    // ===== SMOOTH SCROLL =====
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            var target = document.querySelector(this.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-
-    // ========== DASHBOARD AVANZADO ==========
-
-    function formatSigFig(value) {
-        if (value === undefined || isNaN(value)) return "—";
-        if (Math.abs(value) >= 100) return Math.round(value).toString();
-        if (Math.abs(value) >= 10) return value.toFixed(1);
-        if (Math.abs(value) >= 1) return value.toPrecision(3);
-        return value.toPrecision(2);
-    }
-
-    function showToast(message, duration) {
-        duration = duration || 1000;
-        var toast = document.getElementById('iaToast');
-        if (!toast) return;
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(function() { toast.classList.remove('show'); }, duration);
-    }
-
-    function getFenologicPhase(age, maxAge) {
-        maxAge = maxAge || 45;
-        var ratio = age / maxAge;
-        if (ratio < 0.33) return "plantula";
-        if (ratio < 0.66) return "crecimiento";
-        return "venta";
-    }
-
-    var objectivePresets = {
-        personalizado: { red: 12, blue: 8, intensidad: 75, vpd: 0.9, mist: 18, co2: 450, maxAge: 45 },
-        sabor: { red: 14, blue: 12, intensidad: 85, vpd: 0.8, mist: 20, co2: 600, maxAge: 45 },
-        velocidad: { red: 16, blue: 13, intensidad: 95, vpd: 1.0, mist: 24, co2: 1000, maxAge: 30 },
-        eficiencia: { red: 8, blue: 6, intensidad: 60, vpd: 0.9, mist: 16, co2: 420, maxAge: 45 }
-    };
-
-    function applyObjectivePreset(objetivo) {
-        var p = objectivePresets[objetivo];
-        if (!p) return;
-
-        document.getElementById('redSlider').value = p.red;
-        document.getElementById('blueSlider').value = p.blue;
-        document.getElementById('intensidadSlider').value = p.intensidad;
-        document.getElementById('vpdSlider').value = p.vpd;
-        document.getElementById('mistSlider').value = p.mist;
-        document.getElementById('co2Slider').value = p.co2;
-
-        document.getElementById('redVal').innerText = p.red;
-        document.getElementById('blueVal').innerText = p.blue;
-        document.getElementById('intensidadVal').innerText = p.intensidad;
-        document.getElementById('vpdVal').innerText = p.vpd.toFixed(2);
-        document.getElementById('mistVal').innerText = p.mist;
-        document.getElementById('co2Val').innerText = p.co2;
-
-        var ageSlider = document.getElementById('ageSlider');
-        var maxDayDisplay = document.getElementById('maxDayDisplay');
-        if (ageSlider && maxDayDisplay) {
-            var oldMax = parseInt(ageSlider.max);
-            var newMax = p.maxAge;
-            ageSlider.max = newMax;
-            maxDayDisplay.innerText = newMax;
-            if (parseInt(ageSlider.value) > newMax) { ageSlider.value = newMax; }
-            if (oldMax !== newMax) {
-                var bigCounter = document.querySelector('.big-counter');
-                bigCounter.classList.add('pulse-animation');
-                setTimeout(function() { bigCounter.classList.remove('pulse-animation'); }, 600);
-            }
-        }
-
-        if (window.updateDemoAdvanced) window.updateDemoAdvanced();
-        updatePlayButtonIcon();
-    }
-
-    function activateIAThinking(objetivo) {
-        if (objetivo === 'personalizado') {
-            applyObjectivePreset(objetivo);
-            showToast("✏️ Modo a medida activado", 1000);
-            return;
-        }
-        showToast("🧠 IA pensando...", 1000);
-        setTimeout(function() {
-            applyObjectivePreset(objetivo);
-            var msg = objetivo === 'velocidad' ? '✅ Ciclo acelerado a 30 días' : '✅ Parámetros optimizados';
-            showToast(msg, 1000);
-        }, 1000);
-    }
-
-    function updateEtapasVisuales(age, maxAge) {
-        var items = document.querySelectorAll('#etapasRow .etapa-item');
-        items.forEach(function(i) { i.classList.remove('active'); });
-        var phase = getFenologicPhase(age, maxAge);
-        var fases = ['plantula', 'crecimiento', 'venta'];
-        var idx = fases.indexOf(phase);
-        if (idx >= 0) items[idx].classList.add('active');
-    }
-
-    function updatePlayButtonIcon() {
-        var icon = document.getElementById('iconPlay');
-        var age = parseInt(document.getElementById('ageSlider').value);
-        var maxAge = parseInt(document.getElementById('ageSlider').max);
-        var simRunning = window.growthSimulationInterval !== null;
-        if (simRunning) {
-            icon.className = 'fa-solid fa-pause';
-        } else if (age >= maxAge) {
-            icon.className = 'fa-solid fa-stop';
-        } else {
-            icon.className = 'fa-solid fa-play';
-        }
-    }
-
-    // FIX #4: Formateador corregido para tooltip del radar
-    function formatTooltipValue(value) {
-        if (isNaN(value)) return "—";
-        if (Math.abs(value) >= 100) return Math.round(value).toString();
-        if (Math.abs(value) >= 10) return value.toFixed(1);
-        if (Math.abs(value) >= 1) return value.toFixed(1);
-        return value.toFixed(2);
-    }
-
-    var radarNames = ['Crecimiento', 'Efic. hídrica', 'Aroma', 'Salud foliar', 'Efic. energética'];
-
-    function getEChartsOption(theme) {
-        var isLight = theme === 'light';
-        var fontSize = 10;
-        return {
-            radar: {
-                indicator: [
-                    { name: 'Crecimiento', max: 100 },
-                    { name: 'Efic. hídrica', max: 100 },
-                    { name: 'Aroma', max: 100 },
-                    { name: 'Salud foliar', max: 100 },
-                    { name: 'Efic. energética', max: 100 }
-                ],
-                center: ['50%', '50%'],
-                radius: '72%',
-                name: {
-                    textStyle: {
-                        color: isLight ? '#1a2e2a' : '#e6eef5',
-                        fontSize: fontSize,
-                        fontWeight: '500'
+                class Droplet {
+                    constructor() { this.reset(); }
+                    reset() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = canvas.height + Math.random() * 200;
+                        this.size = Math.random() * 2.5 + 0.8;
+                        this.speedY = -(Math.random() * 0.6 + 0.2);
+                        this.speedX = (Math.random() - 0.5) * 0.4;
+                        this.opacity = Math.random() * 0.3 + 0.06;
+                        this.wobble = Math.random() * Math.PI * 2;
+                        this.wobbleSpeed = (Math.random() - 0.5) * 0.015;
+                        this.life = 0;
+                        this.maxLife = 300 + Math.random() * 500;
                     }
-                },
-                splitArea: {
-                    areaStyle: {
-                        color: [isLight ? 'rgba(31,94,63,0.04)' : 'rgba(45,212,191,0.04)']
-                    }
-                },
-                splitLine: {
-                    lineStyle: {
-                        color: isLight ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)'
-                    }
-                }
-            },
-            series: [{
-                type: 'radar',
-                data: [{ value: [65, 70, 55, 80, 72], name: 'Rendimiento (%)' }],
-                symbol: 'circle',
-                symbolSize: 5,
-                lineStyle: {
-                    color: isLight ? '#1f5e3f' : '#2dd4bf',
-                    width: 1.5
-                },
-                areaStyle: {
-                    color: isLight ? 'rgba(31,94,63,0.2)' : 'rgba(45,212,191,0.25)'
-                },
-                itemStyle: {
-                    color: isLight ? '#1f5e3f' : '#2dd4bf',
-                    borderColor: '#fff',
-                    borderWidth: 1
-                }
-            }],
-            // FIX #4: Tooltip funcional con decimales limitados
-            tooltip: {
-                trigger: 'item',
-                formatter: function(params) {
-                    if (params.componentType === 'radar' && params.value) {
-                        var lines = [];
-                        for (var i = 0; i < params.value.length; i++) {
-                            lines.push(radarNames[i] + ': ' + formatTooltipValue(params.value[i]));
+                    update() {
+                        this.y += this.speedY;
+                        this.x += this.speedX + Math.sin(this.wobble) * 0.3;
+                        this.wobble += this.wobbleSpeed;
+                        this.life++;
+                        if (this.y < -20 || this.life > this.maxLife || this.x < -20 || this.x > canvas.width + 20) {
+                            this.reset();
                         }
-                        return lines.join('<br>');
                     }
-                    return '';
+                    draw(ctx) {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(180,220,210,' + this.opacity + ')';
+                        ctx.fill();
+                        ctx.shadowBlur = 6;
+                        ctx.shadowColor = 'rgba(160,210,200,' + (this.opacity * 0.5) + ')';
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+                }
+
+                for (let i = 0; i < 60; i++) { particles.push(new Droplet()); }
+
+                function animateSpray() {
+                    ctxSpray.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => { p.update(); p.draw(ctxSpray); });
+                    requestAnimationFrame(animateSpray);
+                }
+                animateSpray();
+            }
+
+            // Cambio de tema e intercambio de imágenes
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const logoImg = document.getElementById('logoImg');
+            const heroImage = document.getElementById('heroImage');
+
+            function updateImages(theme) {
+                if (logoImg) logoImg.src = theme === 'dark' ? 'logo.png' : 'logow.png';
+                if (heroImage) {
+                    heroImage.src = theme === 'dark' ? 'imagen.png' : 'imagenw.png';
+                    heroImage.onerror = function() { this.src = theme === 'dark' ? 'imagen.png' : 'imagenw.png'; };
                 }
             }
-        };
-    }
 
-    function initRadarAdvanced() {
-        var radarDom = document.getElementById('radarChart');
-        if (!radarDom || !window.echarts) {
-            setTimeout(initRadarAdvanced, 50);
-            return;
-        }
-        window.radarChart = echarts.init(radarDom);
-        window.radarChart.setOption(getEChartsOption(getCurrentTheme()));
-        setTimeout(function() { if (window.radarChart) window.radarChart.resize(); }, 100);
-        window.addEventListener('resize', function() { if (window.radarChart) window.radarChart.resize(); });
-        updateDemoAdvanced();
-    }
+            function getCurrentTheme() { return html.getAttribute('data-theme'); }
+            themeToggle.addEventListener('click', () => {
+                const newTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
+                html.setAttribute('data-theme', newTheme);
+                updateImages(newTheme);
+                if (window.radarChart) {
+                    window.radarChart.clear();
+                    window.radarChart.setOption(getEChartsOption(newTheme));
+                    updateDemoAdvanced();
+                }
+            });
+            updateImages('light'); // Forzar modo claro inicial
 
-    function updateDemoAdvanced() {
-        if (!window.radarChart) return;
+            // Menú móvil
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+            });
 
-        var red = +document.getElementById('redSlider').value;
-        var blue = +document.getElementById('blueSlider').value;
-        var intensidad = +document.getElementById('intensidadSlider').value;
-        var age = +document.getElementById('ageSlider').value;
-        var vpd = +document.getElementById('vpdSlider').value;
-        var mist = +document.getElementById('mistSlider').value;
-        var co2 = +document.getElementById('co2Slider').value;
-        var maxAge = +document.getElementById('ageSlider').max;
+            // Scroll suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
 
-        document.getElementById('redVal').innerText = red;
-        document.getElementById('blueVal').innerText = blue;
-        document.getElementById('intensidadVal').innerText = intensidad;
-        document.getElementById('vpdVal').innerText = vpd.toFixed(2);
-        document.getElementById('mistVal').innerText = mist;
-        document.getElementById('co2Val').innerText = co2;
-        document.getElementById('ageDisplay').innerText = age;
-        document.getElementById('maxDayDisplay').innerText = maxAge;
-        updateEtapasVisuales(age, maxAge);
-        updatePlayButtonIcon();
+            // ========== FUNCIONES DEL DASHBOARD ==========
+            function formatSigFig(value) {
+                if (value === undefined || isNaN(value)) return "—";
+                if (Math.abs(value) >= 100) return Math.round(value).toString();
+                if (Math.abs(value) >= 10) return value.toFixed(1);
+                if (Math.abs(value) >= 1) return value.toPrecision(3);
+                return value.toPrecision(2);
+            }
 
-        var intensidadFactor = intensidad / 100;
-        var vpdStress = 1 - Math.abs(vpd - 0.9) * 0.6;
-        var mistEff = 1 - Math.abs(mist - 18) * 0.02;
-        var co2Effect = 1 + (co2 - 400) / 1500;
-        co2Effect = Math.min(1.5, Math.max(0.85, co2Effect));
-        var ageFactor = Math.min(1.3, age / (maxAge * 0.78));
+            function showToast(message, duration = 1000) {
+                const toast = document.getElementById('iaToast');
+                if (!toast) return;
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), duration);
+            }
 
-        var growthBase = (3 + (red / 18) * 5 + (blue / 16) * 3) * intensidadFactor;
-        var growth = growthBase * ageFactor * vpdStress * mistEff * co2Effect;
-        growth = Math.min(24, Math.max(1.2, growth));
+            function getFenologicPhase(age, maxAge) {
+                const ratio = age / (maxAge || 45);
+                if (ratio < 0.33) return "plantula";
+                if (ratio < 0.66) return "crecimiento";
+                return "venta";
+            }
 
-        var waterEff = 110 - (mistEff * 25) - (red / 18) * 12 + (vpdStress * 12);
-        waterEff = Math.min(130, Math.max(28, waterEff));
-
-        var terpenes = 0.3 + (red / 18) * 0.7 * vpdStress * mistEff * (co2Effect * 0.8 + 0.2);
-        terpenes = Math.min(1.0, Math.max(0.2, terpenes));
-
-        var health = (vpdStress * 0.5 + mistEff * 0.3 + (co2Effect - 0.85) * 0.8) * 100;
-        health = Math.min(98, Math.max(15, Math.floor(health)));
-
-        var powerKW = (red / 18) * 0.25 + (blue / 16) * 0.15 + (mist / 30) * 0.08;
-        powerKW = Math.min(0.48, Math.max(0.12, powerKW)) * (1 - (intensidad - 40) / 300);
-        powerKW = Math.min(0.48, Math.max(0.10, powerKW));
-
-        var activePresetEl = document.querySelector('.ia-preset-btn.active');
-        var activePreset = activePresetEl ? activePresetEl.dataset.objetivo : 'personalizado';
-        if (activePreset === "eficiencia") { powerKW = powerKW * 0.6; growth = growth * 1.25; terpenes = terpenes * 1.2; }
-        if (activePreset === "velocidad") { growth = growth * 1.15; terpenes = terpenes * 0.95; }
-
-        var basePower = 0.8;
-        var kWhAhorro = (basePower - powerKW) * 18 * 365;
-        var ahorroEuro = kWhAhorro * 0.15;
-        ahorroEuro = Math.max(0, Math.min(800, ahorroEuro));
-        if (activePreset === "eficiencia") ahorroEuro = ahorroEuro * 1.5;
-
-        var aguaAhorradaL = (waterEff < 50 ? 500 : 300);
-        var ahorroAguaEuro = (aguaAhorradaL / 1000) * 2;
-        if (activePreset === "eficiencia") ahorroAguaEuro = ahorroAguaEuro * 1.2;
-
-        var mejoraProduccion = (growth / 15) * 300;
-        var beneficioAnual = ahorroEuro + ahorroAguaEuro + mejoraProduccion;
-        var roi = (beneficioAnual / 1200) * 100;
-        roi = Math.min(180, Math.max(15, Math.round(roi)));
-        if (activePreset === "eficiencia") roi = roi * 1.3;
-
-        // FIX #5: Actualizar solo el span numérico, no el contenedor completo
-        document.getElementById('growthMetric').innerText = formatSigFig(growth);
-        document.getElementById('waterMetric').innerText = formatSigFig(waterEff);
-        document.getElementById('terpMetric').innerText = formatSigFig(terpenes);
-        document.getElementById('healthMetric').innerText = formatSigFig(health);
-        document.getElementById('kWmetric').innerText = formatSigFig(powerKW);
-        document.getElementById('ahorroMetric').innerText = formatSigFig(ahorroEuro);
-        document.getElementById('aguaAhorroMetric').innerText = formatSigFig(ahorroAguaEuro);
-        document.getElementById('roiMetric').innerText = formatSigFig(roi);
-
-        var radarValues = [
-            Math.min(100, (growth / 24) * 100),
-            Math.min(100, ((130 - waterEff) / 100) * 100),
-            Math.min(100, (terpenes / 1.0) * 100),
-            health,
-            Math.min(100, ((0.48 - powerKW) / 0.38) * 100)
-        ].map(function(v) { return Math.min(100, Math.max(0, v)); });
-
-        window.radarChart.setOption({
-            series: [{
-                data: [{ value: radarValues, name: 'Rendimiento (%)' }]
-            }]
-        });
-    }
-
-    window.growthSimulationInterval = null;
-
-    function bindDashboardControls() {
-        var presetButtons = document.querySelectorAll('.ia-preset-btn');
-        presetButtons.forEach(function(button) {
-            var handler = function(e) {
-                e.preventDefault();
-                presetButtons.forEach(function(btn) { btn.classList.remove('active'); });
-                button.classList.add('active');
-                var objetivo = button.dataset.objetivo;
-                activateIAThinking(objetivo);
+            const objectivePresets = {
+                personalizado: { red: 12, blue: 8, intensidad: 75, vpd: 0.9, mist: 18, co2: 450, maxAge: 45 },
+                sabor: { red: 14, blue: 12, intensidad: 85, vpd: 0.8, mist: 20, co2: 600, maxAge: 45 },
+                velocidad: { red: 16, blue: 13, intensidad: 95, vpd: 1.0, mist: 24, co2: 1000, maxAge: 30 },
+                eficiencia: { red: 8, blue: 6, intensidad: 60, vpd: 0.9, mist: 16, co2: 420, maxAge: 45 }
             };
-            button.addEventListener('click', handler);
-            button.addEventListener('touchend', handler);
-        });
 
-        var sliders = ['redSlider', 'blueSlider', 'intensidadSlider', 'vpdSlider', 'mistSlider', 'co2Slider'];
-        sliders.forEach(function(id) {
-            var el = document.getElementById(id);
-            if (el) el.addEventListener('input', function() {
-                if (window.growthSimulationInterval) {
-                    clearInterval(window.growthSimulationInterval);
-                    window.growthSimulationInterval = null;
+            function applyObjectivePreset(objetivo) {
+                const p = objectivePresets[objetivo];
+                if (!p) return;
+                document.getElementById('redSlider').value = p.red;
+                document.getElementById('blueSlider').value = p.blue;
+                document.getElementById('intensidadSlider').value = p.intensidad;
+                document.getElementById('vpdSlider').value = p.vpd;
+                document.getElementById('mistSlider').value = p.mist;
+                document.getElementById('co2Slider').value = p.co2;
+                document.getElementById('redVal').innerText = p.red;
+                document.getElementById('blueVal').innerText = p.blue;
+                document.getElementById('intensidadVal').innerText = p.intensidad;
+                document.getElementById('vpdVal').innerText = p.vpd.toFixed(2);
+                document.getElementById('mistVal').innerText = p.mist;
+                document.getElementById('co2Val').innerText = p.co2;
+
+                const ageSlider = document.getElementById('ageSlider');
+                const maxDayDisplay = document.getElementById('maxDayDisplay');
+                if (ageSlider && maxDayDisplay) {
+                    const oldMax = parseInt(ageSlider.max);
+                    ageSlider.max = p.maxAge;
+                    maxDayDisplay.innerText = p.maxAge;
+                    if (parseInt(ageSlider.value) > p.maxAge) ageSlider.value = p.maxAge;
+                    if (oldMax !== p.maxAge) {
+                        const counter = document.querySelector('.big-counter');
+                        counter.classList.add('pulse-animation');
+                        setTimeout(() => counter.classList.remove('pulse-animation'), 600);
+                    }
                 }
-                updateDemoAdvanced();
-            });
-        });
+                if (window.updateDemoAdvanced) updateDemoAdvanced();
+                updatePlayButtonIcon();
+            }
 
-        var ageSlider = document.getElementById('ageSlider');
-        if (ageSlider) {
-            ageSlider.addEventListener('input', function() {
-                if (window.growthSimulationInterval) {
-                    clearInterval(window.growthSimulationInterval);
-                    window.growthSimulationInterval = null;
-                }
-                updateDemoAdvanced();
-            });
-        }
-
-        var playBtn = document.getElementById('playGrowthBtn');
-        if (playBtn) {
-            var playHandler = function(e) {
-                e.preventDefault();
-                var age = parseInt(document.getElementById('ageSlider').value);
-                var maxAge = parseInt(document.getElementById('ageSlider').max);
-
-                if (window.growthSimulationInterval) {
-                    clearInterval(window.growthSimulationInterval);
-                    window.growthSimulationInterval = null;
-                    updatePlayButtonIcon();
+            function activateIAThinking(objetivo) {
+                if (objetivo === 'personalizado') {
+                    applyObjectivePreset(objetivo);
+                    showToast("✏️ Modo a medida activado");
                     return;
                 }
-                if (age >= maxAge) {
-                    document.getElementById('ageSlider').value = 0;
-                    updateDemoAdvanced();
+                showToast("🧠 IA pensando...");
+                setTimeout(() => {
+                    applyObjectivePreset(objetivo);
+                    const msg = objetivo === 'velocidad' ? '✅ Ciclo acelerado a 30 días' : '✅ Parámetros optimizados';
+                    showToast(msg);
+                }, 1000);
+            }
+
+            function updateEtapasVisuales(age, maxAge) {
+                const items = document.querySelectorAll('#etapasRow .etapa-item');
+                items.forEach(i => i.classList.remove('active'));
+                const phase = getFenologicPhase(age, maxAge);
+                const fases = ['plantula', 'crecimiento', 'venta'];
+                const idx = fases.indexOf(phase);
+                if (idx >= 0) items[idx].classList.add('active');
+            }
+
+            function updatePlayButtonIcon() {
+                const icon = document.getElementById('iconPlay');
+                const age = parseInt(document.getElementById('ageSlider').value);
+                const maxAge = parseInt(document.getElementById('ageSlider').max);
+                if (window.growthSimulationInterval) {
+                    icon.className = 'fa-solid fa-pause';
+                } else if (age >= maxAge) {
+                    icon.className = 'fa-solid fa-stop';
                 } else {
-                    window.growthSimulationInterval = setInterval(function() {
-                        var currentAge = parseInt(document.getElementById('ageSlider').value);
-                        var currentMax = parseInt(document.getElementById('ageSlider').max);
-                        if (currentAge >= currentMax) {
-                            clearInterval(window.growthSimulationInterval);
-                            window.growthSimulationInterval = null;
-                            updateDemoAdvanced();
+                    icon.className = 'fa-solid fa-play';
+                }
+            }
+
+            function formatTooltipValue(value) {
+                if (isNaN(value)) return "—";
+                if (Math.abs(value) >= 100) return Math.round(value).toString();
+                if (Math.abs(value) >= 10) return value.toFixed(1);
+                if (Math.abs(value) >= 1) return value.toFixed(1);
+                return value.toFixed(2);
+            }
+
+            const radarNames = ['Crecimiento', 'Efic. hídrica', 'Aroma', 'Salud foliar', 'Efic. energética'];
+
+            function getEChartsOption(theme) {
+                const isLight = theme === 'light';
+                return {
+                    radar: {
+                        indicator: [
+                            { name: 'Crecimiento', max: 100 },
+                            { name: 'Efic. hídrica', max: 100 },
+                            { name: 'Aroma', max: 100 },
+                            { name: 'Salud foliar', max: 100 },
+                            { name: 'Efic. energética', max: 100 }
+                        ],
+                        center: ['50%', '50%'],
+                        radius: '72%',
+                        name: { textStyle: { color: isLight ? '#1e2a1f' : '#e2e9f0', fontSize: 10, fontWeight: '500' } },
+                        splitArea: { areaStyle: { color: [isLight ? 'rgba(74,135,77,0.04)' : 'rgba(91,155,213,0.04)'] } },
+                        splitLine: { lineStyle: { color: isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.10)' } }
+                    },
+                    series: [{
+                        type: 'radar',
+                        data: [{ value: [65, 70, 55, 80, 72], name: 'Rendimiento (%)' }],
+                        symbol: 'circle',
+                        symbolSize: 5,
+                        lineStyle: { color: isLight ? '#4a874d' : '#5b9bd5', width: 1.5 },
+                        areaStyle: { color: isLight ? 'rgba(74,135,77,0.2)' : 'rgba(91,155,213,0.25)' },
+                        itemStyle: { color: isLight ? '#4a874d' : '#5b9bd5', borderColor: '#fff', borderWidth: 1 }
+                    }],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: function(params) {
+                            if (params.componentType === 'radar' && params.value) {
+                                let lines = [];
+                                for (let i = 0; i < params.value.length; i++) {
+                                    lines.push(radarNames[i] + ': ' + formatTooltipValue(params.value[i]));
+                                }
+                                return lines.join('<br>');
+                            }
+                            return '';
+                        }
+                    }
+                };
+            }
+
+            function initRadarAdvanced() {
+                const radarDom = document.getElementById('radarChart');
+                if (!radarDom || !window.echarts) { setTimeout(initRadarAdvanced, 50); return; }
+                window.radarChart = echarts.init(radarDom);
+                window.radarChart.setOption(getEChartsOption(getCurrentTheme()));
+                setTimeout(() => { if (window.radarChart) window.radarChart.resize(); }, 100);
+                window.addEventListener('resize', () => { if (window.radarChart) window.radarChart.resize(); });
+                updateDemoAdvanced();
+            }
+
+            function updateDemoAdvanced() {
+                if (!window.radarChart) return;
+                const red = +document.getElementById('redSlider').value;
+                const blue = +document.getElementById('blueSlider').value;
+                const intensidad = +document.getElementById('intensidadSlider').value;
+                const age = +document.getElementById('ageSlider').value;
+                const vpd = +document.getElementById('vpdSlider').value;
+                const mist = +document.getElementById('mistSlider').value;
+                const co2 = +document.getElementById('co2Slider').value;
+                const maxAge = +document.getElementById('ageSlider').max;
+
+                document.getElementById('redVal').innerText = red;
+                document.getElementById('blueVal').innerText = blue;
+                document.getElementById('intensidadVal').innerText = intensidad;
+                document.getElementById('vpdVal').innerText = vpd.toFixed(2);
+                document.getElementById('mistVal').innerText = mist;
+                document.getElementById('co2Val').innerText = co2;
+                document.getElementById('ageDisplay').innerText = age;
+                document.getElementById('maxDayDisplay').innerText = maxAge;
+                updateEtapasVisuales(age, maxAge);
+                updatePlayButtonIcon();
+
+                const intensidadFactor = intensidad / 100;
+                const vpdStress = 1 - Math.abs(vpd - 0.9) * 0.6;
+                const mistEff = 1 - Math.abs(mist - 18) * 0.02;
+                let co2Effect = 1 + (co2 - 400) / 1500;
+                co2Effect = Math.min(1.5, Math.max(0.85, co2Effect));
+                const ageFactor = Math.min(1.3, age / (maxAge * 0.78));
+
+                let growth = (3 + (red / 18) * 5 + (blue / 16) * 3) * intensidadFactor * ageFactor * vpdStress * mistEff * co2Effect;
+                growth = Math.min(24, Math.max(1.2, growth));
+
+                let waterEff = 110 - (mistEff * 25) - (red / 18) * 12 + (vpdStress * 12);
+                waterEff = Math.min(130, Math.max(28, waterEff));
+
+                let terpenes = 0.3 + (red / 18) * 0.7 * vpdStress * mistEff * (co2Effect * 0.8 + 0.2);
+                terpenes = Math.min(1.0, Math.max(0.2, terpenes));
+
+                let health = (vpdStress * 0.5 + mistEff * 0.3 + (co2Effect - 0.85) * 0.8) * 100;
+                health = Math.min(98, Math.max(15, Math.floor(health)));
+
+                let powerKW = (red / 18) * 0.25 + (blue / 16) * 0.15 + (mist / 30) * 0.08;
+                powerKW = Math.min(0.48, Math.max(0.12, powerKW)) * (1 - (intensidad - 40) / 300);
+                powerKW = Math.min(0.48, Math.max(0.10, powerKW));
+
+                const activePreset = document.querySelector('.ia-preset-btn.active')?.dataset.objetivo || 'personalizado';
+                if (activePreset === "eficiencia") { powerKW *= 0.6; growth *= 1.25; terpenes *= 1.2; }
+                if (activePreset === "velocidad") { growth *= 1.15; terpenes *= 0.95; }
+
+                const basePower = 0.8;
+                let ahorroEuro = Math.max(0, Math.min(800, (basePower - powerKW) * 18 * 365 * 0.15));
+                if (activePreset === "eficiencia") ahorroEuro *= 1.5;
+
+                let ahorroAguaEuro = ((waterEff < 50 ? 500 : 300) / 1000) * 2;
+                if (activePreset === "eficiencia") ahorroAguaEuro *= 1.2;
+
+                const beneficioAnual = ahorroEuro + ahorroAguaEuro + (growth / 15) * 300;
+                let roi = Math.round((beneficioAnual / 1200) * 100);
+                roi = Math.min(180, Math.max(15, roi));
+                if (activePreset === "eficiencia") roi = Math.min(180, roi * 1.3);
+
+                document.getElementById('growthMetric').innerText = formatSigFig(growth);
+                document.getElementById('waterMetric').innerText = formatSigFig(waterEff);
+                document.getElementById('terpMetric').innerText = formatSigFig(terpenes);
+                document.getElementById('healthMetric').innerText = formatSigFig(health);
+                document.getElementById('kWmetric').innerText = formatSigFig(powerKW);
+                document.getElementById('ahorroMetric').innerText = formatSigFig(ahorroEuro);
+                document.getElementById('aguaAhorroMetric').innerText = formatSigFig(ahorroAguaEuro);
+                document.getElementById('roiMetric').innerText = formatSigFig(roi);
+
+                const radarValues = [
+                    Math.min(100, (growth / 24) * 100),
+                    Math.min(100, ((130 - waterEff) / 100) * 100),
+                    Math.min(100, (terpenes / 1.0) * 100),
+                    health,
+                    Math.min(100, ((0.48 - powerKW) / 0.38) * 100)
+                ].map(v => Math.min(100, Math.max(0, v)));
+
+                window.radarChart.setOption({ series: [{ data: [{ value: radarValues, name: 'Rendimiento (%)' }] }] });
+            }
+
+            let growthSimulationInterval = null;
+
+            function bindDashboardControls() {
+                document.querySelectorAll('.ia-preset-btn').forEach(btn => {
+                    const handler = (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll('.ia-preset-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        activateIAThinking(btn.dataset.objetivo);
+                    };
+                    btn.addEventListener('click', handler);
+                    btn.addEventListener('touchend', handler);
+                });
+
+                ['redSlider', 'blueSlider', 'intensidadSlider', 'vpdSlider', 'mistSlider', 'co2Slider'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.addEventListener('input', () => {
+                        if (growthSimulationInterval) { clearInterval(growthSimulationInterval); growthSimulationInterval = null; }
+                        updateDemoAdvanced();
+                    });
+                });
+
+                const ageSlider = document.getElementById('ageSlider');
+                if (ageSlider) ageSlider.addEventListener('input', () => {
+                    if (growthSimulationInterval) { clearInterval(growthSimulationInterval); growthSimulationInterval = null; }
+                    updateDemoAdvanced();
+                });
+
+                const playBtn = document.getElementById('playGrowthBtn');
+                if (playBtn) {
+                    const playHandler = (e) => {
+                        e.preventDefault();
+                        const age = parseInt(ageSlider.value);
+                        const maxAge = parseInt(ageSlider.max);
+                        if (growthSimulationInterval) {
+                            clearInterval(growthSimulationInterval);
+                            growthSimulationInterval = null;
+                            updatePlayButtonIcon();
                             return;
                         }
-                        currentAge++;
-                        document.getElementById('ageSlider').value = currentAge;
-                        document.getElementById('ageDisplay').innerText = currentAge;
-                        updateDemoAdvanced();
-                    }, 300);
-                    updatePlayButtonIcon();
+                        if (age >= maxAge) {
+                            ageSlider.value = 0;
+                            updateDemoAdvanced();
+                        } else {
+                            growthSimulationInterval = setInterval(() => {
+                                let currentAge = parseInt(ageSlider.value);
+                                const currentMax = parseInt(ageSlider.max);
+                                if (currentAge >= currentMax) {
+                                    clearInterval(growthSimulationInterval);
+                                    growthSimulationInterval = null;
+                                    updateDemoAdvanced();
+                                    return;
+                                }
+                                currentAge++;
+                                ageSlider.value = currentAge;
+                                document.getElementById('ageDisplay').innerText = currentAge;
+                                updateDemoAdvanced();
+                            }, 300);
+                            updatePlayButtonIcon();
+                        }
+                    };
+                    playBtn.addEventListener('click', playHandler);
+                    playBtn.addEventListener('touchend', playHandler);
                 }
-            };
-            playBtn.addEventListener('click', playHandler);
-            playBtn.addEventListener('touchend', playHandler);
-        }
-    }
+            }
 
-    // ===== FORMSPREE =====
-    window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
-    formspree('initForm', { formElement: '#my-form', formId: 'mbdwggjy' });
+            // Inicializar Formspree (envía a leo@agroailab.com)
+            window.formspree = window.formspree || function() { (formspree.q = formspree.q || []).push(arguments); };
+            formspree('initForm', { formElement: '#my-form', formId: 'mbdwggjy' });
+            const form = document.getElementById('my-form');
+            const statusDiv = document.getElementById('form-status');
+            form.addEventListener('formspree:success', () => {
+                statusDiv.textContent = '✅ Mensaje enviado. ¡Gracias!';
+                statusDiv.className = 'success';
+                form.reset();
+            });
+            form.addEventListener('formspree:error', () => {
+                statusDiv.textContent = '❌ Error al enviar. Intenta de nuevo.';
+                statusDiv.className = 'error';
+            });
 
-    var form = document.getElementById('my-form');
-    var statusDiv = document.getElementById('form-status');
-    form.addEventListener('formspree:success', function() {
-        statusDiv.textContent = '✅ Mensaje enviado. ¡Gracias!';
-        statusDiv.className = 'success';
-        form.reset();
-    });
-    form.addEventListener('formspree:error', function() {
-        statusDiv.textContent = '❌ Error al enviar. Intenta de nuevo.';
-        statusDiv.className = 'error';
-    });
-
-    // ===== INICIALIZACIÓN =====
-    document.addEventListener('DOMContentLoaded', function() {
-        initRadarAdvanced();
-        bindDashboardControls();
-    });
-})();
-</script>
+            // Arranque final
+            document.addEventListener('DOMContentLoaded', () => {
+                initRadarAdvanced();
+                bindDashboardControls();
+            });
+        })();
+    </script>
 </body>
 </html>
